@@ -59,6 +59,6 @@ buttons.forEach(btn => {
     renderItems(filter);
   });
 });
-
+console.log(parsed.data);
 // --- первый рендер — показываем все карточки сразу ---
 renderItems();
