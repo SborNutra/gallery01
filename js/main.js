@@ -52,36 +52,49 @@ fetch(CSV_URL)
     // сортировка по дате (новые сверху)
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // --- рендер карточек ---
-    renderItems();
-
     // --- ВСТАВКА НОВОГО КОДА: автоматические кнопки фильтров ---
     // получаем все уникальные теги из таблицы
     const allTags = [...new Set(items.flatMap(item => item.tags))];
 
-    // кнопка "all"
+    // кнопки для каждого уникального тега
+    // --- создаём кнопки ---
     const allBtn = document.createElement('button');
     allBtn.textContent = 'all';
     allBtn.dataset.filter = 'all';
     allBtn.classList.add('active');
     filtersContainer.appendChild(allBtn);
-    allBtn.addEventListener('click', () => renderItems('all'));
-
-    // кнопки для каждого уникального тега
-    const buttons = document.querySelectorAll('.filters button');
-
-    buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFilter = btn.dataset.filter;
+    allBtn.addEventListener('click', () => {
+      setActiveFilter('all');
+    });
+    
+    // кнопки для всех тегов
+    allTags.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.textContent = tag;
+      btn.dataset.filter = tag;
+      filtersContainer.appendChild(btn);
+    
+      btn.addEventListener('click', () => {
+        setActiveFilter(tag);
+      });
+    });
+    
+    // --- отдельная функция установки фильтра ---
+    function setActiveFilter(filter) {
+      currentFilter = filter;
       currentIndex = 0;
       grid.innerHTML = '';
-      renderNextBatch(currentFilter);
-  });
-});
+    
+      // убираем active у всех кнопок
+      document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.filters button[data-filter="${filter}"]`).classList.add('active');
+    
+      renderNextBatch(filter);
+    }
+
   });
 
+renderNextBatch(currentFilter);
 
 
 // --- функция рендера карточек ---
@@ -120,10 +133,6 @@ function renderNextBatch(filter = 'all') {
 
   grid.appendChild(fragment);
   currentIndex += batchSize;
-}
-
-  // вставляем все карточки в DOM одним действием
-  grid.appendChild(fragment);
 }
 
 window.addEventListener('scroll', () => {
