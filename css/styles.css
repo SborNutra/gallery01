@@ -53,13 +53,15 @@ body {
 }
 
 .filters button:hover {
+  font-size: 1rem;
   color: red;
   font-family: 'InstrumentSerif', serif;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   transition: letter-spacing 0.2s ease;
 }
 
 .filters button.active {
+  font-size: 1rem;
   border-color: red;
   font-family: 'InstrumentSerif', serif;
 }
