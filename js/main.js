@@ -1,18 +1,31 @@
+const grid = document.querySelector('.masonry-grid');
+
 const items = [
-  { id:1, category:'motion', img:'/assets/m1.jpg' },
-  …
+  { id: 1, category: 'motion', img: 'https://picsum.photos/400/600' },
+  { id: 2, category: '3d', img: 'https://picsum.photos/400/400' },
+  { id: 3, category: 'abstract', img: 'https://picsum.photos/400/700' },
+  { id: 4, category: 'motion', img: 'https://picsum.photos/400/500' },
+  { id: 5, category: '3d', img: 'https://picsum.photos/400/650' }
 ];
 
-const buttons = document.querySelectorAll('.filters button');
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filter = btn.dataset.filter;
-    renderItems();
-  });
-});
-
-function renderItems() {
+function renderItems(filter = 'all') {
   grid.innerHTML = '';
-  items.filter(i => filter=='all' || i.category==filter)
-       .forEach(i => addCard(i));
+
+  const filtered = filter === 'all'
+    ? items
+    : items.filter(item => item.category === filter);
+
+  filtered.forEach(item => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    const img = document.createElement('img');
+    img.src = item.img;
+    img.loading = 'lazy';
+
+    card.appendChild(img);
+    grid.appendChild(card);
+  });
 }
+
+renderItems();
