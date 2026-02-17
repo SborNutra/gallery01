@@ -48,12 +48,14 @@ body {
   cursor: pointer;
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.9rem;
+  line-height: 1;
   transition: font-family 0.2s, color 0.2s;
 }
 
 .filters button:hover {
   color: red;
   font-family: 'InstrumentSerif', serif;
+  letter-spacing: 2px;
 }
 
 .filters button.active {
