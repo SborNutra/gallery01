@@ -7,12 +7,18 @@ body {
 
 .header {
   padding: 2rem;
+  text-align: center;     /* центрируем текст */
+  font-size: 2rem;        /* размер шрифта заголовка */
+  font-weight: bold;
+  letter-spacing: 1px;    /* чуть больше пространства между буквами */
 }
 
 .filters {
   padding: 1rem 2rem;
-  display: flex;
-  gap: 1rem;
+  display: flex;          /* включаем Flexbox */
+  justify-content: center; /* центрируем по горизонтали */
+  gap: 1rem;              /* расстояние между кнопками */
+  flex-wrap: wrap;        /* если кнопок много, перенос на новую строку */
 }
 
 .filters button {
@@ -29,7 +35,7 @@ body {
 .masonry-grid {
   column-count: 4;
   column-gap: 1rem;
-  padding: 2rem;
+  padding: 8rem;
 }
 
 .card {
