@@ -68,21 +68,21 @@ fetch(CSV_URL)
     allBtn.addEventListener('click', () => renderItems('all'));
 
     // кнопки для каждого уникального тега
-    allTags.forEach(tag => {
-      const btn = document.createElement('button');
-      btn.textContent = tag;
-      btn.dataset.filter = tag;
-      filtersContainer.appendChild(btn);
+    const buttons = document.querySelectorAll('.filters button');
 
-      btn.addEventListener('click', () => {
-        // убираем active у всех
-        filtersContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        renderItems(tag);
-      });
-    });
+    buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      currentIndex = 0;
+      grid.innerHTML = '';
+      renderNextBatch(currentFilter);
   });
+});
+  });
+
+
 
 // --- функция рендера карточек ---
 // --- отдельная функция для создания карточки ---
@@ -105,21 +105,32 @@ function createCard(item) {
 }
 
 // --- оптимизированный рендер с фильтром ---
-function renderItems(filter = 'all') {
-  grid.innerHTML = '';                   // очищаем сетку
-  const fragment = document.createDocumentFragment(); // создаём временный контейнер
+let batchSize = 20;
+let currentIndex = 0;
+let currentFilter = 'all';
 
-  // фильтруем элементы
-  const filtered = filter === 'all' 
-    ? items 
-    : items.filter(item => item.tags.includes(filter));
+function renderNextBatch(filter = 'all') {
+  const filtered = filter === 'all' ? items : items.filter(i => i.tags.includes(filter));
+  const fragment = document.createDocumentFragment();
 
-  // создаём карточки и добавляем в fragment
-  filtered.forEach(item => {
-    const card = createCard(item);
+  for (let i = currentIndex; i < Math.min(currentIndex + batchSize, filtered.length); i++) {
+    const card = createCard(filtered[i]);
     fragment.appendChild(card);
-  });
+  }
+
+  grid.appendChild(fragment);
+  currentIndex += batchSize;
+}
 
   // вставляем все карточки в DOM одним действием
   grid.appendChild(fragment);
 }
+
+window.addEventListener('scroll', () => {
+  const scrollPosition = window.scrollY + window.innerHeight;
+  const gridBottom = grid.offsetTop + grid.offsetHeight;
+
+  if (scrollPosition > gridBottom - 200) {
+    renderNextBatch(currentFilter);
+  }
+});
