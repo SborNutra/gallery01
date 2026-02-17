@@ -28,11 +28,11 @@ function renderItems(filter = 'all') {
   });
 }
 
+// --- фильтры кнопок ---
 const buttons = document.querySelectorAll('.filters button');
 
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
-    // убираем активный класс у всех
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
@@ -41,4 +41,5 @@ buttons.forEach(btn => {
   });
 });
 
+// --- первый рендер — показываем все карточки сразу ---
 renderItems();
