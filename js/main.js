@@ -1,12 +1,13 @@
 const grid = document.querySelector('.masonry-grid');
 
-const items = [
-  { id: 1, category: 'motion', img: 'https://picsum.photos/400/600' },
-  { id: 2, category: '3d', img: 'https://picsum.photos/400/400' },
-  { id: 3, category: 'abstract', img: 'https://picsum.photos/400/700' },
-  { id: 4, category: 'motion', img: 'https://picsum.photos/400/500' },
-  { id: 5, category: '3d', img: 'https://picsum.photos/400/650' }
-];
+let items = [];
+
+fetch('content/works.json')
+  .then(res => res.json())
+  .then(data => {
+    items = data;
+    renderItems();
+});
 
 function renderItems(filter = 'all') {
   grid.innerHTML = '';
