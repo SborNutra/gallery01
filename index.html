@@ -1,9 +1,26 @@
-<section class="filters">
-  <button data-filter="all">All</button>
-  <button data-filter="motion">Motion</button>
-  …
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
 
-<section class="masonry-grid">
-  <!-- карточки добавим через JS -->
-</section>
+  <header class="header">
+    <h1>Portfolio</h1>
+  </header>
+
+  <section class="filters">
+    <button data-filter="all" class="active">All</button>
+    <button data-filter="motion">Motion</button>
+    <button data-filter="3d">3D</button>
+    <button data-filter="abstract">Abstract</button>
+  </section>
+
+  <section class="masonry-grid"></section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
