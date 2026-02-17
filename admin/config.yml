@@ -8,7 +8,7 @@ public_folder: "/assets/images"
 collections:
   - name: "works"
     label: "Works"
-    folder: "content/works"
+    folder: "content"
     create: true
     slug: "{{title | slugify}}"
     fields:
