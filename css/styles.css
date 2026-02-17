@@ -49,17 +49,19 @@ body {
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.9rem;
   line-height: 1;
-  transition: font-family 0.2s, color 0.2s;
+  transition: font-family 0.2s ease, color 0.2s ease,letter-spacing 0.2s ease;
 }
 
 .filters button:hover {
   color: red;
   font-family: 'InstrumentSerif', serif;
   letter-spacing: 2px;
+  transition: letter-spacing 0.2s ease;
 }
 
 .filters button.active {
-  border-color: white;
+  border-color: red;
+  font-family: 'InstrumentSerif', serif;
 }
 
 .card {
