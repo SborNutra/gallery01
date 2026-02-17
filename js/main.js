@@ -1,21 +1,20 @@
 const grid = document.querySelector('.masonry-grid');
+const filtersContainer = document.querySelector('.filters'); // контейнер кнопок
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb9gChhvriuPLiHwT0yJ7zOcxHsyNNxkGQsBRMreZHFxv_oIvgOZil9mdeLiF-LvBp_onplkqZtMLR/pub?gid=0&single=true&output=csv';
 
 let items = [];
 
+// --- функции для определения типа и создания медиа ---
 function getMediaType(url) {
   const extension = url.split('.').pop().toLowerCase()
-
   if (["webm", "mp4", "mov"].includes(extension)) return "video"
   if (["png", "jpg", "jpeg", "webp", "gif"].includes(extension)) return "image"
-
   return "unknown"
 }
 
 function createMediaElement(url) {
   const type = getMediaType(url)
-
   if (type === "video") {
     const video = document.createElement("video")
     video.src = url
@@ -26,13 +25,13 @@ function createMediaElement(url) {
     video.preload = "metadata"
     return video
   }
-
   const img = document.createElement("img")
   img.src = url
   img.loading = "lazy"
   return img
 }
 
+// --- загрузка данных из Google Sheets ---
 fetch(CSV_URL)
   .then(res => res.text())
   .then(text => {
@@ -53,9 +52,39 @@ fetch(CSV_URL)
     // сортировка по дате (новые сверху)
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+    // --- рендер карточек ---
     renderItems();
+
+    // --- ВСТАВКА НОВОГО КОДА: автоматические кнопки фильтров ---
+    // получаем все уникальные теги из таблицы
+    const allTags = [...new Set(items.flatMap(item => item.tags))];
+
+    // кнопка "all"
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'all';
+    allBtn.dataset.filter = 'all';
+    allBtn.classList.add('active');
+    filtersContainer.appendChild(allBtn);
+    allBtn.addEventListener('click', () => renderItems('all'));
+
+    // кнопки для каждого уникального тега
+    allTags.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.textContent = tag;
+      btn.dataset.filter = tag;
+      filtersContainer.appendChild(btn);
+
+      btn.addEventListener('click', () => {
+        // убираем active у всех
+        filtersContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        renderItems(tag);
+      });
+    });
   });
 
+// --- функция рендера карточек ---
 function renderItems(filter = 'all') {
   grid.innerHTML = '';
 
@@ -64,15 +93,14 @@ function renderItems(filter = 'all') {
     : items.filter(item => item.tags.includes(filter));
 
   filtered.forEach(item => {
-
     const card = document.createElement("div");
     card.classList.add("card");
 
-    // 1. создаём медиа
+    // создаём медиа (img или video)
     const media = createMediaElement(item.image);
     card.appendChild(media);
 
-    // 2. добавляем подпись отдельно
+    // добавляем подпись
     if (item.caption) {
       const caption = document.createElement("p");
       caption.textContent = item.caption;
@@ -82,19 +110,3 @@ function renderItems(filter = 'all') {
     grid.appendChild(card);
   });
 }
-
-// --- фильтры кнопок ---
-const buttons = document.querySelectorAll('.filters button');
-
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const filter = btn.dataset.filter;
-    renderItems(filter);
-  });
-});
-
-// --- первый рендер — показываем все карточки сразу ---
-renderItems();
