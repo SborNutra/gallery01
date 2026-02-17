@@ -24,13 +24,14 @@ body {
   padding: 2rem;
   font-family: 'InstrumentSerif', serif;
   text-align: center;     /* центрируем текст */
-  font-size: 2rem;        /* размер шрифта заголовка */
+  font-size: 1.5rem;        /* размер шрифта заголовка */
   font-weight: bold;
   letter-spacing: 1px;    /* чуть больше пространства между буквами */
 }
 
 .filters {
-  padding: 1rem 2rem;
+  padding-top: 1rem;
+  padding-bottom: 0.75rem;
   font-family: 'SuisseIntl', sans-serif;
   display: flex;          /* включаем Flexbox */
   justify-content: center; /* центрируем по горизонтали */
