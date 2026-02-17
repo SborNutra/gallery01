@@ -85,28 +85,41 @@ fetch(CSV_URL)
   });
 
 // --- функция рендера карточек ---
-function renderItems(filter = 'all') {
-  grid.innerHTML = '';
+// --- отдельная функция для создания карточки ---
+function createCard(item) {
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-  const filtered = filter === 'all'
-    ? items
+  // создаём медиа (img или video)
+  const media = createMediaElement(item.image);
+  card.appendChild(media);
+
+  // добавляем подпись
+  if (item.caption) {
+    const caption = document.createElement("p");
+    caption.textContent = item.caption;
+    card.appendChild(caption);
+  }
+
+  return card;
+}
+
+// --- оптимизированный рендер с фильтром ---
+function renderItems(filter = 'all') {
+  grid.innerHTML = '';                   // очищаем сетку
+  const fragment = document.createDocumentFragment(); // создаём временный контейнер
+
+  // фильтруем элементы
+  const filtered = filter === 'all' 
+    ? items 
     : items.filter(item => item.tags.includes(filter));
 
+  // создаём карточки и добавляем в fragment
   filtered.forEach(item => {
-    const card = document.createElement("div");
-    card.classList.add("card");
-
-    // создаём медиа (img или video)
-    const media = createMediaElement(item.image);
-    card.appendChild(media);
-
-    // добавляем подпись
-    if (item.caption) {
-      const caption = document.createElement("p");
-      caption.textContent = item.caption;
-      card.appendChild(caption);
-    }
-
-    grid.appendChild(card);
+    const card = createCard(item);
+    fragment.appendChild(card);
   });
+
+  // вставляем все карточки в DOM одним действием
+  grid.appendChild(fragment);
 }
