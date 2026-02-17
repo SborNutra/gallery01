@@ -31,7 +31,7 @@ body {
 
 .filters {
   padding-top: 1rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 1.25rem;
   font-family: 'SuisseIntl', sans-serif;
   display: flex;          /* включаем Flexbox */
   justify-content: center; /* центрируем по горизонтали */
@@ -40,7 +40,6 @@ body {
 }
 
 .filters button {
-  background: #333;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
@@ -48,11 +47,12 @@ body {
   cursor: pointer;
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.9rem;
-  transition: background 0.2s, color 0.2s;
+  transition: font-family 0.2s, color 0.2s;
 }
 
 .filters button:hover {
-  background: #555;
+  color: red;
+  font-family: 'InstrumentSerif', serif;
 }
 
 .filters button.active {
