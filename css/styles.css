@@ -1,12 +1,28 @@
+@font-face {
+  font-family: 'InstrumentSerif';
+  src: url('../assets/fonts/InstrumentSerif-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SuisseIntl';
+  src: url('../assets/fonts/SuisseIntl-Medium.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
   background: #0e0e0e;
   color: white;
 }
 
 .header {
   padding: 2rem;
+  font-family: 'InstrumentSerif', serif;
   text-align: center;     /* центрируем текст */
   font-size: 2rem;        /* размер шрифта заголовка */
   font-weight: bold;
@@ -15,6 +31,7 @@ body {
 
 .filters {
   padding: 1rem 2rem;
+  font-family: 'SuisseIntl', sans-serif;
   display: flex;          /* включаем Flexbox */
   justify-content: center; /* центрируем по горизонтали */
   gap: 1rem;              /* расстояние между кнопками */
