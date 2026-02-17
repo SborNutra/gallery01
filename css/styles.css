@@ -39,15 +39,39 @@ body {
 }
 
 .filters button {
-  background: transparent;
-  border: 1px solid #444;
-  color: white;
+  background: #333;
+  color: #fff;
+  border: none;
   padding: 0.5rem 1rem;
+  border-radius: 4px;
   cursor: pointer;
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 0.9rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.filters button:hover {
+  background: #555;
 }
 
 .filters button.active {
   border-color: white;
+}
+
+.card {
+  break-inside: avoid;   /* чтобы masonry не ломалась */
+  width: 300px;          /* ширина карточки */
+  margin-bottom: 1rem;
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0.5rem;
 }
 
 .card video,
@@ -64,15 +88,9 @@ body {
   padding: 8rem;
 }
 
-.card {
-  break-inside: avoid;
-  margin-bottom: 1rem;
-  background: #1a1a1a;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.card img {
-  width: 100%;
-  display: block;
+.card p {
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0.25rem 0;
 }
