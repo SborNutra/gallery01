@@ -1,9 +1,28 @@
-.masonry-grid {
-  column-count: 3;
-  column-gap: 1rem;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0e0e0e;
+  color: white;
 }
 
-.card {
-  break-inside: avoid;
-  margin-bottom: 1rem;
+.header {
+  padding: 2rem;
+}
+
+.filters {
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.filters button {
+  background: transparent;
+  border: 1px solid #444;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.filters button.active {
+  border-color: white;
 }
