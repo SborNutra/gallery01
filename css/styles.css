@@ -40,6 +40,7 @@ body {
 }
 
 .filters button {
+  background: transparent;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
