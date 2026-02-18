@@ -7,69 +7,80 @@ let items = [];
 let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
+let activeVideo = null;
 
 // --------------------
-  // OVERLAY
+// OVERLAY LOGIC
 // --------------------
-
 const overlay = document.getElementById('overlay');
 const overlayContent = overlay ? overlay.querySelector('.overlay-content') : null;
 
-function openOverlay(url) {
-  if (!overlay || !overlayContent) return;
-  overlayContent.innerHTML = '';
+// Открываем оверлей с уже загруженным элементом (видео или картинка)
+function openOverlay(mediaElement) {
+  if (!overlay || !overlayContent || !mediaElement) return;
 
-  const media = createMediaElement(url);
-
-  // В оверлее видео не автоплей по умолчанию
-  if (media.tagName === 'VIDEO') {
-    media.autoplay = false;
-    media.controls = true;
-  }
-
-  overlayContent.appendChild(media);
+  overlayContent.innerHTML = ''; // чистим предыдущий контент
+  activeVideo = mediaElement; 
+  overlayContent.appendChild(activeVideo);
   overlay.classList.add('active');
+
+  // для видео включаем autoplay, loop и muted
+  if (activeVideo.tagName === 'VIDEO') {
+    activeVideo.autoplay = true;
+    activeVideo.muted = true;
+    activeVideo.loop = true;
+    activeVideo.play();
+  }
 }
 
+// Закрываем оверлей и возвращаем видео обратно в карточку
 function closeOverlay() {
+  if (!overlay || !overlayContent) return;
+  
   overlay.classList.remove('active');
   overlayContent.innerHTML = '';
+
+  if (!activeVideo) return;
+
+  const parentCardId = activeVideo.dataset.originalParent;
+  if (parentCardId && document.getElementById(parentCardId)) {
+    document.getElementById(parentCardId).appendChild(activeVideo);
+  }
+
+  activeVideo = null;
 }
 
-// клик вне медиа — закрыть
-overlay.addEventListener('click', closeOverlay);
+// Клик по фону оверлея закрывает его
+overlay?.addEventListener('click', closeOverlay);
 
-// ESC закрывает
+// ESC закрывает оверлей
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeOverlay();
 });
 
-
 // --------------------
 // MEDIA HELPERS
 // --------------------
-
 function getMediaType(url) {
   if (!url) return "unknown";
-  const extension = url.split('.').pop().toLowerCase();
-
-  if (["webm", "mp4", "mov"].includes(extension)) return "video";
-  if (["png", "jpg", "jpeg", "webp", "gif"].includes(extension)) return "image";
-
+  const ext = url.split('.').pop().toLowerCase();
+  if (["webm", "mp4", "mov"].includes(ext)) return "video";
+  if (["png", "jpg", "jpeg", "webp", "gif"].includes(ext)) return "image";
   return "unknown";
 }
 
+// Создаём медиа элемент для карточки (img или video)
 function createMediaElement(url) {
   const type = getMediaType(url);
 
   if (type === "video") {
     const video = document.createElement("video");
     video.src = url;
-    video.autoplay = true;
+    video.autoplay = true;     // для батчевой загрузки видео сразу играет
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
-    video.preload = "metadata";
+    video.preload = "metadata"; // быстро подгружается только метадата
     video.loading = "lazy";
     return video;
   }
@@ -80,24 +91,27 @@ function createMediaElement(url) {
   return img;
 }
 
-
 // --------------------
 // CARD CREATION
 // --------------------
-
 function createCard(item) {
   const card = document.createElement("div");
   card.classList.add("card");
+  card.id = `card-${item.id}`;
 
   const media = createMediaElement(item.image);
-  
-  // клик открывает оверлей
-  media.addEventListener("click", () => {
-    openOverlay(item.image);
-  });
-  
-  card.appendChild(media);
 
+  // Сохраняем родительскую карточку для видео
+  if (media.tagName === 'VIDEO') {
+    media.dataset.originalParent = card.id;
+    media.style.cursor = "zoom-in";
+    media.addEventListener("click", () => openOverlay(media));
+  } else {
+    media.style.cursor = "zoom-in";
+    media.addEventListener("click", () => openOverlay(media));
+  }
+
+  card.appendChild(media);
 
   if (item.caption) {
     const caption = document.createElement("p");
@@ -108,25 +122,16 @@ function createCard(item) {
   return card;
 }
 
-
 // --------------------
-// RENDER LOGIC (LAZY BATCH)
+// LAZY BATCH RENDERING
 // --------------------
-
 function renderNextBatch(filter = 'all') {
-  const filtered = filter === 'all'
-    ? items
-    : items.filter(i => i.tags.includes(filter));
-
+  const filtered = filter === 'all' ? items : items.filter(i => i.tags.includes(filter));
   if (currentIndex >= filtered.length) return;
 
   const fragment = document.createDocumentFragment();
 
-  for (
-    let i = currentIndex;
-    i < Math.min(currentIndex + batchSize, filtered.length);
-    i++
-  ) {
+  for (let i = currentIndex; i < Math.min(currentIndex + batchSize, filtered.length); i++) {
     fragment.appendChild(createCard(filtered[i]));
   }
 
@@ -134,11 +139,9 @@ function renderNextBatch(filter = 'all') {
   currentIndex += batchSize;
 }
 
-
 // --------------------
 // FILTER LOGIC
 // --------------------
-
 function setActiveFilter(filter) {
   currentFilter = filter;
   currentIndex = 0;
@@ -147,20 +150,15 @@ function setActiveFilter(filter) {
   document.querySelectorAll('.filters button')
     .forEach(b => b.classList.remove('active'));
 
-  const activeBtn = document.querySelector(
-    `.filters button[data-filter="${filter}"]`
-  );
-
+  const activeBtn = document.querySelector(`.filters button[data-filter="${filter}"]`);
   if (activeBtn) activeBtn.classList.add('active');
 
   renderNextBatch(filter);
 }
 
-
 // --------------------
 // SCROLL LISTENER
 // --------------------
-
 window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY + window.innerHeight;
   const gridBottom = grid.offsetTop + grid.offsetHeight;
@@ -170,38 +168,29 @@ window.addEventListener('scroll', () => {
   }
 });
 
-
 // --------------------
 // LOAD DATA
 // --------------------
-
 fetch(CSV_URL)
   .then(res => res.text())
   .then(text => {
-
-    const parsed = Papa.parse(text, {
-      header: true,
-      skipEmptyLines: true
-    });
+    const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
 
     items = parsed.data.map(item => ({
       id: item.id,
       date: item.date,
       image: item.image,
-      tags: item.tags
-        ? item.tags.split(',').map(t => t.trim())
-        : [],
+      tags: item.tags ? item.tags.split(',').map(t => t.trim()) : [],
       project_url: item.project_url || '',
       caption: item.caption || ''
     }));
 
-    // сортировка по дате (новые сверху)
+    // Сортировка по дате (новые сверху)
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // создаём фильтры
+    // Создаём кнопки фильтров
     const allTags = [...new Set(items.flatMap(item => item.tags))];
 
-    // кнопка ALL
     const allBtn = document.createElement('button');
     allBtn.textContent = 'all';
     allBtn.dataset.filter = 'all';
@@ -209,7 +198,6 @@ fetch(CSV_URL)
     filtersContainer.appendChild(allBtn);
     allBtn.addEventListener('click', () => setActiveFilter('all'));
 
-    // кнопки тегов
     allTags.forEach(tag => {
       const btn = document.createElement('button');
       btn.textContent = tag;
@@ -218,9 +206,7 @@ fetch(CSV_URL)
       btn.addEventListener('click', () => setActiveFilter(tag));
     });
 
-    // первый рендер
+    // Первый рендер
     renderNextBatch(currentFilter);
   })
-  .catch(err => {
-    console.error("Ошибка загрузки CSV:", err);
-  });
+  .catch(err => console.error("Ошибка загрузки CSV:", err));
