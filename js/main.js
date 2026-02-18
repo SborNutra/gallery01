@@ -13,9 +13,10 @@ let currentFilter = 'all';
 // --------------------
 
 const overlay = document.getElementById('overlay');
-const overlayContent = overlay.querySelector('.overlay-content');
+const overlayContent = overlay ? overlay.querySelector('.overlay-content') : null;
 
 function openOverlay(url) {
+  if (!overlay || !overlayContent) return;
   overlayContent.innerHTML = '';
 
   const media = createMediaElement(url);
