@@ -116,12 +116,12 @@ body {
   flex-wrap: wrap;
 }
 
-.card-tag {
+.card-tags span {
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-.card-tag:hover {
+.card-tags span:hover {
   color: red;
   opacity: 0.6;
 }
