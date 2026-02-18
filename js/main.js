@@ -7,7 +7,6 @@ let items = [];
 let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
-let activeVideo = null;
 
 // --------------------
 // OVERLAY LOGIC
@@ -19,35 +18,29 @@ const overlayContent = overlay ? overlay.querySelector('.overlay-content') : nul
 function openOverlay(mediaElement) {
   if (!overlay || !overlayContent || !mediaElement) return;
 
-  overlayContent.innerHTML = ''; // чистим предыдущий контент
-  activeVideo = mediaElement; 
-  overlayContent.appendChild(activeVideo);
-  overlay.classList.add('active');
+  overlayContent.innerHTML = '';
 
-  // для видео включаем autoplay, loop и muted
-  if (activeVideo.tagName === 'VIDEO') {
-    activeVideo.autoplay = true;
-    activeVideo.muted = true;
-    activeVideo.loop = true;
-    activeVideo.play();
+  // создаём клон
+  const clone = mediaElement.cloneNode(true);
+
+  if (clone.tagName === 'VIDEO') {
+    clone.autoplay = true;
+    clone.muted = true;
+    clone.loop = true;
+    clone.controls = true;
+    clone.play();
   }
+
+  overlayContent.appendChild(clone);
+  overlay.classList.add('active');
 }
 
 // Закрываем оверлей и возвращаем видео обратно в карточку
 function closeOverlay() {
   if (!overlay || !overlayContent) return;
-  
+
   overlay.classList.remove('active');
   overlayContent.innerHTML = '';
-
-  if (!activeVideo) return;
-
-  const parentCardId = activeVideo.dataset.originalParent;
-  if (parentCardId && document.getElementById(parentCardId)) {
-    document.getElementById(parentCardId).appendChild(activeVideo);
-  }
-
-  activeVideo = null;
 }
 
 // Клик по фону оверлея закрывает его
