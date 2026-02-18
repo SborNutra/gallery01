@@ -98,3 +98,29 @@ body {
   margin: 0;
   padding: 0.25rem 0;
 }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 9999;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-content img,
+.overlay-content video {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
