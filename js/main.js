@@ -27,7 +27,7 @@ function openOverlay(mediaElement) {
     clone.autoplay = true;
     clone.muted = true;
     clone.loop = true;
-    clone.controls = true;
+    clone.controls = false;
     clone.play();
   }
 
