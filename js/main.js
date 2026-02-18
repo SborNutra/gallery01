@@ -91,40 +91,50 @@ function createMediaElement(url) {
 function createCard(item) {
   const card = document.createElement("div");
   card.classList.add("card");
-  card.id = `card-${item.id}`;
 
   const media = createMediaElement(item.image);
-
-  // Сохраняем родительскую карточку для видео
-  if (media.tagName === 'VIDEO') {
-    media.dataset.originalParent = card.id;
-    media.addEventListener("click", () => openOverlay(media));
-  } else {
-    media.addEventListener("click", () => openOverlay(media));
-  }
-
+  media.addEventListener("click", () => openOverlay(media));
   card.appendChild(media);
 
+  // подпись под картинкой
   if (item.caption) {
     const caption = document.createElement("p");
     caption.textContent = item.caption;
     card.appendChild(caption);
   }
 
-  // дата и теги
+  // meta блок: дата + теги
   const meta = document.createElement("div");
   meta.classList.add("card-meta");
 
+  // дата
   const dateEl = document.createElement("span");
   dateEl.classList.add("card-date");
   dateEl.textContent = item.date || '';
   meta.appendChild(dateEl);
 
+  // теги
   const tagsEl = document.createElement("span");
   tagsEl.classList.add("card-tags");
-  tagsEl.textContent = item.tags ? item.tags.join(', ') : '';
-  meta.appendChild(tagsEl);
 
+  if (item.tags && item.tags.length) {
+    item.tags.forEach((tag, index) => {
+      const tagEl = document.createElement("span");
+      tagEl.textContent = tag;
+      tagEl.style.cursor = "pointer";
+      tagEl.style.marginLeft = index === 0 ? '0' : '0.25rem';
+
+      // навешиваем клик, который переключает фильтр
+      tagEl.addEventListener("click", (e) => {
+        e.stopPropagation(); // чтобы клик по тегу не открывал оверлей
+        setActiveFilter(tag);
+      });
+
+      tagsEl.appendChild(tagEl);
+    });
+  }
+
+  meta.appendChild(tagsEl);
   card.appendChild(meta);
 
   return card;
