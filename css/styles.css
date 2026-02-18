@@ -70,7 +70,7 @@ body {
   break-inside: avoid;
   margin-bottom: 1rem;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: stretch; /* растягиваем по ширине */
@@ -93,7 +93,6 @@ body {
 
 .card-meta span {
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
