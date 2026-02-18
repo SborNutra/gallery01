@@ -119,10 +119,27 @@ function createCard(item) {
   dateEl.textContent = item.date || '';
   meta.appendChild(dateEl);
 
-  const tagsEl = document.createElement("span");
-  tagsEl.classList.add("card-tags");
-  tagsEl.textContent = item.tags ? item.tags.join(', ') : '';
-  meta.appendChild(tagsEl);
+  const tagsWrapper = document.createElement("div");
+  tagsWrapper.classList.add("card-tags");
+  
+  if (item.tags && item.tags.length) {
+    item.tags.forEach(tag => {
+      const tagBtn = document.createElement("span");
+      tagBtn.textContent = tag;
+      tagBtn.classList.add("card-tag");
+  
+      // клик переключает фильтр
+      tagBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // чтобы не открывался overlay
+        setActiveFilter(tag);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+  
+      tagsWrapper.appendChild(tagBtn);
+    });
+  }
+  
+  meta.appendChild(tagsWrapper);
 
   card.appendChild(meta);
 
