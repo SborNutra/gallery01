@@ -81,18 +81,21 @@ body {
 
 .card-meta {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.25rem 0.5rem;
+  bottom: 0.25rem;      /* небольшой отступ от нижнего края */
+  left: 0.5rem;
+  right: 0.5rem;
   display: flex;
   justify-content: space-between; /* слева дата, справа теги */
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.7rem;
-  color: #aaa;
-  background: rgba(0,0,0,0.4); /* полупрозрачный фон для читаемости */
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  color: #fff;           /* текст поверх картинки */
+  pointer-events: none;  /* чтобы клик попадал на картинку под блоком */
+}
+
+.card-meta span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card video,
