@@ -8,9 +8,10 @@ let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
 
-// --------------------
-// OVERLAY LOGIC
-// --------------------
+/* --------------------
+OVERLAY LOGIC
+-------------------- */
+
 const overlay = document.getElementById('overlay');
 const overlayContent = overlay ? overlay.querySelector('.overlay-content') : null;
 
@@ -51,9 +52,10 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeOverlay();
 });
 
-// --------------------
-// MEDIA HELPERS
-// --------------------
+/* --------------------
+MEDIA HELPERS
+-------------------- */
+
 function getMediaType(url) {
   if (!url) return "unknown";
   const ext = url.split('.').pop().toLowerCase();
@@ -84,9 +86,10 @@ function createMediaElement(url) {
   return img;
 }
 
-// --------------------
-// CARD CREATION
-// --------------------
+/* --------------------
+CARD CREATION
+-------------------- */
+
 function createCard(item) {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -146,9 +149,10 @@ function createCard(item) {
   return card;
 }
 
-// --------------------
-// LAZY BATCH RENDERING
-// --------------------
+/* --------------------
+LAZY BATCH RENDERING
+-------------------- */
+
 function renderNextBatch(filter = 'all') {
   const filtered = filter === 'all' ? items : items.filter(i => i.tags.includes(filter));
   if (currentIndex >= filtered.length) return;
@@ -163,9 +167,10 @@ function renderNextBatch(filter = 'all') {
   currentIndex += batchSize;
 }
 
-// --------------------
-// FILTER LOGIC
-// --------------------
+/* --------------------
+FILTER LOGIC
+-------------------- */
+
 function setActiveFilter(filter) {
   currentFilter = filter;
   currentIndex = 0;
@@ -180,9 +185,10 @@ function setActiveFilter(filter) {
   renderNextBatch(filter);
 }
 
-// --------------------
-// SCROLL LISTENER
-// --------------------
+/* --------------------
+SCROLL LISTENER
+-------------------- */
+
 window.addEventListener('scroll', () => {
   const scrollPosition = window.scrollY + window.innerHeight;
   const gridBottom = grid.offsetTop + grid.offsetHeight;
@@ -192,9 +198,10 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// --------------------
-// LOAD DATA
-// --------------------
+/* --------------------
+LOAD DATA
+-------------------- */
+
 fetch(CSV_URL)
   .then(res => res.text())
   .then(text => {
