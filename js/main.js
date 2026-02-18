@@ -116,24 +116,17 @@ function createCard(item) {
   // теги
   const tagsEl = document.createElement("span");
   tagsEl.classList.add("card-tags");
-
-  if (item.tags && item.tags.length) {
-    item.tags.forEach((tag, index) => {
-      const tagEl = document.createElement("span");
-      tagEl.textContent = tag;
-      tagEl.style.cursor = "pointer";
-      tagEl.style.marginLeft = index === 0 ? '0' : '0.25rem';
-
-      // навешиваем клик, который переключает фильтр
-      tagEl.addEventListener("click", (e) => {
-        e.stopPropagation(); // чтобы клик по тегу не открывал оверлей
-        setActiveFilter(tag);
-      });
-
-      tagsEl.appendChild(tagEl);
+  item.tags.forEach((tag, index) => {
+    const tagSpan = document.createElement("span");
+    tagSpan.textContent = tag;
+    tagSpan.style.cursor = "pointer";
+    tagSpan.style.marginLeft = index > 0 ? "0.25rem" : "0";
+    tagSpan.addEventListener("click", (e) => {
+      e.stopPropagation(); // чтобы клик по тегу не открывал оверлей
+      setActiveFilter(tag);
     });
-  }
-
+    tagsEl.appendChild(tagSpan);
+  });
   meta.appendChild(tagsEl);
   card.appendChild(meta);
 
