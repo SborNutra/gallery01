@@ -117,6 +117,28 @@ function createCard(item) {
     card.appendChild(caption);
   }
 
+  // дата и теги
+  const meta = document.createElement("div");
+  meta.classList.add("card-meta");
+
+  // дата
+  if (item.date) {
+    const dateEl = document.createElement("span");
+    dateEl.classList.add("card-date");
+    dateEl.textContent = item.date;
+    meta.appendChild(dateEl);
+  }
+
+  // теги
+  if (item.tags && item.tags.length) {
+    const tagsEl = document.createElement("span");
+    tagsEl.classList.add("card-tags");
+    tagsEl.textContent = item.tags.join(', ');
+    meta.appendChild(tagsEl);
+  }
+
+  card.appendChild(meta);
+
   return card;
 }
 
