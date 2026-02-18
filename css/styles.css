@@ -94,7 +94,6 @@ body {
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.7rem;
   color: #fff;           /* текст поверх картинки */
-  pointer-events: none;  /* чтобы клик попадал на картинку под блоком */
 }
 
 .card-meta span {
