@@ -73,8 +73,8 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: stretch; /* растягиваем по ширине */
+  text-align: left; /* подпись под картинкой слева */
   color: #fff;
   position: relative; /* важно для absolute */
 }
@@ -115,9 +115,11 @@ body {
 
 .card p {
   font-family: 'SuisseIntl', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin: 0;
   padding: 0.25rem 0;
+  text-align: left;
+  color: #ccc; /* мелкий цвет */
 }
 
 .overlay {
