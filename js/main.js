@@ -8,6 +8,43 @@ let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
 
+// --------------------
+  // OVERLAY
+// --------------------
+
+const overlay = document.getElementById('overlay');
+const overlayContent = overlay.querySelector('.overlay-content');
+
+function openOverlay(url) {
+  overlayContent.innerHTML = '';
+
+  const media = createMediaElement(url);
+
+  // В оверлее видео не автоплей по умолчанию
+  if (media.tagName === 'VIDEO') {
+    media.autoplay = false;
+    media.controls = true;
+  }
+
+  overlayContent.appendChild(media);
+  overlay.classList.add('active');
+}
+
+function closeOverlay() {
+  overlay.classList.remove('active');
+  overlayContent.innerHTML = '';
+}
+
+// клик вне медиа — закрыть
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) closeOverlay();
+});
+
+// ESC закрывает
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeOverlay();
+});
+
 
 // --------------------
 // MEDIA HELPERS
@@ -54,7 +91,17 @@ function createCard(item) {
   card.classList.add("card");
 
   const media = createMediaElement(item.image);
+
+  // курсор зума
+  media.style.cursor = "zoom-in";
+  
+  // клик открывает оверлей
+  media.addEventListener("click", () => {
+    openOverlay(item.image);
+  });
+  
   card.appendChild(media);
+
 
   if (item.caption) {
     const caption = document.createElement("p");
