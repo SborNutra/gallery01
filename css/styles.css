@@ -76,38 +76,40 @@ body {
   break-inside: avoid;
   margin-bottom: 1rem;
   border-radius: 8px;
-  overflow: visible;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* растягиваем по ширине */
-  text-align: left; /* подпись под картинкой слева */
+  align-items: stretch;
+  text-align: left;
   color: #fff;
+  position: relative;
 }
 
-.card-meta {
-  position: static;
-  margin-top: 0.4rem;
-  left: 0.5rem;
-  right: 0.5rem;
-  display: flex;
-  justify-content: space-between; /* слева дата, справа теги */
-  font-family: 'SuisseIntl', sans-serif;
-  font-size: 0.7rem;
-  color: #fff;           /* текст поверх картинки */
-}
-
-.card-meta span {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.card video,
-.card img {
+.card-media {
   width: 100%;
-  height: auto;
-  display: block;
+  /* используем соотношение сторон через padding-bottom */
+  padding-bottom: 66.66%; /* например 3:2 */
+  position: relative;
+  background: transparent; /* нет заливки */
+}
+
+.card-media img,
+.card-media video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 8px;
-  cursor: pointer;/* если нужно */
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-media img.loaded,
+.card-media video.loaded {
+  opacity: 1;
 }
 
 .card-tags {
