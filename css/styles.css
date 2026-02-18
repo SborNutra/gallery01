@@ -84,7 +84,8 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 8px; /* если нужно */
+  border-radius: 8px;
+  cursor: pointer;/* если нужно */
 }
 
 .masonry-grid {
