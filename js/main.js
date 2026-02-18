@@ -37,9 +37,7 @@ function closeOverlay() {
 }
 
 // клик вне медиа — закрыть
-overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) closeOverlay();
-});
+overlay.addEventListener('click', closeOverlay);
 
 // ESC закрывает
 document.addEventListener('keydown', (e) => {
