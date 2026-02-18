@@ -1,4 +1,3 @@
-
 const grid = document.querySelector('.masonry-grid');
 const filtersContainer = document.querySelector('.filters');
 
@@ -92,42 +91,43 @@ function createCard(item) {
   const card = document.createElement("div");
   card.classList.add("card");
 
-  // placeholder под изображение
-  const mediaWrapper = document.createElement("div");
-  mediaWrapper.classList.add("card-media");
-
   const media = createMediaElement(item.image);
+  media.addEventListener("click", () => openOverlay(media));
+  card.appendChild(media);
 
-  // после загрузки показываем с плавным появлением
-  media.addEventListener("load", () => media.classList.add("loaded")); // для img
-  if (media.tagName === 'VIDEO') {
-    media.addEventListener("loadeddata", () => media.classList.add("loaded"));
-  }
-
-  mediaWrapper.appendChild(media);
-  card.appendChild(mediaWrapper);
-
-  // подписи, дата, теги и т.д.
+  // подпись под картинкой
   if (item.caption) {
     const caption = document.createElement("p");
     caption.textContent = item.caption;
     card.appendChild(caption);
   }
 
+  // meta блок: дата + теги
   const meta = document.createElement("div");
   meta.classList.add("card-meta");
+
+  // дата
   const dateEl = document.createElement("span");
   dateEl.classList.add("card-date");
   dateEl.textContent = item.date || '';
+  meta.appendChild(dateEl);
+
+  // теги
   const tagsEl = document.createElement("span");
   tagsEl.classList.add("card-tags");
-  tagsEl.textContent = item.tags ? item.tags.join(', ') : '';
-  meta.appendChild(dateEl);
+  item.tags.forEach((tag, index) => {
+    const tagSpan = document.createElement("span");
+    tagSpan.textContent = tag;
+    tagSpan.style.cursor = "pointer";
+    tagSpan.style.marginLeft = index > 0 ? "0.25rem" : "0";
+    tagSpan.addEventListener("click", (e) => {
+      e.stopPropagation(); // чтобы клик по тегу не открывал оверлей
+      setActiveFilter(tag);
+    });
+    tagsEl.appendChild(tagSpan);
+  });
   meta.appendChild(tagsEl);
   card.appendChild(meta);
-
-  // клик открывает overlay
-  media.addEventListener("click", () => openOverlay(media));
 
   return card;
 }
