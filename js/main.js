@@ -104,10 +104,8 @@ function createCard(item) {
   // Сохраняем родительскую карточку для видео
   if (media.tagName === 'VIDEO') {
     media.dataset.originalParent = card.id;
-    media.style.cursor = "zoom-in";
     media.addEventListener("click", () => openOverlay(media));
   } else {
-    media.style.cursor = "zoom-in";
     media.addEventListener("click", () => openOverlay(media));
   }
 
