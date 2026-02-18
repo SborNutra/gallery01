@@ -92,9 +92,6 @@ function createCard(item) {
   card.classList.add("card");
 
   const media = createMediaElement(item.image);
-
-  // курсор зума
-  media.style.cursor = "zoom-in";
   
   // клик открывает оверлей
   media.addEventListener("click", () => {
