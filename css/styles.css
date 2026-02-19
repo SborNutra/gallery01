@@ -78,7 +78,14 @@ body {
   overflow: hidden;
   border-radius: 8px;
 
-  /* shimmer фон */
+  background: #e5e5e5; /* статичный серый фон */
+}
+
+/* shimmer через псевдоэлемент */
+.media-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
     110deg,
     #e5e5e5 8%,
@@ -87,15 +94,17 @@ body {
   );
   background-size: 200% 100%;
   animation: shimmer 1.2s linear infinite;
+  z-index: 1;
 }
 
-/* когда медиа загружено */
-.media-wrapper.loaded {
-  animation: none;      /* останавливаем shimmer */
-  background: none;     /* фон убираем */
+.media-wrapper.loaded::before {
+  animation: none;
+  opacity: 0; /* плавно скрываем */
+  transition: opacity 0.2s ease-out;
+  pointer-events: none;
 }
 
-/* сами медиа */
+/* медиа */
 .media-wrapper img,
 .media-wrapper video {
   position: absolute;
@@ -105,11 +114,11 @@ body {
   top: 0;
   left: 0;
 
-  opacity: 0;                   /* пока не загрузилось */
-  transition: opacity 0.3s ease-in; /* плавное появление */
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+  z-index: 2;
 }
 
-/* когда wrapper получил loaded через JS */
 .media-wrapper.loaded img,
 .media-wrapper.loaded video {
   opacity: 1;
