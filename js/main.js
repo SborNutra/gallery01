@@ -8,19 +8,18 @@ let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
 
+
 // --------------------
 // OVERLAY LOGIC
 // --------------------
 const overlay = document.getElementById('overlay');
 const overlayContent = overlay ? overlay.querySelector('.overlay-content') : null;
 
-// Открываем оверлей с уже загруженным элементом (видео или картинка)
 function openOverlay(mediaElement) {
   if (!overlay || !overlayContent || !mediaElement) return;
 
   overlayContent.innerHTML = '';
 
-  // создаём клон
   const clone = mediaElement.cloneNode(true);
 
   if (clone.tagName === 'VIDEO') {
@@ -35,21 +34,18 @@ function openOverlay(mediaElement) {
   overlay.classList.add('active');
 }
 
-// Закрываем оверлей и возвращаем видео обратно в карточку
 function closeOverlay() {
   if (!overlay || !overlayContent) return;
-
   overlay.classList.remove('active');
   overlayContent.innerHTML = '';
 }
 
-// Клик по фону оверлея закрывает его
 overlay?.addEventListener('click', closeOverlay);
 
-// ESC закрывает оверлей
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeOverlay();
 });
+
 
 // --------------------
 // MEDIA HELPERS
@@ -62,18 +58,17 @@ function getMediaType(url) {
   return "unknown";
 }
 
-// Создаём медиа элемент для карточки (img или video)
 function createMediaElement(url) {
   const type = getMediaType(url);
 
   if (type === "video") {
     const video = document.createElement("video");
     video.src = url;
-    video.autoplay = true;     // для батчевой загрузки видео сразу играет
+    video.autoplay = true;
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
-    video.preload = "metadata"; // быстро подгружается только метадата
+    video.preload = "metadata";
     video.loading = "lazy";
     return video;
   }
@@ -84,6 +79,7 @@ function createMediaElement(url) {
   return img;
 }
 
+
 // --------------------
 // CARD CREATION
 // --------------------
@@ -91,52 +87,63 @@ function createCard(item) {
   const card = document.createElement("div");
   card.classList.add("card");
 
+  // --- MEDIA WRAPPER (фиксирует высоту заранее)
+  const mediaWrapper = document.createElement("div");
+  mediaWrapper.classList.add("media-wrapper");
+  mediaWrapper.style.aspectRatio = item.aspectRatio;
+
   const media = createMediaElement(item.image);
   media.addEventListener("click", () => openOverlay(media));
-  card.appendChild(media);
 
-  // подпись под картинкой
+  mediaWrapper.appendChild(media);
+  card.appendChild(mediaWrapper);
+
+  // caption
   if (item.caption) {
     const caption = document.createElement("p");
     caption.textContent = item.caption;
     card.appendChild(caption);
   }
 
-  // meta блок: дата + теги
+  // meta
   const meta = document.createElement("div");
   meta.classList.add("card-meta");
 
-  // дата
   const dateEl = document.createElement("span");
   dateEl.classList.add("card-date");
   dateEl.textContent = item.date || '';
   meta.appendChild(dateEl);
 
-  // теги
   const tagsEl = document.createElement("span");
   tagsEl.classList.add("card-tags");
+
   item.tags.forEach((tag, index) => {
     const tagSpan = document.createElement("span");
     tagSpan.textContent = tag;
     tagSpan.style.cursor = "pointer";
     tagSpan.style.marginLeft = index > 0 ? "0.25rem" : "0";
     tagSpan.addEventListener("click", (e) => {
-      e.stopPropagation(); // чтобы клик по тегу не открывал оверлей
+      e.stopPropagation();
       setActiveFilter(tag);
     });
     tagsEl.appendChild(tagSpan);
   });
+
   meta.appendChild(tagsEl);
   card.appendChild(meta);
 
   return card;
 }
 
+
 // --------------------
 // LAZY BATCH RENDERING
 // --------------------
 function renderNextBatch(filter = 'all') {
-  const filtered = filter === 'all' ? items : items.filter(i => i.tags.includes(filter));
+  const filtered = filter === 'all'
+    ? items
+    : items.filter(i => i.tags.includes(filter));
+
   if (currentIndex >= filtered.length) return;
 
   const fragment = document.createDocumentFragment();
@@ -148,6 +155,7 @@ function renderNextBatch(filter = 'all') {
   grid.appendChild(fragment);
   currentIndex += batchSize;
 }
+
 
 // --------------------
 // FILTER LOGIC
@@ -166,6 +174,7 @@ function setActiveFilter(filter) {
   renderNextBatch(filter);
 }
 
+
 // --------------------
 // SCROLL LISTENER
 // --------------------
@@ -178,27 +187,42 @@ window.addEventListener('scroll', () => {
   }
 });
 
+
 // --------------------
 // LOAD DATA
 // --------------------
 fetch(CSV_URL)
   .then(res => res.text())
   .then(text => {
-    const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+    const parsed = Papa.parse(text, {
+      header: true,
+      skipEmptyLines: true
+    });
 
-    items = parsed.data.map(item => ({
-      id: item.id,
-      date: item.date,
-      image: item.image,
-      tags: item.tags ? item.tags.split(',').map(t => t.trim()) : [],
-      project_url: item.project_url || '',
-      caption: item.caption || ''
-    }));
+    items = parsed.data.map(item => {
 
-    // Сортировка по дате (новые сверху)
+      let aspectRatio = 1;
+
+      if (item.resolution) {
+        const [w, h] = item.resolution.split('x').map(Number);
+        if (w && h) aspectRatio = w / h;
+      }
+
+      return {
+        id: item.id,
+        date: item.date,
+        image: item.image,
+        tags: item.tags
+          ? item.tags.split(',').map(t => t.trim())
+          : [],
+        project_url: item.project_url || '',
+        caption: item.caption || '',
+        aspectRatio
+      };
+    });
+
     items.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Создаём кнопки фильтров
     const allTags = [...new Set(items.flatMap(item => item.tags))];
 
     const allBtn = document.createElement('button');
@@ -216,7 +240,6 @@ fetch(CSV_URL)
       btn.addEventListener('click', () => setActiveFilter(tag));
     });
 
-    // Первый рендер
     renderNextBatch(currentFilter);
   })
   .catch(err => console.error("Ошибка загрузки CSV:", err));
