@@ -93,6 +93,19 @@ function createCard(item) {
   mediaWrapper.style.aspectRatio = item.aspectRatio;
 
   const media = createMediaElement(item.image);
+
+    if (media.tagName === "IMG") {
+    media.addEventListener("load", () => {
+      mediaWrapper.classList.add("loaded");
+    });
+  }
+  
+  if (media.tagName === "VIDEO") {
+    media.addEventListener("loadeddata", () => {
+      mediaWrapper.classList.add("loaded");
+    });
+  }
+
   media.addEventListener("click", () => openOverlay(media));
 
   mediaWrapper.appendChild(media);
