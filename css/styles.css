@@ -69,31 +69,62 @@ body {
 }
 
 /* --------------------
-// CARD
+// PRE-LOADER
 ---------------------*/
 
 .media-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+
+  /* shimmer фон */
   background: linear-gradient(
     110deg,
     #e5e5e5 8%,
     #f2f2f2 18%,
     #e5e5e5 33%
   );
-  border-radius: 8px;
   background-size: 200% 100%;
   animation: shimmer 1.2s linear infinite;
 }
 
+/* когда медиа загружено */
 .media-wrapper.loaded {
-  animation: none;
-  background: none;
+  animation: none;      /* останавливаем shimmer */
+  background: none;     /* фон убираем */
 }
 
+/* сами медиа */
+.media-wrapper img,
+.media-wrapper video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+
+  opacity: 0;                   /* пока не загрузилось */
+  transition: opacity 0.3s ease-in; /* плавное появление */
+}
+
+/* когда wrapper получил loaded через JS */
+.media-wrapper.loaded img,
+.media-wrapper.loaded video {
+  opacity: 1;
+}
+
+/* shimmer анимация */
 @keyframes shimmer {
   to {
     background-position-x: -200%;
   }
 }
+
+/* --------------------
+// CARD
+---------------------*/
 
 .card {
   break-inside: avoid;
