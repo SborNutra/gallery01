@@ -79,6 +79,7 @@ body {
     #f2f2f2 18%,
     #e5e5e5 33%
   );
+  border-radius: 8px;
   background-size: 200% 100%;
   animation: shimmer 1.2s linear infinite;
 }
