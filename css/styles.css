@@ -26,48 +26,55 @@ body {
 
 .header {
   position: sticky;
-  top: 0;
+  top: 2rem;
   z-index: 1000;
 
-  padding: 1.5rem 4rem;
-  background: rgba(14,14,14,0.8);
-  backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: center;
 }
 
+/* контейнер */
 .header__inner {
+  width: 50vw;                 /* минимум 1/2 экрана */
+  min-width: 600px;            /* чтобы не схлопывался */
+  max-width: 1200px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  max-width: 1600px;
-  margin: 0 auto;
+  padding: 1.25rem 2rem;
+
+  background: rgba(14,14,14,0.85);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
 }
 
 /* avatar */
 
 .header__avatar img {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  width: 70px;
+  height: 42px;
+  border-radius: 12px; /* прямоугольник с закруглением */
   object-fit: cover;
   display: block;
 }
 
-/* center navigation */
+/* центр */
 
 .header__nav {
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
 
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.9rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
 }
 
 .header__nav a {
   text-decoration: none;
   color: #fff;
-  opacity: 0.7;
+  opacity: 0.6;
   transition: opacity 0.2s ease;
 }
 
@@ -75,30 +82,16 @@ body {
   opacity: 1;
 }
 
-/* telegram */
+/* mobile */
 
-.header__tg {
-  font-family: 'SuisseIntl', sans-serif;
-  font-size: 0.9rem;
-  text-decoration: none;
-  color: #fff;
-  opacity: 0.6;
-  transition: opacity 0.2s ease;
-}
-
-.header__tg:hover {
-  opacity: 1;
-}
-
-/* responsive */
-
-@media (max-width: 1000px) {
-  .header {
-    padding: 1.25rem 2rem;
+@media (max-width: 900px) {
+  .header__inner {
+    width: 90vw;
+    min-width: unset;
   }
 
   .header__nav {
-    display: none;
+    gap: 2rem;
   }
 }
 
