@@ -41,6 +41,18 @@
     <div class="overlay-content"></div>
   </div>
   <script src="js/main.js"></script>
+
+  <script>
+    const links = document.querySelectorAll('.header__nav a');
+    links.forEach(link => {
+    const current = window.location.pathname.split("/").pop() || "index.html";
+    if (link.getAttribute("href") === current) {
+      link.removeAttribute("href");        // убираем ссылку
+      link.classList.add("active");        // добавляем стиль
+      link.style.cursor = "default";
+      }
+    });
+  </script>
   
 </body>
 </html>
