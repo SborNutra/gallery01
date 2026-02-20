@@ -36,7 +36,7 @@ body {
 
 /* контейнер */
 .header__inner {
-  width: 33vw;
+  width: 30vw;
   min-width: 600px;
   max-width: 1200px;
 
@@ -44,7 +44,7 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  padding: 1rem 1rem;
+  padding: 0.5rem 0.5rem;
 
   background: rgba(14,14,14,0.85);
   backdrop-filter: blur(16px);
@@ -54,7 +54,7 @@ body {
 /* avatar → about */
 
 .header__avatar img {
-  width: 4rem;
+  width: 3rem;
   height: 1--px;
   border-radius: 1rem;
   object-fit: cover;
@@ -68,7 +68,8 @@ body {
   display: flex;
   gap: 3rem;
   font-family: 'SuisseIntl', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.25rem;
+  cursor: pointer;
 }
 
 .header__nav a {
@@ -76,6 +77,7 @@ body {
   color: #fff;
   opacity: 0.6;
   transition: opacity 0.2s ease;
+  cursor: pointer;
 }
 
 .header__nav a:hover {
