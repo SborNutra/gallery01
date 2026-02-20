@@ -20,13 +20,86 @@ body {
   color: white;
 }
 
+/* --------------------
+// HEADER
+---------------------*/
+
 .header {
-  padding: 2rem;
-  font-family: 'InstrumentSerif', serif;
-  text-align: center;     /* центрируем текст */
-  font-size: 1.5rem;        /* размер шрифта заголовка */
-  font-weight: bold;
-  letter-spacing: 1px;    /* чуть больше пространства между буквами */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  padding: 1.5rem 4rem;
+  background: rgba(14,14,14,0.8);
+  backdrop-filter: blur(14px);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* avatar */
+
+.header__avatar img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* center navigation */
+
+.header__nav {
+  display: flex;
+  gap: 2.5rem;
+
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+.header__nav a {
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.header__nav a:hover {
+  opacity: 1;
+}
+
+/* telegram */
+
+.header__tg {
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.header__tg:hover {
+  opacity: 1;
+}
+
+/* responsive */
+
+@media (max-width: 1000px) {
+  .header {
+    padding: 1.25rem 2rem;
+  }
+
+  .header__nav {
+    display: none;
+  }
 }
 
 /* --------------------
