@@ -14,6 +14,34 @@
   font-display: swap;
 }
 
+/* --------------------
+// RAINBOW UTILITY
+---------------------*/
+
+@keyframes rainbowFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.rainbow-hover:hover {
+  background: linear-gradient(
+    120deg,
+    #ff8a8a,
+    #ffe29a,
+    #6ddbd2,
+    #a29bfe,
+    #ff8a8a
+  );
+  background-size: 200% auto;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+
+  animation: rainbowFlow 8s linear infinite;
+}
+
 body {
   margin: 0;
   padding-top: 4rem;
