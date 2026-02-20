@@ -56,7 +56,7 @@ body {
 .header__avatar img {
   width: 3rem;
   height: 1--px;
-  border-radius: 1rem;
+  border-radius: 0.25rem;
   object-fit: cover;
   display: block;
   padding: 0rem;
