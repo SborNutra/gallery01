@@ -48,15 +48,15 @@ body {
 
   background: rgba(14,14,14,0.85);
   backdrop-filter: blur(16px);
-  border-radius: 16px;
+  border-radius: 2rem;
 }
 
 /* avatar → about */
 
 .header__avatar img {
-  width: 100px;
+  width: 4rem;
   height: 1--px;
-  border-radius: 12px;
+  border-radius: 1rem;
   object-fit: cover;
   display: block;
   padding: 0rem;
@@ -86,7 +86,7 @@ body {
 
 .header__tg {
   font-family: 'SuisseIntl', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   text-decoration: none;
   color: #fff;
   opacity: 0.6;
