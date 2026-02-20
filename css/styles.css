@@ -26,12 +26,15 @@
 .rainbow-hover:hover {
   background: linear-gradient(
     120deg,
-    #ff8a8a,
-    #ffe29a,
-    #6ddbd2,
-    #a29bfe,
-    #ff8a8a
-  );
+    #ff3b3b,
+    #ff9f1c,
+    #fffc3c,
+    #2effc5,
+    #2caaff,
+    #8e2eff,
+    #ff3b3b
+  ); /* более насыщенные цвета */
+
   background-size: 200% auto;
 
   -webkit-background-clip: text;
@@ -39,7 +42,7 @@
   background-clip: text;
   color: transparent;
 
-  animation: rainbowFlow 8s linear infinite;
+  animation: rainbowFlow 4s linear infinite; /* быстрее анимация */
 }
 
 body {
