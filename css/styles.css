@@ -44,7 +44,7 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  padding: 2rem 2rem;
+  padding: 1rem 1rem;
 
   background: rgba(14,14,14,0.85);
   backdrop-filter: blur(16px);
@@ -54,12 +54,12 @@ body {
 /* avatar → about */
 
 .header__avatar img {
-  width: 70px;
-  height: 42px;
+  width: 100px;
+  height: 1--px;
   border-radius: 12px;
   object-fit: cover;
   display: block;
-  padding: 0.25rem;
+  padding: 0rem;
 }
 
 /* центр */
@@ -67,10 +67,8 @@ body {
 .header__nav {
   display: flex;
   gap: 3rem;
-
   font-family: 'SuisseIntl', sans-serif;
   font-size: 0.9rem;
-  letter-spacing: 0.08em;
 }
 
 .header__nav a {
