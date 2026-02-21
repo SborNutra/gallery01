@@ -8,6 +8,33 @@ let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
 
+function setRandomRainbowPhase(element) {
+  if (!element) return;
+
+  const randomStart = `${(Math.random() * 200).toFixed(2)}%`;
+  const randomDelay = `${(-Math.random() * 4).toFixed(2)}s`;
+
+  element.style.setProperty('--rainbow-start', randomStart);
+  element.style.setProperty('--rainbow-delay', randomDelay);
+}
+
+function applyRandomRainbowStart() {
+  const rainbowElements = document.querySelectorAll('.rainbow-hover');
+  rainbowElements.forEach(setRandomRainbowPhase);
+}
+
+function setupRandomRainbowHover() {
+  document.addEventListener('mouseenter', (event) => {
+    const hoverTarget = event.target.closest('.filters button, .card-tags span');
+    if (!hoverTarget) return;
+
+    setRandomRainbowPhase(hoverTarget);
+  }, true);
+}
+
+applyRandomRainbowStart();
+setupRandomRainbowHover();
+
 function applyRandomRainbowStart() {
   const rainbowElements = document.querySelectorAll('.rainbow-hover');
 
@@ -144,11 +171,10 @@ function createCard(item) {
   const tagsEl = document.createElement("span");
   tagsEl.classList.add("card-tags");
 
-  item.tags.forEach((tag, index) => {
+  item.tags.forEach((tag) => {
     const tagSpan = document.createElement("span");
     tagSpan.textContent = tag;
-    tagSpan.style.cursor = "pointer";
-    tagSpan.style.marginLeft = index > 0 ? "0.25rem" : "0";
+    tagSpan.classList.add('rainbow-random-hover');
     tagSpan.addEventListener("click", (e) => {
       e.stopPropagation();
       setActiveFilter(tag);
@@ -196,7 +222,10 @@ function setActiveFilter(filter) {
     .forEach(b => b.classList.remove('active'));
 
   const activeBtn = document.querySelector(`.filters button[data-filter="${filter}"]`);
-  if (activeBtn) activeBtn.classList.add('active');
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    setRandomRainbowPhase(activeBtn);
+  }
 
   renderNextBatch(filter);
 }
@@ -256,6 +285,8 @@ fetch(CSV_URL)
     allBtn.textContent = 'all';
     allBtn.dataset.filter = 'all';
     allBtn.classList.add('active');
+    allBtn.classList.add('rainbow-random-hover');
+    setRandomRainbowPhase(allBtn);
     filtersContainer.appendChild(allBtn);
     allBtn.addEventListener('click', () => setActiveFilter('all'));
 
@@ -263,6 +294,7 @@ fetch(CSV_URL)
       const btn = document.createElement('button');
       btn.textContent = tag;
       btn.dataset.filter = tag;
+      btn.classList.add('rainbow-random-hover');
       filtersContainer.appendChild(btn);
       btn.addEventListener('click', () => setActiveFilter(tag));
     });
