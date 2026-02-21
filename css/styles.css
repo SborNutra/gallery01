@@ -215,9 +215,9 @@ body {
 }
 
 .hue-toggle.is-open {
-  transform: scale(0.5);
+  transform: scale(1);
   background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0);
   box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
   position: relative; /* важно для ::after */
 }
@@ -237,17 +237,23 @@ body {
 
 /* поворачиваем вертикальную линию */
 .hue-toggle.is-open::after {
-  transform: translate(-50%, -50%) rotate(90deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 /* горизонтальная линия */
 .hue-toggle.is-open::before {
-  transform: translate(-50%, -50%) rotate(0deg);
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .hue-filter {
-  display: inline-flex;
-  align-items: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hue-filter.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hue-filter[hidden] {
