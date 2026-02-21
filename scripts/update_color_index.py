@@ -65,6 +65,17 @@ def normalized_extension(image_ref: str) -> str:
     return Path(urlparse(image_ref).path).suffix.lower()
 
 
+def normalize_image_ref(image_ref: str) -> str:
+    return urlparse(image_ref).path.lstrip("/").lower()
+
+
+def file_name_from_image_ref(image_ref: str) -> str:
+    path = normalize_image_ref(image_ref)
+    if not path:
+        return ""
+    return path.split("/")[-1]
+
+
 def format_float(value: float) -> str:
     if value == 0:
         return "0"
@@ -180,6 +191,26 @@ def get_row_value_case_insensitive(row: dict[str, str], key: str) -> str:
     return ""
 
 
+def discover_local_media_rows(repo_root: Path, known_image_keys: set[str]) -> list[dict[str, str]]:
+    media_root = repo_root / "assets" / "pics"
+    if not media_root.exists():
+        return []
+
+    discovered_rows: list[dict[str, str]] = []
+    for path in sorted(media_root.iterdir()):
+        if not path.is_file() or path.suffix.lower() not in SUPPORTED_IMAGE_EXTENSIONS:
+            continue
+
+        image_ref = str(path.relative_to(repo_root)).replace("\\", "/")
+        normalized = normalize_image_ref(image_ref)
+        file_name = file_name_from_image_ref(image_ref)
+        if image_ref in known_image_keys or normalized in known_image_keys or file_name in known_image_keys:
+            continue
+
+        discovered_rows.append({"image": image_ref})
+    return discovered_rows
+
+
 def build_output_rows(
     rows: list[dict[str, str]],
     image_column: str,
@@ -250,6 +281,20 @@ def main() -> None:
     output_path = (repo_root / args.csv_output).resolve()
 
     rows = read_csv_source(args.csv_input)
+    known_image_keys: set[str] = set()
+    for row in rows:
+        image_ref = get_row_value_case_insensitive(row, args.image_column).strip()
+        if not image_ref:
+            continue
+        known_image_keys.add(image_ref)
+        normalized = normalize_image_ref(image_ref)
+        if normalized:
+            known_image_keys.add(normalized)
+        file_name = file_name_from_image_ref(image_ref)
+        if file_name:
+            known_image_keys.add(file_name)
+
+    rows.extend(discover_local_media_rows(repo_root, known_image_keys))
     existing_index = read_existing_index(output_path, args.image_column)
     output_rows, processed_images = build_output_rows(
         rows=rows,
