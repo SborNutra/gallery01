@@ -36,6 +36,7 @@
   ); /* более насыщенные цвета */
 
   background-size: 200% auto;
+  background-position: var(--rainbow-start, 0%) center;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -43,6 +44,7 @@
   color: transparent;
 
   animation: rainbowFlow 4s linear infinite; /* быстрее анимация */
+  animation-delay: var(--rainbow-delay, 0s);
 }
 
 body {
@@ -107,12 +109,14 @@ body {
   text-decoration: none;
   color: #fff;
   opacity: 0.6;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   cursor: pointer;
 }
 
 .header__nav a:hover {
   opacity: 1;
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 /* telegram справа */
@@ -123,11 +127,14 @@ body {
   text-decoration: none;
   color: #fff;
   opacity: 0.6;
-  transition: opacity 0.2s ease;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .header__tg:hover {
   opacity: 1;
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 /* mobile */
@@ -166,19 +173,34 @@ body {
   font-family: 'SuisseIntl', sans-serif;
   font-size: 1.25rem;
   line-height: 1;
+  transition: transform 0.2s ease;
 }
 
 .filters button:hover {
-  font-size: 1.3rem;
-  color: red;
-  font-family: 'InstrumentSerif', serif;
-  letter-spacing: 1px;
+  transform: scale(1.05);
 }
 
 .filters button.active {
-  font-size: 1.3rem;
-  border-color: red;
   font-family: 'InstrumentSerif', serif;
+  background: linear-gradient(
+    120deg,
+    #ff3b3b,
+    #ff9f1c,
+    #fffc3c,
+    #2effc5,
+    #2caaff,
+    #8e2eff,
+    #ff3b3b
+  );
+  background-size: 200% auto;
+  background-position: var(--rainbow-start, 0%) center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: rainbowFlow 4s linear infinite;
+  animation-delay: var(--rainbow-delay, 0s);
+  transform: scale(1.05);
 }
 
 /* --------------------
@@ -294,11 +316,31 @@ body {
 
 .card-tags span {
   cursor: pointer;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.card-tags span:hover {
-  color: red;
+.rainbow-random-hover:hover {
+  font-family: 'InstrumentSerif', serif;
+  letter-spacing: 1px;
+  background: linear-gradient(
+    120deg,
+    #ff3b3b,
+    #ff9f1c,
+    #fffc3c,
+    #2effc5,
+    #2caaff,
+    #8e2eff,
+    #ff3b3b
+  );
+  background-size: 200% auto;
+  background-position: var(--rainbow-start, 0%) center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: rainbowFlow 4s linear infinite;
+  animation-delay: var(--rainbow-delay, 0s);
+  transform: scale(1.05);
 }
 
 .masonry-grid {
