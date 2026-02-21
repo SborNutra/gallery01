@@ -1,5 +1,6 @@
 const grid = document.querySelector('.masonry-grid');
 const filtersContainer = document.querySelector('.filters');
+const sortToggleButton = document.querySelector('.sort-toggle');
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb9gChhvriuPLiHwT0yJ7zOcxHsyNNxkGQsBRMreZHFxv_oIvgOZil9mdeLiF-LvBp_onplkqZtMLR/pub?gid=0&single=true&output=csv';
 
@@ -7,6 +8,7 @@ let items = [];
 let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
+let sortDirection = 'desc';
 
 function setRandomRainbowPhase(element) {
   if (!element) return;
@@ -97,6 +99,38 @@ function getMediaType(url) {
   if (["webm", "mp4", "mov"].includes(ext)) return "video";
   if (["png", "jpg", "jpeg", "webp", "gif"].includes(ext)) return "image";
   return "unknown";
+}
+
+function parseDateValue(dateValue) {
+  const timestamp = Date.parse(dateValue);
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
+function sortItemsByDate() {
+  items.sort((a, b) => {
+    const dateA = parseDateValue(a.date);
+    const dateB = parseDateValue(b.date);
+
+    if (sortDirection === 'asc') {
+      return dateA - dateB;
+    }
+
+    return dateB - dateA;
+  });
+}
+
+function updateSortToggleLabel() {
+  if (!sortToggleButton) return;
+  sortToggleButton.textContent = sortDirection === 'desc' ? 'date ↓' : 'date ↑';
+}
+
+function toggleSortDirection() {
+  sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
+  updateSortToggleLabel();
+  sortItemsByDate();
+  currentIndex = 0;
+  grid.innerHTML = '';
+  renderNextBatch(currentFilter);
 }
 
 function createMediaElement(url) {
@@ -277,7 +311,7 @@ fetch(CSV_URL)
       };
     });
 
-    items.sort((a, b) => new Date(b.date) - new Date(a.date));
+    sortItemsByDate();
 
     const allTags = [...new Set(items.flatMap(item => item.tags))];
 
@@ -299,6 +333,11 @@ fetch(CSV_URL)
       btn.addEventListener('click', () => setActiveFilter(tag));
     });
 
+    updateSortToggleLabel();
     renderNextBatch(currentFilter);
   })
   .catch(err => console.error("Ошибка загрузки CSV:", err));
+
+if (sortToggleButton) {
+  sortToggleButton.addEventListener('click', toggleSortDirection);
+}
