@@ -160,9 +160,14 @@ body {
     gap: 0.5rem;
   }
 
+  .hue-filter-wrap,
   .filters,
   .sort-toggle {
     grid-column: 1;
+    justify-self: center;
+  }
+
+  .hue-filter-wrap {
     justify-self: center;
   }
 }
@@ -175,6 +180,75 @@ body {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
+}
+
+
+
+.hue-filter-wrap {
+  grid-column: 1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hue-toggle {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.hue-filter {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hue-filter[hidden] {
+  display: none;
+}
+
+.hue-slider {
+  width: 11rem;
+  appearance: none;
+  height: 0.45rem;
+  border-radius: 999px;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    hsl(0 100% 50%),
+    hsl(60 100% 50%),
+    hsl(120 100% 45%),
+    hsl(180 100% 45%),
+    hsl(240 100% 60%),
+    hsl(300 100% 55%),
+    hsl(360 100% 50%)
+  );
+}
+
+.hue-slider:disabled {
+  opacity: 0.45;
+}
+
+.hue-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.95);
+  background: #0e0e0e;
+}
+
+.hue-slider::-moz-range-thumb {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.95);
+  background: #0e0e0e;
 }
 
 .filters {
