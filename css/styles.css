@@ -193,6 +193,7 @@ body {
 
 .hue-toggle {
   position: relative;
+  box-shadow: none;
   width: 2rem;
   height: 2rem;
   border-radius: 999px;
@@ -215,6 +216,7 @@ body {
 }
 
 .hue-toggle.is-open {
+  box-shadow: none;
   transform: scale(1);
   background: rgba(255,255,255,0.12);
   border-color: rgba(255,255,255,0);
