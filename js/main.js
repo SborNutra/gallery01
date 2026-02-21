@@ -16,6 +16,28 @@ let currentFilter = 'all';
 let currentHue = null;
 let sortDirection = 'desc';
 
+function normalizeImageKey(imageRef) {
+  if (!imageRef) return '';
+
+  const trimmed = imageRef.trim();
+  if (!trimmed) return '';
+
+  try {
+    const parsed = new URL(trimmed);
+    const normalizedPath = decodeURIComponent(parsed.pathname).replace(/^\/+/, '');
+    return normalizedPath.toLowerCase();
+  } catch {
+    return decodeURIComponent(trimmed).replace(/^\/+/, '').toLowerCase();
+  }
+}
+
+function fileNameFromImageRef(imageRef) {
+  const normalized = normalizeImageKey(imageRef);
+  if (!normalized) return '';
+  const parts = normalized.split('/');
+  return parts[parts.length - 1] || '';
+}
+
 function setRandomRainbowPhase(element) {
   if (!element) return;
 
@@ -261,13 +283,28 @@ function setActiveFilter(filter) {
 
 function setHueFilter(hue) {
   currentHue = hue;
+  updateHueSliderHandleColor();
   resetRender();
+}
+
+function updateHueToggleState() {
+  if (!hueToggleButton || !hueFilterPanel) return;
+  const isOpen = !hueFilterPanel.hasAttribute('hidden');
+  hueToggleButton.classList.toggle('is-open', isOpen);
+}
+
+function updateHueSliderHandleColor() {
+  if (!hueSlider) return;
+  const hue = Number(hueSlider.value);
+  hueSlider.style.setProperty('--thumb-color', `hsl(${hue} 100% 50%)`);
 }
 
 function setupHueFilterControls() {
   if (!hueSlider || !hueToggleButton || !hueFilterPanel) return;
 
   hueSlider.disabled = false;
+  updateHueSliderHandleColor();
+  updateHueToggleState();
 
   hueSlider.addEventListener('input', () => {
     setHueFilter(Number(hueSlider.value));
@@ -277,12 +314,15 @@ function setupHueFilterControls() {
     const isHidden = hueFilterPanel.hasAttribute('hidden');
     if (isHidden) {
       hueFilterPanel.removeAttribute('hidden');
+      updateHueToggleState();
       return;
     }
 
     hueFilterPanel.setAttribute('hidden', '');
     currentHue = null;
     hueSlider.value = 0;
+    updateHueSliderHandleColor();
+    updateHueToggleState();
     resetRender();
   });
 }
@@ -310,15 +350,33 @@ function parseColorIndexRows(text) {
     const image = (row.image || '').trim();
     if (!image) return;
 
-    map.set(image, {
+    const colorMetrics = {
       dominantHue: Number(row.dominantHue),
       secondaryHue: Number(row.secondaryHue),
       weight: Number(row.weight),
       saturation: Number(row.saturation)
-    });
+    };
+
+    map.set(image, colorMetrics);
+
+    const normalized = normalizeImageKey(image);
+    if (normalized) {
+      map.set(normalized, colorMetrics);
+      const fileName = fileNameFromImageRef(image);
+      if (fileName) map.set(fileName, colorMetrics);
+    }
   });
 
   return map;
+}
+
+function getColorMetrics(imageRef, colorIndex) {
+  if (!imageRef) return {};
+
+  return colorIndex.get(imageRef)
+    || colorIndex.get(normalizeImageKey(imageRef))
+    || colorIndex.get(fileNameFromImageRef(imageRef))
+    || {};
 }
 
 function buildItems(dataRows, colorIndex) {
@@ -331,7 +389,7 @@ function buildItems(dataRows, colorIndex) {
     }
 
     const image = item.image || '';
-    const color = colorIndex.get(image) || {};
+    const color = getColorMetrics(image, colorIndex);
 
     return {
       id: item.id,
