@@ -192,9 +192,10 @@ body {
 }
 
 .hue-toggle {
+  position: relative;
   width: 2rem;
   height: 2rem;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,1);
   border-radius: 999px;
   background: conic-gradient(
     from 0deg,
@@ -216,9 +217,26 @@ body {
 }
 
 .hue-toggle.is-open {
+  transform: scale(0.5);
   background: rgba(255,255,255,0.12);
   border-color: rgba(255,255,255,0.85);
   box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
+  position: relative; /* важно для ::after */
+}
+
+/* Псевдоэлемент для крестика */
+.hue-toggle.is-open::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.6rem;   /* длина крестика */
+  height: 0.6rem;  /* длина крестика */
+  transform: translate(-50%, -50%);
+  background-color: transparent; /* сам элемент прозрачный */
+  box-shadow: 
+    0 -2px 0 0 white,  /* вертикальная линия */
+    -2px 0 0 0 white;  /* горизонтальная линия */
 }
 
 .hue-filter {
