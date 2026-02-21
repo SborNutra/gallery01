@@ -36,6 +36,7 @@
   ); /* более насыщенные цвета */
 
   background-size: 200% auto;
+  background-position: var(--rainbow-start, 0%) center;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -43,6 +44,7 @@
   color: transparent;
 
   animation: rainbowFlow 4s linear infinite; /* быстрее анимация */
+  animation-delay: var(--rainbow-delay, 0s);
 }
 
 body {

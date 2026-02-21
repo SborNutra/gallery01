@@ -8,6 +8,20 @@ let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
 
+function applyRandomRainbowStart() {
+  const rainbowElements = document.querySelectorAll('.rainbow-hover');
+
+  rainbowElements.forEach((element) => {
+    const randomStart = `${(Math.random() * 200).toFixed(2)}%`;
+    const randomDelay = `${(-Math.random() * 4).toFixed(2)}s`;
+
+    element.style.setProperty('--rainbow-start', randomStart);
+    element.style.setProperty('--rainbow-delay', randomDelay);
+  });
+}
+
+applyRandomRainbowStart();
+
 
 // --------------------
 // OVERLAY LOGIC
