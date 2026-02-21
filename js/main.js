@@ -1,13 +1,19 @@
 const grid = document.querySelector('.masonry-grid');
 const filtersContainer = document.querySelector('.filters');
 const sortToggleButton = document.querySelector('.sort-toggle');
+const hueSlider = document.querySelector('#hue-slider');
+const hueToggleButton = document.querySelector('.hue-toggle');
+const hueFilterPanel = document.querySelector('.hue-filter');
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb9gChhvriuPLiHwT0yJ7zOcxHsyNNxkGQsBRMreZHFxv_oIvgOZil9mdeLiF-LvBp_onplkqZtMLR/pub?gid=0&single=true&output=csv';
+const COLOR_INDEX_URL = 'data/image-index.csv';
+const HUE_TOLERANCE = 18;
 
 let items = [];
 let batchSize = 20;
 let currentIndex = 0;
 let currentFilter = 'all';
+let currentHue = null;
 let sortDirection = 'desc';
 
 function setRandomRainbowPhase(element) {
@@ -36,21 +42,6 @@ function setupRandomRainbowHover() {
 
 applyRandomRainbowStart();
 setupRandomRainbowHover();
-
-function applyRandomRainbowStart() {
-  const rainbowElements = document.querySelectorAll('.rainbow-hover');
-
-  rainbowElements.forEach((element) => {
-    const randomStart = `${(Math.random() * 200).toFixed(2)}%`;
-    const randomDelay = `${(-Math.random() * 4).toFixed(2)}s`;
-
-    element.style.setProperty('--rainbow-start', randomStart);
-    element.style.setProperty('--rainbow-delay', randomDelay);
-  });
-}
-
-applyRandomRainbowStart();
-
 
 // --------------------
 // OVERLAY LOGIC
@@ -89,16 +80,15 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeOverlay();
 });
 
-
 // --------------------
 // MEDIA HELPERS
 // --------------------
 function getMediaType(url) {
-  if (!url) return "unknown";
+  if (!url) return 'unknown';
   const ext = url.split('.').pop().toLowerCase();
-  if (["webm", "mp4", "mov"].includes(ext)) return "video";
-  if (["png", "jpg", "jpeg", "webp", "gif"].includes(ext)) return "image";
-  return "unknown";
+  if (['webm', 'mp4', 'mov'].includes(ext)) return 'video';
+  if (['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext)) return 'image';
+  return 'unknown';
 }
 
 function parseDateValue(dateValue) {
@@ -110,12 +100,7 @@ function sortItemsByDate() {
   items.sort((a, b) => {
     const dateA = parseDateValue(a.date);
     const dateB = parseDateValue(b.date);
-
-    if (sortDirection === 'asc') {
-      return dateA - dateB;
-    }
-
-    return dateB - dateA;
+    return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
   });
 }
 
@@ -128,88 +113,104 @@ function toggleSortDirection() {
   sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
   updateSortToggleLabel();
   sortItemsByDate();
-  currentIndex = 0;
-  grid.innerHTML = '';
-  renderNextBatch(currentFilter);
+  resetRender();
 }
 
 function createMediaElement(url) {
   const type = getMediaType(url);
 
-  if (type === "video") {
-    const video = document.createElement("video");
+  if (type === 'video') {
+    const video = document.createElement('video');
     video.src = url;
     video.autoplay = true;
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
-    video.preload = "metadata";
-    video.loading = "lazy";
+    video.preload = 'metadata';
+    video.loading = 'lazy';
     return video;
   }
 
-  const img = document.createElement("img");
+  const img = document.createElement('img');
   img.src = url;
-  img.loading = "lazy";
+  img.loading = 'lazy';
   return img;
 }
 
+function hueDistance(a, b) {
+  if (a === null || b === null || Number.isNaN(a) || Number.isNaN(b)) return Infinity;
+  const distance = Math.abs(a - b);
+  return Math.min(distance, 360 - distance);
+}
+
+function itemMatchesHue(item) {
+  if (currentHue === null) return true;
+  if (Number.isNaN(item.dominantHue)) return false;
+  return hueDistance(item.dominantHue, currentHue) <= HUE_TOLERANCE;
+}
+
+function getFilteredItems() {
+  const byTag = currentFilter === 'all'
+    ? items
+    : items.filter(i => i.tags.includes(currentFilter));
+
+  return byTag.filter(itemMatchesHue);
+}
+
+function resetRender() {
+  currentIndex = 0;
+  grid.innerHTML = '';
+  renderNextBatch();
+}
 
 // --------------------
 // CARD CREATION
 // --------------------
 function createCard(item) {
-  const card = document.createElement("div");
-  card.classList.add("card");
+  const card = document.createElement('div');
+  card.classList.add('card');
 
-  // --- MEDIA WRAPPER (фиксирует высоту заранее)
-  const mediaWrapper = document.createElement("div");
-  mediaWrapper.classList.add("media-wrapper");
+  const mediaWrapper = document.createElement('div');
+  mediaWrapper.classList.add('media-wrapper');
   mediaWrapper.style.aspectRatio = item.aspectRatio;
 
   const media = createMediaElement(item.image);
 
-    if (media.tagName === "IMG") {
-    media.addEventListener("load", () => {
-      mediaWrapper.classList.add("loaded");
-    });
-  }
-  
-  if (media.tagName === "VIDEO") {
-    media.addEventListener("loadeddata", () => {
-      mediaWrapper.classList.add("loaded");
-    });
+  if (media.tagName === 'IMG') {
+    media.addEventListener('load', () => mediaWrapper.classList.add('loaded'));
   }
 
-  media.addEventListener("click", () => openOverlay(media));
+  if (media.tagName === 'VIDEO') {
+    media.addEventListener('loadeddata', () => mediaWrapper.classList.add('loaded'));
+  }
+
+  media.addEventListener('click', () => openOverlay(media));
 
   mediaWrapper.appendChild(media);
   card.appendChild(mediaWrapper);
 
-  // caption
   if (item.caption) {
-    const caption = document.createElement("p");
+    const caption = document.createElement('p');
     caption.textContent = item.caption;
     card.appendChild(caption);
   }
 
-  // meta
-  const meta = document.createElement("div");
-  meta.classList.add("card-meta");
+  const meta = document.createElement('div');
+  meta.classList.add('card-meta');
 
-  const dateEl = document.createElement("span");
-  dateEl.classList.add("card-date");
+  const dateEl = document.createElement('span');
+  dateEl.classList.add('card-date');
   dateEl.textContent = item.date || '';
   meta.appendChild(dateEl);
 
-  const tagsEl = document.createElement("span");
-  tagsEl.classList.add("card-tags");
+  const tagsEl = document.createElement('span');
+  tagsEl.classList.add('card-tags');
 
   item.tags.forEach((tag) => {
-    const tagSpan = document.createElement("span");
+    const tagSpan = document.createElement('span');
     tagSpan.textContent = tag;
     tagSpan.classList.add('rainbow-random-hover');
-    tagSpan.addEventListener("click", (e) => {
+    tagSpan.addEventListener('click', (e) => {
       e.stopPropagation();
       setActiveFilter(tag);
     });
@@ -222,15 +223,11 @@ function createCard(item) {
   return card;
 }
 
-
 // --------------------
 // LAZY BATCH RENDERING
 // --------------------
-function renderNextBatch(filter = 'all') {
-  const filtered = filter === 'all'
-    ? items
-    : items.filter(i => i.tags.includes(filter));
-
+function renderNextBatch() {
+  const filtered = getFilteredItems();
   if (currentIndex >= filtered.length) return;
 
   const fragment = document.createDocumentFragment();
@@ -243,17 +240,15 @@ function renderNextBatch(filter = 'all') {
   currentIndex += batchSize;
 }
 
-
 // --------------------
 // FILTER LOGIC
 // --------------------
 function setActiveFilter(filter) {
   currentFilter = filter;
-  currentIndex = 0;
-  grid.innerHTML = '';
 
-  document.querySelectorAll('.filters button')
-    .forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.filters button').forEach((button) => {
+    button.classList.remove('active');
+  });
 
   const activeBtn = document.querySelector(`.filters button[data-filter="${filter}"]`);
   if (activeBtn) {
@@ -261,9 +256,36 @@ function setActiveFilter(filter) {
     setRandomRainbowPhase(activeBtn);
   }
 
-  renderNextBatch(filter);
+  resetRender();
 }
 
+function setHueFilter(hue) {
+  currentHue = hue;
+  resetRender();
+}
+
+function setupHueFilterControls() {
+  if (!hueSlider || !hueToggleButton || !hueFilterPanel) return;
+
+  hueSlider.disabled = false;
+
+  hueSlider.addEventListener('input', () => {
+    setHueFilter(Number(hueSlider.value));
+  });
+
+  hueToggleButton.addEventListener('click', () => {
+    const isHidden = hueFilterPanel.hasAttribute('hidden');
+    if (isHidden) {
+      hueFilterPanel.removeAttribute('hidden');
+      return;
+    }
+
+    hueFilterPanel.setAttribute('hidden', '');
+    currentHue = null;
+    hueSlider.value = 0;
+    resetRender();
+  });
+}
 
 // --------------------
 // SCROLL LISTENER
@@ -273,70 +295,104 @@ window.addEventListener('scroll', () => {
   const gridBottom = grid.offsetTop + grid.offsetHeight;
 
   if (scrollPosition > gridBottom - 200) {
-    renderNextBatch(currentFilter);
+    renderNextBatch();
   }
 });
 
+function parseColorIndexRows(text) {
+  const parsed = Papa.parse(text, {
+    header: true,
+    skipEmptyLines: true
+  });
+
+  const map = new Map();
+  parsed.data.forEach((row) => {
+    const image = (row.image || '').trim();
+    if (!image) return;
+
+    map.set(image, {
+      dominantHue: Number(row.dominantHue),
+      secondaryHue: Number(row.secondaryHue),
+      weight: Number(row.weight),
+      saturation: Number(row.saturation)
+    });
+  });
+
+  return map;
+}
+
+function buildItems(dataRows, colorIndex) {
+  return dataRows.map((item) => {
+    let aspectRatio = 1;
+
+    if (item.resolution) {
+      const [w, h] = item.resolution.split('x').map(Number);
+      if (w && h) aspectRatio = w / h;
+    }
+
+    const image = item.image || '';
+    const color = colorIndex.get(image) || {};
+
+    return {
+      id: item.id,
+      date: item.date,
+      image,
+      tags: item.tags ? item.tags.split(',').map(t => t.trim()) : [],
+      project_url: item.project_url || '',
+      caption: item.caption || '',
+      aspectRatio,
+      dominantHue: Number(color.dominantHue),
+      secondaryHue: Number(color.secondaryHue),
+      colorWeight: Number(color.weight),
+      colorSaturation: Number(color.saturation)
+    };
+  });
+}
+
+function renderTagFilters() {
+  const allTags = [...new Set(items.flatMap(item => item.tags))];
+
+  const allBtn = document.createElement('button');
+  allBtn.textContent = 'all';
+  allBtn.dataset.filter = 'all';
+  allBtn.classList.add('active', 'rainbow-random-hover');
+  setRandomRainbowPhase(allBtn);
+  filtersContainer.appendChild(allBtn);
+  allBtn.addEventListener('click', () => setActiveFilter('all'));
+
+  allTags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.textContent = tag;
+    btn.dataset.filter = tag;
+    btn.classList.add('rainbow-random-hover');
+    filtersContainer.appendChild(btn);
+    btn.addEventListener('click', () => setActiveFilter(tag));
+  });
+}
 
 // --------------------
 // LOAD DATA
 // --------------------
-fetch(CSV_URL)
-  .then(res => res.text())
-  .then(text => {
-    const parsed = Papa.parse(text, {
+Promise.all([
+  fetch(CSV_URL).then(res => res.text()),
+  fetch(COLOR_INDEX_URL).then(res => res.ok ? res.text() : '')
+])
+  .then(([sourceCsvText, colorCsvText]) => {
+    const parsed = Papa.parse(sourceCsvText, {
       header: true,
       skipEmptyLines: true
     });
 
-    items = parsed.data.map(item => {
+    const colorIndexMap = colorCsvText ? parseColorIndexRows(colorCsvText) : new Map();
 
-      let aspectRatio = 1;
-
-      if (item.resolution) {
-        const [w, h] = item.resolution.split('x').map(Number);
-        if (w && h) aspectRatio = w / h;
-      }
-
-      return {
-        id: item.id,
-        date: item.date,
-        image: item.image,
-        tags: item.tags
-          ? item.tags.split(',').map(t => t.trim())
-          : [],
-        project_url: item.project_url || '',
-        caption: item.caption || '',
-        aspectRatio
-      };
-    });
-
+    items = buildItems(parsed.data, colorIndexMap);
     sortItemsByDate();
-
-    const allTags = [...new Set(items.flatMap(item => item.tags))];
-
-    const allBtn = document.createElement('button');
-    allBtn.textContent = 'all';
-    allBtn.dataset.filter = 'all';
-    allBtn.classList.add('active');
-    allBtn.classList.add('rainbow-random-hover');
-    setRandomRainbowPhase(allBtn);
-    filtersContainer.appendChild(allBtn);
-    allBtn.addEventListener('click', () => setActiveFilter('all'));
-
-    allTags.forEach(tag => {
-      const btn = document.createElement('button');
-      btn.textContent = tag;
-      btn.dataset.filter = tag;
-      btn.classList.add('rainbow-random-hover');
-      filtersContainer.appendChild(btn);
-      btn.addEventListener('click', () => setActiveFilter(tag));
-    });
-
+    renderTagFilters();
+    setupHueFilterControls();
     updateSortToggleLabel();
-    renderNextBatch(currentFilter);
+    renderNextBatch();
   })
-  .catch(err => console.error("Ошибка загрузки CSV:", err));
+  .catch(err => console.error('Ошибка загрузки CSV:', err));
 
 if (sortToggleButton) {
   sortToggleButton.addEventListener('click', toggleSortDirection);

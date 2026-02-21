@@ -33,6 +33,12 @@
   </header>
 
   <section class="controls">
+    <div class="hue-filter-wrap">
+      <button class="hue-toggle" type="button" aria-label="Toggle hue filter">◉</button>
+      <div class="hue-filter" hidden>
+        <input id="hue-slider" class="hue-slider" type="range" min="0" max="360" value="0" step="1" disabled>
+      </div>
+    </div>
     <section class="filters"></section>
     <button class="sort-toggle rainbow-random-hover" type="button" aria-label="Toggle sort by date">date ↓</button>
   </section>
