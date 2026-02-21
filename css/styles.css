@@ -52,6 +52,8 @@ body {
   padding-top: 4rem;
   background: #0e0e0e;
   color: white;
+
+  --layout-gutter: 16rem;
 }
 
 /* --------------------
@@ -88,7 +90,7 @@ body {
 
 .header__avatar img {
   width: 3rem;
-  height: 1--px;
+  height: 3rem;
   border-radius: 0.5rem;
   object-fit: cover;
   display: block;
@@ -140,6 +142,10 @@ body {
 /* mobile */
 
 @media (max-width: 900px) {
+  body {
+    --layout-gutter: 1rem;
+  }
+
   .header__inner {
     width: 90vw;
     min-width: unset;
@@ -148,22 +154,40 @@ body {
   .header__nav {
     gap: 2rem;
   }
+
+  .controls {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .filters,
+  .sort-toggle {
+    grid-column: 1;
+    justify-self: center;
+  }
 }
 /* --------------------
 // FILTERS
 ---------------------*/
 
-.filters {
-  padding-top: 1rem;
-  padding-bottom: 1.25rem;
-  font-family: 'SuisseIntl', sans-serif;
-  display: flex;          /* включаем Flexbox */
-  justify-content: center; /* центрируем по горизонтали */
-  gap: 1rem;              /* расстояние между кнопками */
-  flex-wrap: wrap;        /* если кнопок много, перенос на новую строку */
+.controls {
+  padding: 1rem var(--layout-gutter) 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
 
-.filters button {
+.filters {
+  font-family: 'SuisseIntl', sans-serif;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  grid-column: 2;
+}
+
+.filters button,
+.sort-toggle {
   background: transparent;
   color: #fff;
   border: none;
@@ -176,8 +200,15 @@ body {
   transition: transform 0.2s ease;
 }
 
-.filters button:hover {
+.filters button:hover,
+.sort-toggle:hover {
   transform: scale(1.05);
+}
+
+.sort-toggle {
+  grid-column: 3;
+  justify-self: end;
+  opacity: 0.8;
 }
 
 .filters button.active {
@@ -201,8 +232,6 @@ body {
   animation: rainbowFlow 4s linear infinite;
   animation-delay: var(--rainbow-delay, 0s);
   transform: scale(1.05);
-}
-  
 }
 
 /* --------------------
@@ -348,7 +377,7 @@ body {
 .masonry-grid {
   column-count: 4;
   column-gap: 1rem;
-  padding: 0rem 16rem;
+  padding: 0rem var(--layout-gutter);
 }
 
 .card p {
