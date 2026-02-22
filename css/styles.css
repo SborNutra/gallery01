@@ -298,6 +298,25 @@ body {
   cursor: grabbing;
 }
 
+/* курсор при наведении */
+.hue-slider::-webkit-slider-thumb:hover {
+  cursor: grab; /* наведение */
+}
+
+/* курсор при зажатии */
+.hue-slider::-webkit-slider-thumb:active {
+  cursor: grabbing; /* зажатие */
+}
+
+/* Firefox */
+.hue-slider::-moz-range-thumb:hover {
+  cursor: grab;
+}
+
+.hue-slider::-moz-range-thumb:active {
+  cursor: grabbing;
+}
+
 /* --------------------
 // FILTERS
 ---------------------*/
