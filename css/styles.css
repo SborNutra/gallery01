@@ -286,6 +286,7 @@ body {
   border-radius: 0.5rem;
   border: 1px solid rgba(255,255,255,0.95);
   background: var(--thumb-color);
+  cursor: grabbing;
 }
 
 .hue-slider::-moz-range-thumb {
@@ -294,6 +295,7 @@ body {
   border-radius: 0.5rem;
   border: 1px solid rgba(255,255,255,0.95);
   background: var(--thumb-color);
+  cursor: grabbing;
 }
 
 /* --------------------
