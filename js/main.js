@@ -15,6 +15,9 @@ let currentIndex = 0;
 let currentFilter = 'all';
 let currentHue = null;
 let sortDirection = 'desc';
+let visibleItems = [];
+
+const cardCache = new Map();
 
 function normalizeImageKey(imageRef) {
   if (!imageRef) return '';
@@ -179,7 +182,21 @@ function getFilteredItems() {
   return byTag.filter(itemMatchesHue);
 }
 
+function getItemKey(item) {
+  return item.id || item.image;
+}
+
+function getOrCreateCard(item) {
+  const key = getItemKey(item);
+  if (cardCache.has(key)) return cardCache.get(key);
+
+  const card = createCard(item);
+  cardCache.set(key, card);
+  return card;
+}
+
 function resetRender() {
+  visibleItems = getFilteredItems();
   currentIndex = 0;
   grid.innerHTML = '';
   renderNextBatch();
@@ -249,13 +266,12 @@ function createCard(item) {
 // LAZY BATCH RENDERING
 // --------------------
 function renderNextBatch() {
-  const filtered = getFilteredItems();
-  if (currentIndex >= filtered.length) return;
+  if (currentIndex >= visibleItems.length) return;
 
   const fragment = document.createDocumentFragment();
 
-  for (let i = currentIndex; i < Math.min(currentIndex + batchSize, filtered.length); i++) {
-    fragment.appendChild(createCard(filtered[i]));
+  for (let i = currentIndex; i < Math.min(currentIndex + batchSize, visibleItems.length); i++) {
+    fragment.appendChild(getOrCreateCard(visibleItems[i]));
   }
 
   grid.appendChild(fragment);
@@ -448,7 +464,7 @@ Promise.all([
     renderTagFilters();
     setupHueFilterControls();
     updateSortToggleLabel();
-    renderNextBatch();
+    resetRender();
   })
   .catch(err => console.error('Ошибка загрузки CSV:', err));
 
