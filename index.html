@@ -3,34 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sbor</title>
+  <title>sbor — shards</title>
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
-  
-<body>
-  <header class="header">
-  <div class="header__inner">
 
-    <!-- About -->
-    <a href="index.html" class="header__avatar">
-      <img src="assets/avatar.jpg" alt="About">
-    </a>
-
-    <!-- Center -->
-    <nav class="header__nav">
-      <a href="index.html" class="rainbow-hover">cases</a>
-      <a href="index.html" class="rainbow-hover">shards</a>
-    </nav>
-
-    <!-- Right -->
-    <a href="https://t.me/sbor_ntra"
-       target="_blank"
-       class="header__tg rainbow-hover">
-      telegram
-    </a>
-  </div>
-  </header>
+<body data-page="shards">
+  <div data-site-header></div>
 
   <section class="controls">
     <div class="hue-filter-wrap">
@@ -44,24 +23,12 @@
   </section>
 
   <section class="masonry-grid"></section>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <div class="overlay" id="overlay">
     <div class="overlay-content"></div>
   </div>
+  <script src="js/header.js"></script>
   <script src="js/main.js"></script>
-
-  <script>
-    const links = document.querySelectorAll('.header__nav a');
-    links.forEach(link => {
-    const current = window.location.pathname.split("/").pop() || "index.html";
-    if (link.getAttribute("href") === current) {
-      link.removeAttribute("href");        // убираем ссылку
-      link.classList.add("active");        // добавляем стиль
-      link.style.cursor = "default";
-      }
-    });
-  </script>
-  
 </body>
 </html>

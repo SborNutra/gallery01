@@ -139,6 +139,43 @@ body {
   transform: scale(1.05);
 }
 
+
+.header__nav a.active {
+  opacity: 1;
+  cursor: default;
+}
+
+.header__nav a.active:hover {
+  transform: none;
+}
+
+.single-column-page {
+  width: 30vw;
+  min-width: 600px;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+}
+
+.single-column-page__content {
+  text-align: left;
+}
+
+.single-column-page__content p {
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: clamp(1rem, 1.3vw, 1.3rem);
+  line-height: 1.6;
+  color: #d9d9d9;
+  margin: 0 0 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .single-column-page {
+    width: 90vw;
+    min-width: unset;
+    margin-top: 2.5rem;
+  }
+}
+
 /* mobile */
 
 @media (max-width: 900px) {
@@ -388,7 +425,7 @@ body {
   overflow: hidden;
   border-radius: 8px;
 
-  background: #e5e5e5; /* статичный серый фон */
+  background: #161616;
 }
 
 /* shimmer через псевдоэлемент */
@@ -398,9 +435,9 @@ body {
   inset: 0;
   background: linear-gradient(
     110deg,
-    #e5e5e5 8%,
-    #f2f2f2 18%,
-    #e5e5e5 33%
+    #161616 8%,
+    #242424 18%,
+    #161616 33%
   );
   background-size: 200% 100%;
   animation: shimmer 1.2s linear infinite;
