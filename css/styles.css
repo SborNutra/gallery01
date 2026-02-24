@@ -47,6 +47,7 @@
   animation-delay: var(--rainbow-delay, 0s);
 }
 
+html,
 body {
   margin: 0;
   padding-top: 7rem;
@@ -54,6 +55,15 @@ body {
   color: white;
 
   --layout-gutter: 16rem;
+
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .chatgpt-scrollbar {
@@ -69,16 +79,28 @@ body {
   pointer-events: none;
 }
 
+.chatgpt-scrollbar.is-hidden {
+  opacity: 0;
+}
+
 .chatgpt-scrollbar__line {
   width: 1rem;
   height: 2px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
   transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .chatgpt-scrollbar__line.is-active {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.chatgpt-scrollbar__line.is-near {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.chatgpt-scrollbar__line.is-far {
+  background: rgba(255, 255, 255, 0.26);
 }
 
 @media (max-width: 900px) {
