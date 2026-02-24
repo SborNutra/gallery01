@@ -50,7 +50,11 @@
       document.documentElement.scrollHeight,
       document.body.scrollHeight
     );
-    const pages = Math.max(fullHeight / Math.max(viewportHeight, 1), 1);
+    const maxScroll = Math.max(fullHeight - viewportHeight, 0);
+
+    if (maxScroll <= 0) return 0;
+
+    const pages = fullHeight / Math.max(viewportHeight, 1);
     return Math.min(90, Math.max(8, Math.round(pages * 10)));
   }
 
@@ -73,15 +77,28 @@
   function updateActiveLines() {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-    const activeLines = Math.round(progress * Math.max(lineCount - 1, 0));
+    const currentLine = Math.round(progress * Math.max(lineCount - 1, 0));
 
     scrollbar.childNodes.forEach((line, index) => {
-      line.classList.toggle('is-active', index <= activeLines);
+      line.classList.remove('is-active', 'is-near', 'is-far');
+
+      const distance = Math.abs(index - currentLine);
+      if (distance === 0) {
+        line.classList.add('is-active');
+      } else if (distance === 1) {
+        line.classList.add('is-near');
+      } else if (distance === 2) {
+        line.classList.add('is-far');
+      }
     });
   }
 
   function updateScrollbar() {
-    renderLines(getTargetLineCount());
+    const nextCount = getTargetLineCount();
+    scrollbar.classList.toggle('is-hidden', nextCount === 0);
+    renderLines(nextCount);
+
+    if (nextCount === 0) return;
     updateActiveLines();
   }
 
