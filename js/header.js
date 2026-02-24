@@ -102,7 +102,29 @@
     updateActiveLines();
   }
 
+  let lastKnownScrollHeight = 0;
+
+  function syncScrollbarSize() {
+    const currentScrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+
+    if (currentScrollHeight === lastKnownScrollHeight) return;
+    lastKnownScrollHeight = currentScrollHeight;
+    updateScrollbar();
+  }
+
   updateScrollbar();
-  window.addEventListener('resize', updateScrollbar);
-  window.addEventListener('scroll', updateActiveLines, { passive: true });
+  syncScrollbarSize();
+
+  window.addEventListener('load', syncScrollbarSize);
+  window.addEventListener('resize', syncScrollbarSize);
+  window.addEventListener('scroll', () => {
+    syncScrollbarSize();
+    updateActiveLines();
+  }, { passive: true });
+
+  const observer = new MutationObserver(syncScrollbarSize);
+  observer.observe(document.body, { childList: true, subtree: true });
 })();

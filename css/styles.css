@@ -47,6 +47,7 @@
   animation-delay: var(--rainbow-delay, 0s);
 }
 
+html,
 body {
   margin: 0;
   padding-top: 7rem;
@@ -58,9 +59,11 @@ body {
   scrollbar-width: none;
 }
 
+html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   width: 0;
   height: 0;
+  display: none;
 }
 
 .chatgpt-scrollbar {
