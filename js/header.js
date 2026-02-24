@@ -35,3 +35,57 @@
   activeLink.classList.remove('rainbow-hover');
   activeLink.setAttribute('aria-current', 'page');
 })();
+
+(function initCustomScrollbar() {
+  const scrollbar = document.createElement('div');
+  scrollbar.className = 'chatgpt-scrollbar';
+  scrollbar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(scrollbar);
+
+  let lineCount = 0;
+
+  function getTargetLineCount() {
+    const viewportHeight = window.innerHeight;
+    const fullHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+    const pages = Math.max(fullHeight / Math.max(viewportHeight, 1), 1);
+    return Math.min(90, Math.max(8, Math.round(pages * 10)));
+  }
+
+  function renderLines(nextCount) {
+    if (nextCount === lineCount) return;
+
+    scrollbar.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < nextCount; i += 1) {
+      const line = document.createElement('span');
+      line.className = 'chatgpt-scrollbar__line';
+      fragment.appendChild(line);
+    }
+
+    scrollbar.appendChild(fragment);
+    lineCount = nextCount;
+  }
+
+  function updateActiveLines() {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    const activeLines = Math.round(progress * Math.max(lineCount - 1, 0));
+
+    scrollbar.childNodes.forEach((line, index) => {
+      line.classList.toggle('is-active', index <= activeLines);
+    });
+  }
+
+  function updateScrollbar() {
+    renderLines(getTargetLineCount());
+    updateActiveLines();
+  }
+
+  updateScrollbar();
+  window.addEventListener('resize', updateScrollbar);
+  window.addEventListener('scroll', updateActiveLines, { passive: true });
+})();
