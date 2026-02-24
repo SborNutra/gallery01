@@ -16,6 +16,8 @@ let currentFilter = 'all';
 let currentHue = null;
 let sortDirection = 'desc';
 let visibleItems = [];
+let masonryColumns = [];
+let nextColumnIndex = 0;
 
 const cardCache = new Map();
 
@@ -199,7 +201,30 @@ function resetRender() {
   visibleItems = getFilteredItems();
   currentIndex = 0;
   grid.innerHTML = '';
+  initMasonryColumns();
   renderNextBatch();
+}
+
+function getColumnCount() {
+  if (window.innerWidth <= 700) return 1;
+  if (window.innerWidth <= 1000) return 2;
+  if (window.innerWidth <= 1400) return 3;
+  return 4;
+}
+
+function initMasonryColumns() {
+  if (!grid) return;
+
+  const columnCount = getColumnCount();
+  masonryColumns = [];
+  nextColumnIndex = 0;
+
+  for (let i = 0; i < columnCount; i++) {
+    const column = document.createElement('div');
+    column.classList.add('masonry-column');
+    masonryColumns.push(column);
+    grid.appendChild(column);
+  }
 }
 
 // --------------------
@@ -266,16 +291,17 @@ function createCard(item) {
 // LAZY BATCH RENDERING
 // --------------------
 function renderNextBatch() {
-  if (currentIndex >= visibleItems.length) return;
+  if (currentIndex >= visibleItems.length || masonryColumns.length === 0) return;
 
-  const fragment = document.createDocumentFragment();
+  const maxIndex = Math.min(currentIndex + batchSize, visibleItems.length);
 
-  for (let i = currentIndex; i < Math.min(currentIndex + batchSize, visibleItems.length); i++) {
-    fragment.appendChild(getOrCreateCard(visibleItems[i]));
+  for (let i = currentIndex; i < maxIndex; i++) {
+    const column = masonryColumns[nextColumnIndex];
+    column.appendChild(getOrCreateCard(visibleItems[i]));
+    nextColumnIndex = (nextColumnIndex + 1) % masonryColumns.length;
   }
 
-  grid.appendChild(fragment);
-  currentIndex += batchSize;
+  currentIndex = maxIndex;
 }
 
 // --------------------
@@ -352,6 +378,13 @@ window.addEventListener('scroll', () => {
 
   if (scrollPosition > gridBottom - 200) {
     renderNextBatch();
+  }
+});
+
+window.addEventListener('resize', () => {
+  const desiredColumns = getColumnCount();
+  if (desiredColumns !== masonryColumns.length) {
+    resetRender();
   }
 });
 
