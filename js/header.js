@@ -55,7 +55,7 @@
     if (maxScroll <= 0) return 0;
 
     const pages = fullHeight / Math.max(viewportHeight, 1);
-    return Math.min(90, Math.max(8, Math.round(pages * 10)));
+    return Math.min(90, Math.max(8, Math.round(pages * 3))); // количество линий на scrollbar
   }
 
   function renderLines(nextCount) {
