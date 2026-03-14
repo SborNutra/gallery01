@@ -1,9 +1,9 @@
 id,date,image,tags,project_url,caption,resolution,,https://script.google.com/u/0/home/projects/1GPsKSg1ipb4WJSjiYzCKSBVxh6KBv3esRBxa2aawCiD-jbVFR_PZWpF_/edit,dominantHue,secondaryHue,weight,saturation
-CorpseMetal,,https://SborNutra.github.io/gallery01/assets/pics/CorpseMetal-1620x2880.jpg,,,,1620x2880,,,,,,
-DarkStar,,https://SborNutra.github.io/gallery01/assets/pics/DarkStar-1500x1500.jpg,,,,1500x1500,,,,,,
+CorpseMetal,"Mar 6, 2026",https://SborNutra.github.io/gallery01/assets/pics/CorpseMetal-1620x2880.jpg,"3d, Abstract",,,1620x2880,,,345,15,0.0504,0.349
+DarkStar,"Feb 25, 2026",https://SborNutra.github.io/gallery01/assets/pics/DarkStar-1500x1500.jpg,"3d, Abstract",,,1500x1500,,,0,0,0,0
 MatStudy,"Apr 17, 2025",https://SborNutra.github.io/gallery01/assets/pics/MatStudy-1080x1920.png,"3d, Abstract",,,1080x1920,,,240,204,0.0398,0.8042
-Scribble,,https://SborNutra.github.io/gallery01/assets/pics/Scribble-1500x1500.jpg,,,,1500x1500,,,,,,
-WiggleCircle,,https://SborNutra.github.io/gallery01/assets/pics/WiggleCircle-1080x1920.webm,,,,1080x1920,,,,,,
+Scribble,"Jan 1, 2026",https://SborNutra.github.io/gallery01/assets/pics/Scribble-1500x1500.jpg,"2d, Abstract",,,1500x1500,,,68,206,0.0629,0.6067
+WiggleCircle,"Feb 11, 2026",https://SborNutra.github.io/gallery01/assets/pics/WiggleCircle-1080x1920.webm,"2d, Motion",,,1080x1920,,,60,180,0.3442,0.8893
 alinom1,"Dec 5, 2024",https://SborNutra.github.io/gallery01/assets/pics/alinom1-1700x1000.jpg,"3d, Abstract",,,1700x1000,,,246,264,0.0585,0.651
 alinom2,"Dec 5, 2024",https://SborNutra.github.io/gallery01/assets/pics/alinom2-1700x1000.jpg,"3d, Abstract",,,1700x1000,,,228,248,0.099,0.6686
 bacteria1,"Nov 4, 2025",https://SborNutra.github.io/gallery01/assets/pics/bacteria1-1000x1000.jpg,"2d, Abstract, Generative",,,1000x1000,,,0,0,0,0
@@ -23,7 +23,7 @@ cyany1,"Aug 20, 2025",https://SborNutra.github.io/gallery01/assets/pics/cyany1-1
 cyany2,"Aug 20, 2025",https://SborNutra.github.io/gallery01/assets/pics/cyany2-1080x1080.jpg,"2d, Abstract",,,1080x1080,,,194,60,0.3212,0.7459
 eye1,"Aug 27, 2025",https://SborNutra.github.io/gallery01/assets/pics/eye1-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,205,227,0.053,0.5855
 grayGate,"Jan 19, 2026",https://SborNutra.github.io/gallery01/assets/pics/grayGate-1249x1156.jpg,"2d, Abstract",,,1249x1156,,,0,0,0,0
-landDisplace,"Jul 29, 2025",https://SborNutra.github.io/gallery01/assets/pics/landDisplace-1920x1080.webm,"3d, Abstract, Generative",,,1920x1080,,,240,215,0.1023,0.9848
+landDisplace,"Jul 29, 2025",https://SborNutra.github.io/gallery01/assets/pics/landDisplace-1920x1080.webm,"3d, Abstract, Generative, Motion",,,1920x1080,,,240,215,0.1023,0.9848
 octopus,"Sep 21, 2025",https://SborNutra.github.io/gallery01/assets/pics/octopus-1080x1920.jpg,"3d, Abstract, Generative",,,1080x1920,,,237,216,0.4708,0.2415
 piano,"Dec 7, 2022",https://SborNutra.github.io/gallery01/assets/pics/piano-1000x1000.jpg,"3d, Illustration",,,1000x1000,,,39,63,0.0249,0.9239
 portrait1,"Feb 7, 2026",https://SborNutra.github.io/gallery01/assets/pics/portrait1-2511x2902.jpg,"2d, Illustration",,,2511x2902,,,328,184,0.214,0.6475
@@ -46,7 +46,8 @@ spaceship1,"Jul 22, 2025",https://SborNutra.github.io/gallery01/assets/pics/spac
 spaceship2,"Jul 22, 2025",https://SborNutra.github.io/gallery01/assets/pics/spaceship2-1080x1920.jpg,"3d, Illustration",,,1080x1920,,,0,0,0,0
 star1,"Sep 21, 2025",https://SborNutra.github.io/gallery01/assets/pics/star1-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,223,203,0.068,0.8743
 tBank,"Aug 20, 2025",https://SborNutra.github.io/gallery01/assets/pics/tBank-1500x1200.jpg,"3d, Illustration",,,1500x1200,,,54,36,0.7639,0.9306
-,"Aug 16, 2025",https://SborNutra.github.io/gallery01/assets/pics/targetRainbow-1000x1000.jpg,"3d, Abstract",,,,,,0,49,0.0382,0.9739
-,"Aug 16, 2025",https://SborNutra.github.io/gallery01/assets/pics/targetRainbow2-1000x1000.jpg,"3d, Abstract",,,,,,120,0,0.0434,1
-,8/27/2025,https://SborNutra.github.io/gallery01/assets/pics/volume1-1000x1000.jpg,"3d, Abstract",,,,,,213,183,0.0281,0.8196
-,12/3/2025,https://SborNutra.github.io/gallery01/assets/pics/zorcheCover2-1000x1000.jpg,2d,,,,,,0,0,0,0
+targetRainbow,"Aug 16, 2025",https://SborNutra.github.io/gallery01/assets/pics/targetRainbow-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,0,49,0.0382,0.9739
+targetRainbow2,"Aug 16, 2025",https://SborNutra.github.io/gallery01/assets/pics/targetRainbow2-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,120,0,0.0434,1
+volume1,8/27/2025,https://SborNutra.github.io/gallery01/assets/pics/volume1-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,213,183,0.0281,0.8196
+zorcheCover2,12/3/2025,https://SborNutra.github.io/gallery01/assets/pics/zorcheCover2-1000x1000.jpg,2d,,,1000x1000,,,0,0,0,0
+,,assets/pics/CorpseMetal-1000x1691.jpg,,,,,,,211,193,0.0617,0.2735
