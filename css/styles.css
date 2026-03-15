@@ -355,7 +355,7 @@ body::-webkit-scrollbar {
 .hue-slider {
   --thumb-color: hsl(0 100% 50%);
   --thumb-outline-color: hsl(0 100% 80%);
-  --thumb-outline-width: 2px;
+  --thumb-outline-width: 1.5px;
   width: 11rem;
   appearance: none;
   height: 0.45rem;
