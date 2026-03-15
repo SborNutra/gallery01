@@ -354,6 +354,8 @@ body::-webkit-scrollbar {
 
 .hue-slider {
   --thumb-color: hsl(0 100% 50%);
+  --thumb-outline-color: hsl(0 100% 80%);
+  --thumb-outline-width: 2px;
   width: 11rem;
   appearance: none;
   height: 0.45rem;
@@ -380,7 +382,7 @@ body::-webkit-scrollbar {
   width: 2rem;
   height: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255,255,255,0.95);
+  border: var(--thumb-outline-width) solid var(--thumb-outline-color);
   background: var(--thumb-color);
   cursor: grabbing;
 }
@@ -389,7 +391,7 @@ body::-webkit-scrollbar {
   width: 2rem;
   height: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255,255,255,0.95);
+  border: var(--thumb-outline-width) solid var(--thumb-outline-color);
   background: var(--thumb-color);
   cursor: grabbing;
 }
