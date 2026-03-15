@@ -338,7 +338,13 @@ function updateHueToggleState() {
 function updateHueSliderHandleColor() {
   if (!hueSlider) return;
   const hue = Number(hueSlider.value);
-  hueSlider.style.setProperty('--thumb-color', `hsl(${hue} 100% 50%)`);
+  const thumbLightness = 50;
+  const outlineLightness = Math.min(95, thumbLightness + 30);
+  const outlineWidth = thumbLightness < 58 ? '2.5px' : '2px';
+
+  hueSlider.style.setProperty('--thumb-color', `hsl(${hue} 100% ${thumbLightness}%)`);
+  hueSlider.style.setProperty('--thumb-outline-color', `hsl(${hue} 100% ${outlineLightness}%)`);
+  hueSlider.style.setProperty('--thumb-outline-width', outlineWidth);
 }
 
 function setupHueFilterControls() {
