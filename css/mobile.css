@@ -1,14 +1,16 @@
 @media (max-width: 900px) {
+  html,
+  body {
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+  }
+
   body {
     --layout-gutter: 1rem;
   }
 
   .chatgpt-scrollbar {
-    right: 0.55rem;
-  }
-
-  .chatgpt-scrollbar__line {
-    width: 0.75rem;
+    display: none;
   }
 
   .single-column-page {
@@ -19,6 +21,7 @@
 
   .header__inner {
     width: 90vw;
+    max-width: 100%;
     min-width: unset;
   }
 
@@ -53,6 +56,16 @@
   .single-column-page {
     width: var(--content-width);
     margin-top: 2.5rem;
+  }
+
+  .masonry-grid {
+    width: var(--content-width);
+    margin: 0 auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.75rem;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
   }
 }
 
@@ -135,7 +148,11 @@
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
     gap: 0.65rem;
+    width: 100%;
+    max-width: 100%;
     padding-bottom: 0.15rem;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
@@ -210,10 +227,5 @@
 
   .controls {
     gap: 0.65rem;
-  }
-}
-@media (max-width: 420px) {
-  .masonry-grid {
-    grid-template-columns: 1fr;
   }
 }

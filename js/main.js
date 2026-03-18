@@ -206,7 +206,6 @@ function resetRender() {
 }
 
 function getColumnCount() {
-  if (window.innerWidth <= 420) return 1;
   if (window.innerWidth <= 1000) return 2;
   if (window.innerWidth <= 1400) return 3;
   return 4;
