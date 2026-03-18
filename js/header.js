@@ -10,7 +10,6 @@
         </a>
 
         <nav class="header__nav">
-          <a href="cases.html" data-nav="cases" class="rainbow-hover">cases</a>
           <a href="index.html" data-nav="shards" class="rainbow-hover">shards</a>
         </nav>
 
