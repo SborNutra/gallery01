@@ -87,6 +87,9 @@
   .header__inner {
     width: 100%;
     min-width: unset;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
     gap: 0.65rem;
     padding: 0.5rem 0.65rem;
     border-radius: 1rem;
@@ -102,9 +105,9 @@
 
   .header__nav {
     gap: 0.75rem;
-    justify-content: flex-start;
+    justify-content: center;
     font-size: 1rem;
-    flex: 1 1 auto;
+    flex: initial;
     min-width: 0;
   }
 
@@ -115,16 +118,17 @@
   }
 
   .controls {
-    width: var(--content-width);
+    width: 100%;
     margin: 0 auto 0.75rem;
-    padding: 0;
+    padding: 0 var(--layout-gutter);
+    box-sizing: border-box;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       'filters filters'
       'hue sort';
     align-items: start;
     column-gap: 0.75rem;
-    row-gap: 0.75rem;
+    row-gap: 0.325rem;
   }
 
   .hue-filter-wrap {
@@ -160,6 +164,7 @@
   .filters {
     grid-area: filters;
     grid-column: auto;
+    position: relative;
     justify-content: flex-start;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -167,12 +172,13 @@
     overscroll-behavior-x: contain;
     touch-action: pan-x;
     gap: 0.65rem;
-    width: 100%;
-    max-width: 100%;
-    padding-bottom: 0.15rem;
+    width: calc(100vw - (var(--layout-gutter) * 2));
+    max-width: calc(100vw - (var(--layout-gutter) * 2));
+    padding: 0 3rem 0.15rem 0;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    mask-image: linear-gradient(to right, black 0, black calc(100% - 3rem), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0, black calc(100% - 3rem), transparent 100%);
   }
 
   .filters::-webkit-scrollbar {
@@ -251,9 +257,13 @@
 @media (max-width: 700px) {
   .card-tags {
     gap: 0.35rem;
+    justify-content: flex-end;
   }
 
   .card-tags span {
-    max-width: 48%;
+    max-width: none;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
   }
 }
