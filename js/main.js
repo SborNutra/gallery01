@@ -4,6 +4,7 @@ const sortToggleButton = document.querySelector('.sort-toggle');
 const hueSlider = document.querySelector('#hue-slider');
 const hueToggleButton = document.querySelector('.hue-toggle');
 const hueFilterPanel = document.querySelector('.hue-filter');
+const isMobileViewport = () => window.matchMedia('(max-width: 700px)').matches;
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb9gChhvriuPLiHwT0yJ7zOcxHsyNNxkGQsBRMreZHFxv_oIvgOZil9mdeLiF-LvBp_onplkqZtMLR/pub?gid=0&single=true&output=csv';
 const COLOR_INDEX_URL = 'data/image-index.csv';
@@ -269,7 +270,7 @@ function createCard(item) {
   const tagsEl = document.createElement('span');
   tagsEl.classList.add('card-tags');
 
-  item.tags.forEach((tag) => {
+  item.tags.slice(0, 2).forEach((tag) => {
     const tagSpan = document.createElement('span');
     tagSpan.textContent = tag;
     tagSpan.classList.add('rainbow-random-hover');
@@ -332,6 +333,7 @@ function updateHueToggleState() {
   if (!hueToggleButton || !hueFilterPanel) return;
   const isOpen = !hueFilterPanel.hasAttribute('hidden');
   hueToggleButton.classList.toggle('is-open', isOpen);
+  hueToggleButton.setAttribute('aria-expanded', String(isOpen));
 }
 
 function updateHueSliderHandleColor() {
@@ -346,12 +348,31 @@ function updateHueSliderHandleColor() {
   hueSlider.style.setProperty('--thumb-outline-width', outlineWidth);
 }
 
+function syncHueFilterVisibility() {
+  if (!hueFilterPanel) return;
+
+  if (isMobileViewport()) {
+    hueFilterPanel.setAttribute('hidden', '');
+    currentHue = null;
+    if (hueSlider) {
+      hueSlider.value = 0;
+      updateHueSliderHandleColor();
+    }
+    resetRender();
+    updateHueToggleState();
+    return;
+  }
+
+  hueFilterPanel.removeAttribute('hidden');
+  updateHueToggleState();
+}
+
 function setupHueFilterControls() {
   if (!hueSlider || !hueToggleButton || !hueFilterPanel) return;
 
   hueSlider.disabled = false;
   updateHueSliderHandleColor();
-  updateHueToggleState();
+  syncHueFilterVisibility();
 
   hueSlider.addEventListener('input', () => {
     setHueFilter(Number(hueSlider.value));
@@ -374,6 +395,36 @@ function setupHueFilterControls() {
   });
 }
 
+function setupFilterScrollGuard() {
+  if (!filtersContainer) return;
+
+  let pointerDownX = 0;
+  let pointerDownY = 0;
+  let pointerMoved = false;
+
+  filtersContainer.addEventListener('pointerdown', (event) => {
+    pointerDownX = event.clientX;
+    pointerDownY = event.clientY;
+    pointerMoved = false;
+  }, { passive: true });
+
+  filtersContainer.addEventListener('pointermove', (event) => {
+    if (Math.abs(event.clientX - pointerDownX) > 8 || Math.abs(event.clientY - pointerDownY) > 8) {
+      pointerMoved = true;
+    }
+  }, { passive: true });
+
+  filtersContainer.addEventListener('click', (event) => {
+    if (!pointerMoved) return;
+
+    const filterButton = event.target.closest('button');
+    if (!filterButton) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
+}
+
 // --------------------
 // SCROLL LISTENER
 // --------------------
@@ -387,6 +438,7 @@ window.addEventListener('scroll', () => {
 });
 
 window.addEventListener('resize', () => {
+  syncHueFilterVisibility();
   const desiredColumns = getColumnCount();
   if (desiredColumns !== masonryColumns.length) {
     resetRender();
@@ -501,6 +553,7 @@ Promise.all([
     sortItemsByDate();
     renderTagFilters();
     setupHueFilterControls();
+    setupFilterScrollGuard();
     updateSortToggleLabel();
     resetRender();
   })
