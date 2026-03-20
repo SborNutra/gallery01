@@ -3,6 +3,7 @@
   body {
     overflow-x: hidden;
     overscroll-behavior-x: none;
+    background: #0e0e0e;
   }
 
   body {
@@ -117,33 +118,48 @@
     width: var(--content-width);
     margin: 0 auto 0.75rem;
     padding: 0;
-    grid-template-columns: auto auto;
-    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'filters filters'
+      'hue sort';
+    align-items: start;
+    column-gap: 0.75rem;
+    row-gap: 0.75rem;
   }
 
   .hue-filter-wrap {
-    grid-column: 1 / -1;
+    grid-area: hue;
+    grid-column: auto;
     width: 100%;
-    justify-content: space-between;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 999px;
-    padding: 0.4rem 0.45rem;
+    min-width: 0;
+    justify-self: stretch;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.75rem;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
     box-sizing: border-box;
+  }
+
+  .hue-toggle {
+    flex: 0 0 auto;
   }
 
   .hue-filter {
     flex: 1 1 auto;
     min-width: 0;
-    justify-content: flex-end;
+    justify-content: stretch;
   }
 
   .hue-slider {
-    width: min(100%, 10rem);
+    width: 100%;
   }
 
   .filters {
-    grid-column: 1 / -1;
+    grid-area: filters;
+    grid-column: auto;
     justify-content: flex-start;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -175,8 +191,10 @@
   }
 
   .sort-toggle {
-    grid-column: 1 / -1;
-    justify-self: start;
+    grid-area: sort;
+    grid-column: auto;
+    justify-self: end;
+    align-self: center;
   }
 
   .card,
@@ -227,5 +245,15 @@
 
   .controls {
     gap: 0.65rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .card-tags {
+    gap: 0.35rem;
+  }
+
+  .card-tags span {
+    max-width: 48%;
   }
 }
