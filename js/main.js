@@ -405,12 +405,19 @@ function setupFilterScrollGuard() {
   let suppressClicksUntil = 0;
   let lastScrollLeft = filtersContainer.scrollLeft;
 
+  const isGuardActive = (event) => isMobileViewport() || event?.pointerType === 'touch';
+
   const markDragging = () => {
     pointerMoved = true;
     suppressClicksUntil = performance.now() + 250;
   };
 
   filtersContainer.addEventListener('pointerdown', (event) => {
+    if (!isGuardActive(event)) {
+      pointerMoved = false;
+      return;
+    }
+
     pointerDownX = event.clientX;
     pointerDownY = event.clientY;
     pointerMoved = false;
@@ -418,25 +425,36 @@ function setupFilterScrollGuard() {
   }, { passive: true });
 
   filtersContainer.addEventListener('pointermove', (event) => {
+    if (!isGuardActive(event)) return;
+
     if (Math.abs(event.clientX - pointerDownX) > 8 || Math.abs(event.clientY - pointerDownY) > 8) {
       markDragging();
     }
   }, { passive: true });
 
   filtersContainer.addEventListener('scroll', () => {
+    if (!isMobileViewport()) {
+      lastScrollLeft = filtersContainer.scrollLeft;
+      return;
+    }
+
     if (Math.abs(filtersContainer.scrollLeft - lastScrollLeft) > 4) {
       markDragging();
       lastScrollLeft = filtersContainer.scrollLeft;
     }
   }, { passive: true });
 
-  filtersContainer.addEventListener('pointerup', () => {
+  filtersContainer.addEventListener('pointerup', (event) => {
+    if (!isGuardActive(event)) return;
+
     if (pointerMoved) {
       suppressClicksUntil = performance.now() + 250;
     }
   }, { passive: true });
 
-  filtersContainer.addEventListener('pointercancel', () => {
+  filtersContainer.addEventListener('pointercancel', (event) => {
+    if (!isGuardActive(event)) return;
+
     if (pointerMoved) {
       suppressClicksUntil = performance.now() + 250;
     }
@@ -444,7 +462,7 @@ function setupFilterScrollGuard() {
 
   filtersContainer.addEventListener('click', (event) => {
     const filterButton = event.target.closest('button');
-    if (!filterButton) return;
+    if (!filterButton || !isMobileViewport()) return;
 
     if (!pointerMoved && performance.now() > suppressClicksUntil) return;
 
