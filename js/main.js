@@ -19,6 +19,7 @@ let sortDirection = 'desc';
 let visibleItems = [];
 let masonryColumns = [];
 let nextColumnIndex = 0;
+let wasMobileViewport = isMobileViewport();
 
 const cardCache = new Map();
 
@@ -401,27 +402,55 @@ function setupFilterScrollGuard() {
   let pointerDownX = 0;
   let pointerDownY = 0;
   let pointerMoved = false;
+  let suppressClicksUntil = 0;
+  let lastScrollLeft = filtersContainer.scrollLeft;
+
+  const markDragging = () => {
+    pointerMoved = true;
+    suppressClicksUntil = performance.now() + 250;
+  };
 
   filtersContainer.addEventListener('pointerdown', (event) => {
     pointerDownX = event.clientX;
     pointerDownY = event.clientY;
     pointerMoved = false;
+    lastScrollLeft = filtersContainer.scrollLeft;
   }, { passive: true });
 
   filtersContainer.addEventListener('pointermove', (event) => {
     if (Math.abs(event.clientX - pointerDownX) > 8 || Math.abs(event.clientY - pointerDownY) > 8) {
-      pointerMoved = true;
+      markDragging();
+    }
+  }, { passive: true });
+
+  filtersContainer.addEventListener('scroll', () => {
+    if (Math.abs(filtersContainer.scrollLeft - lastScrollLeft) > 4) {
+      markDragging();
+      lastScrollLeft = filtersContainer.scrollLeft;
+    }
+  }, { passive: true });
+
+  filtersContainer.addEventListener('pointerup', () => {
+    if (pointerMoved) {
+      suppressClicksUntil = performance.now() + 250;
+    }
+  }, { passive: true });
+
+  filtersContainer.addEventListener('pointercancel', () => {
+    if (pointerMoved) {
+      suppressClicksUntil = performance.now() + 250;
     }
   }, { passive: true });
 
   filtersContainer.addEventListener('click', (event) => {
-    if (!pointerMoved) return;
-
     const filterButton = event.target.closest('button');
     if (!filterButton) return;
 
+    if (!pointerMoved && performance.now() > suppressClicksUntil) return;
+
     event.preventDefault();
     event.stopPropagation();
+    pointerMoved = false;
   }, true);
 }
 
@@ -438,7 +467,13 @@ window.addEventListener('scroll', () => {
 });
 
 window.addEventListener('resize', () => {
-  syncHueFilterVisibility();
+  const isMobile = isMobileViewport();
+
+  if (isMobile !== wasMobileViewport) {
+    wasMobileViewport = isMobile;
+    syncHueFilterVisibility();
+  }
+
   const desiredColumns = getColumnCount();
   if (desiredColumns !== masonryColumns.length) {
     resetRender();
