@@ -1,4 +1,6 @@
 id,date,image,tags,project_url,caption,resolution,,https://script.google.com/u/0/home/projects/1GPsKSg1ipb4WJSjiYzCKSBVxh6KBv3esRBxa2aawCiD-jbVFR_PZWpF_/edit,dominantHue,secondaryHue,weight,saturation
+Beam1,,https://SborNutra.github.io/gallery01/assets/pics/Beam1-1559x1080.jpg,,,,1559x1080,,,,,,
+Butterfly,"Mar 23, 2026",https://SborNutra.github.io/gallery01/assets/pics/Butterfly-1080x1920.webm,,,,1080x1920,,,,,,
 CorpseMetal,"Mar 6, 2026",https://SborNutra.github.io/gallery01/assets/pics/CorpseMetal-1000x1691.jpg,"3d, Abstract",,,1000x1691,,,211,193,0.0617,0.2735
 DarkStar,"Feb 25, 2026",https://SborNutra.github.io/gallery01/assets/pics/DarkStar-1500x1500.jpg,"3d, Abstract",,,1500x1500,,,0,0,0,0
 MatStudy,"Apr 17, 2025",https://SborNutra.github.io/gallery01/assets/pics/MatStudy-1080x1920.png,"3d, Abstract",,,1080x1920,,,240,204,0.0398,0.8042
@@ -44,8 +46,8 @@ shiftfield1,"Apr 7, 2025",https://SborNutra.github.io/gallery01/assets/pics/shif
 shiftfield2,"Apr 7, 2025",https://SborNutra.github.io/gallery01/assets/pics/shiftfield2-1080x1920.jpg,"2d, Abstract, Generative",,,1080x1920,,,239,47,0.0287,0.9525
 space1,"Sep 21, 2025",https://SborNutra.github.io/gallery01/assets/pics/space1-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,288,241,0.0221,0.7208
 spaceship1,"Jul 22, 2025",https://SborNutra.github.io/gallery01/assets/pics/spaceship1-1000x1000.jpg,"3d, Illustration",,,1000x1000,,,184,38,0.7253,0.2943
-spaceship2,"Jul 22, 2025",https://SborNutra.github.io/gallery01/assets/pics/spaceship2-1080x1920.jpg,"3d, Illustration",,,1080x1920,,,0,0,0,0
-star1,"Sep 21, 2025",https://SborNutra.github.io/gallery01/assets/pics/star1-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,223,203,0.068,0.8743
+spaceship2,7/22/2025,https://SborNutra.github.io/gallery01/assets/pics/spaceship2-1080x1920.jpg,"3d, Illustration",,,1080x1920,,,0,0,0,0
+star1,9/21/2025,https://SborNutra.github.io/gallery01/assets/pics/star1-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,223,203,0.068,0.8743
 tBank,8/20/2025,https://SborNutra.github.io/gallery01/assets/pics/tBank-1500x1200.jpg,"3d, Illustration",,,1500x1200,,,54,36,0.7639,0.9306
 targetRainbow,8/16/2025,https://SborNutra.github.io/gallery01/assets/pics/targetRainbow-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,0,49,0.0382,0.9739
 targetRainbow2,8/16/2025,https://SborNutra.github.io/gallery01/assets/pics/targetRainbow2-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,120,0,0.0434,1
