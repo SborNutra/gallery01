@@ -1,10 +1,10 @@
 id,date,image,tags,project_url,caption,resolution,,https://script.google.com/u/0/home/projects/1GPsKSg1ipb4WJSjiYzCKSBVxh6KBv3esRBxa2aawCiD-jbVFR_PZWpF_/edit,dominantHue,secondaryHue,weight,saturation
-Beam1,,https://SborNutra.github.io/gallery01/assets/pics/Beam1-1559x1080.jpg,,,,1559x1080,,,,,,
-Butterfly,"Mar 23, 2026",https://SborNutra.github.io/gallery01/assets/pics/Butterfly-1080x1920.webm,,,,1080x1920,,,,,,
+Beam1,"Jan 28, 2026",https://SborNutra.github.io/gallery01/assets/pics/Beam1-1559x1080.jpg,"2d, Illustration",,,1559x1080,,,226,262,0.1411,0.3125
+Butterfly,"Mar 23, 2026",https://SborNutra.github.io/gallery01/assets/pics/Butterfly-1080x1920.webm,"2d, Motion",,,1080x1920,,,320,0,0.7667,0.7118
 CorpseMetal,"Mar 6, 2026",https://SborNutra.github.io/gallery01/assets/pics/CorpseMetal-1000x1691.jpg,"3d, Abstract",,,1000x1691,,,211,193,0.0617,0.2735
 DarkStar,"Feb 25, 2026",https://SborNutra.github.io/gallery01/assets/pics/DarkStar-1500x1500.jpg,"3d, Abstract",,,1500x1500,,,0,0,0,0
 MatStudy,"Apr 17, 2025",https://SborNutra.github.io/gallery01/assets/pics/MatStudy-1080x1920.png,"3d, Abstract",,,1080x1920,,,240,204,0.0398,0.8042
-ParamLamp,"Mar 22, 2026",https://SborNutra.github.io/gallery01/assets/pics/ParamLamp-3000x3000.jpg,"3d, Illustration, Generative",,,3000x3000,,,35,16,0.0946,0.6749
+ParamLamp,"Mar 24, 2026",https://SborNutra.github.io/gallery01/assets/pics/ParamLamp-3000x3000.jpg,"3d, Illustration, Generative",,,3000x3000,,,35,16,0.0946,0.6749
 Scribble,"Jan 1, 2026",https://SborNutra.github.io/gallery01/assets/pics/Scribble-1500x1500.jpg,"2d, Abstract",,,1500x1500,,,68,206,0.0629,0.6067
 WiggleCircle,"Feb 11, 2026",https://SborNutra.github.io/gallery01/assets/pics/WiggleCircle-1080x1920.webm,"2d, Motion",,,1080x1920,,,60,180,0.3442,0.8893
 alinom1,"Dec 5, 2024",https://SborNutra.github.io/gallery01/assets/pics/alinom1-1700x1000.jpg,"3d, Abstract",,,1700x1000,,,246,264,0.0585,0.651
@@ -53,3 +53,5 @@ targetRainbow,8/16/2025,https://SborNutra.github.io/gallery01/assets/pics/target
 targetRainbow2,8/16/2025,https://SborNutra.github.io/gallery01/assets/pics/targetRainbow2-1000x1000.jpg,"3d, Abstract",,,1000x1000,,,120,0,0.0434,1
 ,8/27/2025,https://SborNutra.github.io/gallery01/assets/pics/volume1-1000x1000.jpg,"3d, Abstract",,,,,,213,183,0.0281,0.8196
 ,12/3/2025,https://SborNutra.github.io/gallery01/assets/pics/zorcheCover2-1000x1000.jpg,2d,,,,,,0,0,0,0
+,,assets/pics/Speaker-1500x1500.jpg,,,,,,,34,183,0.2163,0.975
+,,assets/pics/Vase-1080x1920.jpg,,,,,,,0,31,0.0359,0.7449
