@@ -1,0 +1,163 @@
+/* --------------------
+// CASES PAGE
+---------------------*/
+
+.controls.controls--cases {
+  grid-template-columns: 1fr;
+}
+
+.controls.controls--cases .filters {
+  grid-column: 1;
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 1rem;
+  padding: 0 var(--layout-gutter) 6rem;
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: #fff;
+  text-decoration: none;
+}
+
+.case-card--featured {
+  grid-column: 1 / -1;
+}
+
+.case-media {
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+}
+
+.case-card--featured .case-media {
+  aspect-ratio: 16 / 9;
+}
+
+.case-media img,
+.case-media video {
+  transition: opacity 0.3s ease-in, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.case-card:hover .case-media img,
+.case-card:hover .case-media video {
+  transform: scale(1.03);
+}
+
+.case-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  font-family: 'SuisseIntl', sans-serif;
+}
+
+.case-title-block {
+  min-width: 0;
+}
+
+.case-title {
+  margin: 0;
+  font-family: 'SuisseIntl', sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  transition: transform 0.2s ease;
+  transform-origin: left center;
+}
+
+.case-card--featured .case-title {
+  font-size: 1.6rem;
+}
+
+.case-card:hover .case-title {
+  font-family: 'InstrumentSerif', serif;
+  letter-spacing: 0.5px;
+}
+
+.case-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.case-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+  max-width: 50%;
+  font-size: 0.75rem;
+}
+
+.case-year {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.15rem 0.5rem;
+}
+
+.case-tags span {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+  .cases-grid {
+    gap: 2rem 0.75rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .cases-grid {
+    width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 0 4rem;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 700px) {
+  .controls.controls--cases {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'filters';
+  }
+
+  .controls.controls--cases .filters {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+
+  .cases-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .case-media,
+  .case-card--featured .case-media {
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+  }
+
+  .case-title,
+  .case-card--featured .case-title {
+    font-size: 1.1rem;
+  }
+
+  .case-side {
+    font-size: 0.7rem;
+  }
+}

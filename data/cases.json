@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Milo Concert Hall",
+    "subtitle": "Rebranding",
+    "year": "2024",
+    "cover": "https://files.mediiia.ru/projectimages/2401/b16b26df27be43d29514c50223b8b464/bc87e3f124f84c4cbe6144afe2250b431152x1626.jpg",
+    "tags": ["branding", "identity"],
+    "url": "https://hsedesign.ru/project/bb3a47426f364d2488edaa9a18320e26",
+    "featured": true,
+    "hidden": false
+  },
+  {
+    "title": "Futura Law",
+    "subtitle": "Branding & website for a legal firm",
+    "year": "2025",
+    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/2bffbc238411575.6931866f056e2.png",
+    "tags": ["branding", "identity", "web"],
+    "url": "https://www.behance.net/gallery/238411575/Futura-Law-Branding-website-for-a-legal-firm",
+    "featured": false,
+    "hidden": false
+  },
+  {
+    "title": "Sotka online school",
+    "subtitle": "Rebranding",
+    "year": "2025",
+    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/0e990c236752675.6949b6b9ea0bf.jpg",
+    "tags": ["branding", "identity", "illustration"],
+    "url": "https://www.behance.net/gallery/236752675/Sotka-online-school-Rebranding",
+    "featured": false,
+    "hidden": false
+  },
+  {
+    "title": "Nizhny Novgorod Planetarium",
+    "subtitle": "Rebranding",
+    "year": "2025",
+    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/c80d1d227587827.68429f64ccf2b.jpg",
+    "tags": ["branding", "identity", "environment"],
+    "url": "https://www.behance.net/gallery/227587827/nizhegorodskij-planetarij-rebrending",
+    "featured": false,
+    "hidden": false
+  },
+  {
+    "title": "Month of types",
+    "subtitle": "Typographic series",
+    "year": "2023",
+    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/3c06ab160348847.63b588495b679.png",
+    "tags": ["typography", "3d", "motion"],
+    "url": "https://www.behance.net/gallery/160348847/Month-of-types",
+    "featured": false,
+    "hidden": false
+  }
+]

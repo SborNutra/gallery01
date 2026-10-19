@@ -1,0 +1,45 @@
+# Pages CMS config — admin panel at https://app.pagescms.org (log in with GitHub, pick this repo).
+# Only the "cases" section is managed here; shards keep working as before.
+
+media:
+  input: assets/cases
+  output: /assets/cases
+
+content:
+  - name: cases
+    label: Cases
+    type: file
+    path: data/cases.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle (e.g. "Rebranding")
+        type: string
+      - name: year
+        label: Year
+        type: string
+      - name: cover
+        label: Cover (jpg / png / webp / gif)
+        type: image
+        options:
+          extensions: [jpg, jpeg, png, webp, gif]
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: url
+        label: Link to the case (Behance, hsedesign…)
+        type: string
+      - name: featured
+        label: Big card (full width)
+        type: boolean
+        default: false
+      - name: hidden
+        label: Hidden (draft)
+        type: boolean
+        default: false

@@ -11,6 +11,7 @@
 
         <nav class="header__nav">
           <a href="index.html" data-nav="shards" class="rainbow-hover">shards</a>
+          <a href="cases.html" data-nav="cases" class="rainbow-hover">cases</a>
         </nav>
 
         <a href="https://t.me/sbor_ntra"
