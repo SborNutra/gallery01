@@ -13,6 +13,7 @@ and can be run locally: python scripts/optimize_media.py
 """
 from __future__ import annotations
 
+import base64
 import hashlib
 import io
 import json
@@ -144,6 +145,28 @@ def download(url: str) -> bytes:
         return resp.read()
 
 
+def behance_cover_crop(url: str, data: bytes) -> bytes:
+    """Behance cover links carry the crop in the file name (base64 "crop,w,h,x,y").
+    The /projects/original/ file is uncropped, so apply that crop ourselves."""
+    match = re.search(r"behance\.net/projects/[^/]+/[0-9a-f]+\.([A-Za-z0-9_-]+)\.\w+$", url)
+    if not match:
+        return data
+    try:
+        token = match.group(1)
+        parts = base64.urlsafe_b64decode(token + "=" * (-len(token) % 4)).decode().split(",")
+        if parts[0] != "crop":
+            return data
+        w, h, x, y = (int(v) for v in parts[1:5])
+        im = Image.open(io.BytesIO(data))
+        if im.width < x + w or im.height < y + h:
+            return data  # already the cropped version
+        out = io.BytesIO()
+        im.convert("RGBA" if im.mode in ("RGBA", "LA", "P") else "RGB").crop((x, y, x + w, y + h)).save(out, "PNG")
+        return out.getvalue()
+    except Exception:
+        return data
+
+
 def localize(ref: str, target_name: str, max_width: int) -> str:
     """Return the new reference for an image (or the old one if nothing to do / failed)."""
     if not ref:
@@ -157,7 +180,7 @@ def localize(ref: str, target_name: str, max_width: int) -> str:
 
     try:
         if is_remote(ref):
-            data = download(ref)
+            data = behance_cover_crop(ref, download(ref))
         else:
             src = local_path(ref)
             if not src.exists():
