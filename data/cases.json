@@ -59,6 +59,7 @@
   {
     "title": "Foxford",
     "subtitle": "Brand guide & 3D illustrations",
+    "year": "2025",
     "cover": "/assets/cases/foxford-cover.webp",
     "gallery": [
       "/assets/cases/foxford-1.webp",
@@ -96,6 +97,7 @@
   {
     "title": "Alinom",
     "subtitle": "Explainer film & motion",
+    "year": "2025",
     "cover": "/assets/cases/alinom-cover.webp",
     "cover_video": [
       "/assets/cases/video/alinom-loop.webm",
@@ -111,8 +113,7 @@
     ],
     "url": "https://www.alinom.com/",
     "featured": true,
-    "hidden": false,
-    "gallery": []
+    "hidden": false
   },
   {
     "title": "Upcycle typeface",
