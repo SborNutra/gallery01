@@ -28,6 +28,20 @@ content:
         type: image
         options:
           extensions: [jpg, jpeg, png, webp, gif]
+      - name: cover_video
+        label: Cover video loop (optional, silent, 5–10 s — webm and/or mp4)
+        type: file
+        options:
+          multiple:
+            max: 2
+          extensions: [webm, mp4]
+      - name: film
+        label: Full film (optional — adds a "watch film" button; webm and/or mp4)
+        type: file
+        options:
+          multiple:
+            max: 2
+          extensions: [webm, mp4]
       - name: gallery
         label: Hover frames (2–4 pictures shown on hover)
         type: image

@@ -2,11 +2,17 @@
 // CASES PAGE
 ---------------------*/
 
+/* styles.css pads both html and body under the fixed header; on cases keep only one of them,
+   so the grid starts a regular distance below the header */
+html:has(body[data-page="cases"]) {
+  padding-top: 0;
+}
+
 .cases-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2.5rem 1rem;
-  padding: 2.5rem var(--layout-gutter) 6rem;
+  padding: 1rem var(--layout-gutter) 6rem;
 }
 
 .case-card {
@@ -53,6 +59,11 @@
 
 .media-wrapper.loaded .case-slide.is-visible {
   opacity: 1;
+}
+
+/* frames hidden underneath the top one disappear without a fade */
+.media-wrapper .case-slide.is-instant {
+  transition: none;
 }
 
 .case-progress {
@@ -193,7 +204,7 @@
   .cases-grid {
     width: var(--content-width);
     margin: 0 auto;
-    padding: 1.5rem 0 4rem;
+    padding: 0.5rem 0 4rem;
     box-sizing: border-box;
   }
 }
@@ -202,7 +213,7 @@
   .cases-grid {
     grid-template-columns: 1fr;
     gap: 1.75rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
   }
 
   .case-media,
@@ -218,5 +229,99 @@
 
   .case-side {
     font-size: 0.7rem;
+  }
+}
+
+/* silent loop over the cover: fades in once it actually plays */
+.media-wrapper .case-cover-video {
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.media-wrapper.loaded .case-cover-video.is-playing {
+  opacity: 1;
+}
+
+/* "watch film" */
+.case-film-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem 0.75rem 0.4rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.case-film-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.04);
+}
+
+.case-film-btn__icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.3rem 0 0.3rem 0.5rem;
+  border-color: transparent transparent transparent currentColor;
+}
+
+/* film player */
+.film-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.film-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.film-overlay__frame video {
+  display: block;
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  background: #000;
+}
+
+.film-overlay__close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 0.5rem;
+  border: 0;
+  background: none;
+  color: #fff;
+  opacity: 0.7;
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.film-overlay__close:hover {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .film-overlay__frame video {
+    max-width: 100vw;
+    border-radius: 0;
   }
 }

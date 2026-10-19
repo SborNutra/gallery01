@@ -4,11 +4,13 @@
     "subtitle": "Rebranding",
     "year": "2026",
     "cover": "/assets/cases/milo-concert-hall-cover.webp",
+    "cover_video": [],
     "gallery": [
       "/assets/cases/milo-concert-hall-1.webp",
       "/assets/cases/milo-concert-hall-2.webp",
       "/assets/cases/milo-concert-hall-3.webp"
     ],
+    "film": [],
     "tags": [
       "branding",
       "identity",
@@ -23,11 +25,13 @@
     "subtitle": "Branding & website for a legal firm",
     "year": "2025",
     "cover": "/assets/cases/futura-law-cover.webp",
+    "cover_video": [],
     "gallery": [
       "/assets/cases/futura-law-1.webp",
       "/assets/cases/futura-law-2.webp",
       "/assets/cases/futura-law-3.webp"
     ],
+    "film": [],
     "tags": [
       "branding",
       "identity",
@@ -42,11 +46,13 @@
     "subtitle": "Rebranding",
     "year": "2025",
     "cover": "/assets/cases/sotka-online-school-cover.webp",
+    "cover_video": [],
     "gallery": [
       "/assets/cases/sotka-online-school-1.webp",
       "/assets/cases/sotka-online-school-2.webp",
       "/assets/cases/sotka-online-school-3.webp"
     ],
+    "film": [],
     "tags": [
       "branding",
       "identity",
@@ -60,8 +66,14 @@
     "title": "Foxford",
     "subtitle": "Brand guide & 3D illustrations",
     "year": "",
-    "cover": "",
-    "gallery": [],
+    "cover": "/assets/cases/foxford-cover.webp",
+    "cover_video": [],
+    "gallery": [
+      "/assets/cases/foxford-1.webp",
+      "/assets/cases/foxford-2.webp",
+      "/assets/cases/foxford-3.webp"
+    ],
+    "film": [],
     "tags": [
       "3d",
       "illustration",
@@ -76,11 +88,13 @@
     "subtitle": "Rebranding",
     "year": "2025",
     "cover": "/assets/cases/nizhny-novgorod-planetarium-cover.webp",
+    "cover_video": [],
     "gallery": [
       "/assets/cases/nizhny-novgorod-planetarium-1.webp",
       "/assets/cases/nizhny-novgorod-planetarium-2.webp",
       "/assets/cases/nizhny-novgorod-planetarium-3.webp"
     ],
+    "film": [],
     "tags": [
       "branding",
       "identity",
@@ -92,11 +106,17 @@
   },
   {
     "title": "Alinom",
-    "subtitle": "Motion & brand film",
+    "subtitle": "Explainer film & motion",
     "year": "",
     "cover": "/assets/cases/alinom-cover.webp",
-    "gallery": [
-      "/assets/cases/alinom-1.webp"
+    "cover_video": [
+      "/assets/cases/video/alinom-loop.webm",
+      "/assets/cases/video/alinom-loop.mp4"
+    ],
+    "gallery": [],
+    "film": [
+      "/assets/cases/video/alinom-film.webm",
+      "/assets/cases/video/alinom-film.mp4"
     ],
     "tags": [
       "motion",
@@ -111,11 +131,13 @@
     "subtitle": "Display typeface for Mashupble parties",
     "year": "2023",
     "cover": "/assets/cases/upcycle-typeface-cover.webp",
+    "cover_video": [],
     "gallery": [
       "/assets/cases/upcycle-typeface-1.webp",
       "/assets/cases/upcycle-typeface-2.webp",
       "/assets/cases/upcycle-typeface-3.webp"
     ],
+    "film": [],
     "tags": [
       "typography",
       "type design"
@@ -129,11 +151,13 @@
     "subtitle": "Typographic series",
     "year": "2023",
     "cover": "/assets/cases/month-of-types-cover.webp",
+    "cover_video": [],
     "gallery": [
       "/assets/cases/month-of-types-1.webp",
       "/assets/cases/month-of-types-2.webp",
       "/assets/cases/month-of-types-3.webp"
     ],
+    "film": [],
     "tags": [
       "typography",
       "3d",
