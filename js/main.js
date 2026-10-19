@@ -62,7 +62,7 @@ function applyRandomRainbowStart() {
 
 function setupRandomRainbowHover() {
   document.addEventListener('mouseenter', (event) => {
-    const hoverTarget = event.target.closest('.filters button, .card-tags span');
+    const hoverTarget = event.target.closest && event.target.closest('.filters button, .card-tags span');
     if (!hoverTarget) return;
 
     setRandomRainbowPhase(hoverTarget);
@@ -86,11 +86,26 @@ function openOverlay(mediaElement) {
   const clone = mediaElement.cloneNode(true);
 
   if (clone.tagName === 'VIDEO') {
+    if (!clone.getAttribute('src') && clone.dataset.src) clone.src = clone.dataset.src;
     clone.autoplay = true;
     clone.muted = true;
     clone.loop = true;
     clone.controls = false;
-    clone.play();
+    const playing = clone.play();
+    if (playing) playing.catch(() => {});
+  }
+
+  // the grid shows a light preview; the overlay swaps in the full-size original once it's loaded
+  if (clone.tagName === 'IMG') {
+    clone.loading = 'eager';
+    const fullSrc = mediaElement.dataset.full;
+    if (fullSrc && clone.src !== fullSrc) {
+      const full = new Image();
+      full.onload = () => {
+        if (overlayContent.contains(clone)) clone.src = fullSrc;
+      };
+      full.src = fullSrc;
+    }
   }
 
   overlayContent.appendChild(clone);
@@ -145,24 +160,59 @@ function toggleSortDirection() {
   resetRender();
 }
 
+// assets/pics/Name.jpg → assets/pics/thumbs/Name.webp (built by scripts/optimize_media.py)
+function getThumbUrl(url) {
+  const match = /assets\/pics\/([^/?#]+)\.(jpe?g|png|webp|gif)(?:[?#].*)?$/i.exec(url || '');
+  if (!match) return '';
+  return `${url.slice(0, match.index)}assets/pics/thumbs/${match[1]}.webp`;
+}
+
+// videos start downloading only when they get close to the screen, and pause off-screen
+const videoObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries) => {
+    entries.forEach(({ target: video, isIntersecting }) => {
+      if (isIntersecting) {
+        if (!video.getAttribute('src')) video.src = video.dataset.src;
+        const playing = video.play();
+        if (playing) playing.catch(() => {});
+      } else if (!video.paused) {
+        video.pause();
+      }
+    });
+  }, { rootMargin: '300px 0px' })
+  : null;
+
 function createMediaElement(url) {
   const type = getMediaType(url);
 
   if (type === 'video') {
     const video = document.createElement('video');
-    video.src = url;
-    video.autoplay = true;
+    video.dataset.src = url;
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
-    video.preload = 'metadata';
-    video.loading = 'lazy';
+    video.preload = 'none';
+    if (videoObserver) {
+      videoObserver.observe(video);
+    } else {
+      video.src = url;
+      video.autoplay = true;
+    }
     return video;
   }
 
   const img = document.createElement('img');
-  img.src = url;
+  const thumb = getThumbUrl(url);
+  img.dataset.full = url;
   img.loading = 'lazy';
+  img.decoding = 'async';
+  if (thumb) {
+    // no thumbnail yet (e.g. right after upload) → quietly fall back to the original
+    img.addEventListener('error', () => {
+      if (img.src !== url) img.src = url;
+    }, { once: true });
+  }
+  img.src = thumb || url;
   return img;
 }
 
@@ -590,26 +640,62 @@ function renderTagFilters() {
 // --------------------
 // LOAD DATA
 // --------------------
-Promise.all([
-  fetch(CSV_URL).then(res => res.text()),
-  fetch(COLOR_INDEX_URL).then(res => res.ok ? res.text() : '')
-])
-  .then(([sourceCsvText, colorCsvText]) => {
-    const parsed = Papa.parse(sourceCsvText, {
-      header: true,
-      skipEmptyLines: true
-    });
+// data/image-index.csv is a same-origin copy of the Google Sheet (kept by the Color Index
+// workflow), so the grid is drawn from it right away. The live sheet is still fetched in the
+// background, and the grid is redrawn only if the sheet has something the copy doesn't.
+const ROW_FIELDS = ['id', 'date', 'image', 'tags', 'project_url', 'caption', 'resolution'];
+let colorIndexMap = new Map();
+let controlsReady = false;
+let dataSignature = '';
 
-    const colorIndexMap = colorCsvText ? parseColorIndexRows(colorCsvText) : new Map();
+function parseRows(text) {
+  if (!text) return [];
+  return Papa.parse(text, { header: true, skipEmptyLines: true })
+    .data
+    .filter(row => (row.image || '').trim());
+}
 
-    items = buildItems(parsed.data, colorIndexMap);
-    sortItemsByDate();
-    renderTagFilters();
+function rowsSignature(rows) {
+  return JSON.stringify(rows.map(row => ROW_FIELDS.map(key => (row[key] || '').trim())));
+}
+
+function applyRows(rows) {
+  if (!rows.length) return;
+  const signature = rowsSignature(rows);
+  if (signature === dataSignature) return;
+  dataSignature = signature;
+
+  cardCache.clear();
+  items = buildItems(rows, colorIndexMap);
+  sortItemsByDate();
+
+  filtersContainer.innerHTML = '';
+  renderTagFilters();
+  if (currentFilter !== 'all' && !items.some(item => item.tags.includes(currentFilter))) {
+    currentFilter = 'all';
+  }
+
+  if (!controlsReady) {
+    controlsReady = true;
     setupHueFilterControls();
     setupFilterScrollGuard();
     updateSortToggleLabel();
-    resetRender();
+  }
+
+  setActiveFilter(currentFilter);
+}
+
+const sheetRequest = fetch(CSV_URL).then(res => (res.ok ? res.text() : '')).catch(() => '');
+
+fetch(COLOR_INDEX_URL, { cache: 'no-cache' })
+  .then(res => (res.ok ? res.text() : ''))
+  .catch(() => '')
+  .then((localText) => {
+    colorIndexMap = localText ? parseColorIndexRows(localText) : new Map();
+    applyRows(parseRows(localText));
+    return sheetRequest;
   })
+  .then(sheetText => applyRows(parseRows(sheetText)))
   .catch(err => console.error('Ошибка загрузки CSV:', err));
 
 if (sortToggleButton) {

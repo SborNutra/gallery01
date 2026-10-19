@@ -2,19 +2,11 @@
 // CASES PAGE
 ---------------------*/
 
-.controls.controls--cases {
-  grid-template-columns: 1fr;
-}
-
-.controls.controls--cases .filters {
-  grid-column: 1;
-}
-
 .cases-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2.5rem 1rem;
-  padding: 0 var(--layout-gutter) 6rem;
+  padding: 2.5rem var(--layout-gutter) 6rem;
 }
 
 .case-card {
@@ -23,6 +15,7 @@
   min-width: 0;
   color: #fff;
   text-decoration: none;
+  outline: none;
 }
 
 .case-card--featured {
@@ -32,6 +25,7 @@
 .case-media {
   aspect-ratio: 4 / 3;
   border-radius: 8px;
+  isolation: isolate;
 }
 
 .case-card--featured .case-media {
@@ -40,14 +34,90 @@
 
 .case-media img,
 .case-media video {
-  transition: opacity 0.3s ease-in, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: opacity 0.3s ease-in, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .case-card:hover .case-media img,
-.case-card:hover .case-media video {
-  transform: scale(1.03);
+.case-card:hover .case-media video,
+.case-card:focus-visible .case-media img {
+  transform: scale(1.025);
 }
 
+/* hover slideshow: extra frames sit on top of the cover and crossfade in */
+.media-wrapper .case-slide,
+.media-wrapper.loaded .case-slide {
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.45s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.media-wrapper.loaded .case-slide.is-visible {
+  opacity: 1;
+}
+
+.case-progress {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 4;
+  display: flex;
+  gap: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.case-card.is-playing .case-progress {
+  opacity: 1;
+}
+
+.case-progress span {
+  flex: 1 1 0;
+  max-width: 2.5rem;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background-color 0.25s ease;
+}
+
+.case-progress span.is-active {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* no cover yet */
+.case-media--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 90% at 20% 110%, rgba(142, 46, 255, 0.18), transparent 60%),
+    radial-gradient(90% 80% at 90% -10%, rgba(44, 170, 255, 0.14), transparent 60%),
+    #161616;
+}
+
+.case-placeholder {
+  position: relative;
+  z-index: 2;
+  font-family: 'InstrumentSerif', serif;
+  font-style: italic;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.case-card:hover .case-placeholder {
+  background: linear-gradient(120deg, #ff3b3b, #ff9f1c, #fffc3c, #2effc5, #2caaff, #8e2eff, #ff3b3b);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowFlow 4s linear infinite;
+}
+
+/* meta */
 .case-meta {
   display: flex;
   justify-content: space-between;
@@ -67,16 +137,16 @@
   font-weight: 400;
   font-size: 1.25rem;
   line-height: 1.2;
-  transition: transform 0.2s ease;
-  transform-origin: left center;
 }
 
 .case-card--featured .case-title {
   font-size: 1.6rem;
 }
 
-.case-card:hover .case-title {
+.case-card:hover .case-title,
+.case-card:focus-visible .case-title {
   font-family: 'InstrumentSerif', serif;
+  font-style: italic;
   letter-spacing: 0.5px;
 }
 
@@ -106,10 +176,10 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.15rem 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .case-tags span {
-  cursor: pointer;
   white-space: nowrap;
 }
 
@@ -123,27 +193,16 @@
   .cases-grid {
     width: var(--content-width);
     margin: 0 auto;
-    padding: 0 0 4rem;
+    padding: 1.5rem 0 4rem;
     box-sizing: border-box;
   }
 }
 
 @media (max-width: 700px) {
-  .controls.controls--cases {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'filters';
-  }
-
-  .controls.controls--cases .filters {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    justify-self: stretch;
-  }
-
   .cases-grid {
     grid-template-columns: 1fr;
     gap: 1.75rem;
+    padding-top: 1rem;
   }
 
   .case-media,

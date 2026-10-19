@@ -2,9 +2,18 @@
   {
     "title": "Milo Concert Hall",
     "subtitle": "Rebranding",
-    "year": "2024",
-    "cover": "https://files.mediiia.ru/projectimages/2401/b16b26df27be43d29514c50223b8b464/bc87e3f124f84c4cbe6144afe2250b431152x1626.jpg",
-    "tags": ["branding", "identity"],
+    "year": "2026",
+    "cover": "https://files.mediiia.ru/postimages/46366/27ae902e43a6483cbd6a092fc515d797/1ece78ce80664733938f12d43221b4ba1440x810.png",
+    "gallery": [
+      "https://files.mediiia.ru/postimages/46466/7bd8d9be112c41f39960fefd89fd4565/14a47b7c67ca4a5881e5848e8acc03f81440x810.png",
+      "https://files.mediiia.ru/postimages/46550/3b4557f8a64943ea9ac9bfbf5726c89a/b0ff2be60da846c19434275b771a4a411440x810.png",
+      "https://files.mediiia.ru/postimages/47621/cd1c06cb2ff940fb851fd87adaf8b12a/41f01726d9fb484e92f8109836985a751440x810.png"
+    ],
+    "tags": [
+      "branding",
+      "identity",
+      "3d"
+    ],
     "url": "https://hsedesign.ru/project/bb3a47426f364d2488edaa9a18320e26",
     "featured": true,
     "hidden": false
@@ -13,8 +22,17 @@
     "title": "Futura Law",
     "subtitle": "Branding & website for a legal firm",
     "year": "2025",
-    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/2bffbc238411575.6931866f056e2.png",
-    "tags": ["branding", "identity", "web"],
+    "cover": "https://mir-s3-cdn-cf.behance.net/projects/original/b1efa9238411575.Y3JvcCwxMzUzLDEwNTgsMCw2.png",
+    "gallery": [
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/d36495238411575.6931866f04ae2.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/b2fd60238411575.6931866f03c46.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/328266238411575.693188d3f11f4.png"
+    ],
+    "tags": [
+      "branding",
+      "identity",
+      "web"
+    ],
     "url": "https://www.behance.net/gallery/238411575/Futura-Law-Branding-website-for-a-legal-firm",
     "featured": false,
     "hidden": false
@@ -23,9 +41,33 @@
     "title": "Sotka online school",
     "subtitle": "Rebranding",
     "year": "2025",
-    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/0e990c236752675.6949b6b9ea0bf.jpg",
-    "tags": ["branding", "identity", "illustration"],
+    "cover": "https://mir-s3-cdn-cf.behance.net/projects/original/acc2a5236752675.Y3JvcCw4MDgsNjMyLDAsMA.png",
+    "gallery": [
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/5cfb4d236752675.6949b6b9ed946.jpg",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/6c52a3236752675.6949b6b9ebc71.jpg",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/a97ed5236752675.6949b6b9e7e3a.jpg"
+    ],
+    "tags": [
+      "branding",
+      "identity",
+      "illustration"
+    ],
     "url": "https://www.behance.net/gallery/236752675/Sotka-online-school-Rebranding",
+    "featured": false,
+    "hidden": false
+  },
+  {
+    "title": "Foxford",
+    "subtitle": "Brand guide & 3D illustrations",
+    "year": "",
+    "cover": "",
+    "gallery": [],
+    "tags": [
+      "3d",
+      "illustration",
+      "guidelines"
+    ],
+    "url": "https://foxford.ru/",
     "featured": false,
     "hidden": false
   },
@@ -33,9 +75,52 @@
     "title": "Nizhny Novgorod Planetarium",
     "subtitle": "Rebranding",
     "year": "2025",
-    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/c80d1d227587827.68429f64ccf2b.jpg",
-    "tags": ["branding", "identity", "environment"],
+    "cover": "https://mir-s3-cdn-cf.behance.net/projects/original/016448227587827.Y3JvcCw4MDgsNjMyLDAsMA.png",
+    "gallery": [
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/8e2dea227587827.6842bc364df7a.jpg",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/c7d65d227587827.6842bc36521b1.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/029d19227587827.6843f0516a546.png"
+    ],
+    "tags": [
+      "branding",
+      "identity",
+      "environment"
+    ],
     "url": "https://www.behance.net/gallery/227587827/nizhegorodskij-planetarij-rebrending",
+    "featured": false,
+    "hidden": false
+  },
+  {
+    "title": "Alinom",
+    "subtitle": "Motion & brand film",
+    "year": "",
+    "cover": "/assets/cases/alinom-cover.webp",
+    "gallery": [
+      "/assets/cases/alinom-1.webp"
+    ],
+    "tags": [
+      "motion",
+      "3d"
+    ],
+    "url": "https://www.alinom.com/",
+    "featured": false,
+    "hidden": false
+  },
+  {
+    "title": "Upcycle typeface",
+    "subtitle": "Display typeface for Mashupble parties",
+    "year": "2023",
+    "cover": "https://files.mediiia.ru/postimages/9211/fccc0485691440f59bece74c5807e4c0/6ef8084cf3d14e378ea8c88da36062d21440x810.jpg",
+    "gallery": [
+      "https://files.mediiia.ru/postimages/9211/a7d246ddd8bc4e6ab8b72e4ddc30e8f3/e945a5e3e91c45d4ba1caa776661cf5e1440x810.jpg",
+      "https://files.mediiia.ru/postimages/9211/d345242db31e4e8eabd11aeafcfb94e2/b177c41887be4c43ad8587418960c5481440x810.jpg",
+      "https://files.mediiia.ru/postimages/9243/fbbe7bafc93942f0ae07d4ac66543069/2a26b6842e8f41a7be4fe3d8979dc51f1920x1080.gif"
+    ],
+    "tags": [
+      "typography",
+      "type design"
+    ],
+    "url": "https://hsedesign.ru/project/1262d1b79855480b9f66f4aea3caff02",
     "featured": false,
     "hidden": false
   },
@@ -43,8 +128,17 @@
     "title": "Month of types",
     "subtitle": "Typographic series",
     "year": "2023",
-    "cover": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/3c06ab160348847.63b588495b679.png",
-    "tags": ["typography", "3d", "motion"],
+    "cover": "https://mir-s3-cdn-cf.behance.net/projects/original/fa6f4a160348847.Y3JvcCwxOTk5LDE1NjQsMCwzNA.jpg",
+    "gallery": [
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/ae2a5c160348847.63b5934cbabe2.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/809711160348847.63b5887a4eab4.png",
+      "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/c51f84160348847.63b58d8c333f1.png"
+    ],
+    "tags": [
+      "typography",
+      "3d",
+      "motion"
+    ],
     "url": "https://www.behance.net/gallery/160348847/Month-of-types",
     "featured": false,
     "hidden": false

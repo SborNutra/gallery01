@@ -24,9 +24,16 @@ content:
         label: Year
         type: string
       - name: cover
-        label: Cover (jpg / png / webp / gif)
+        label: Cover (any size — it is compressed automatically)
         type: image
         options:
+          extensions: [jpg, jpeg, png, webp, gif]
+      - name: gallery
+        label: Hover frames (2–4 pictures shown on hover)
+        type: image
+        options:
+          multiple:
+            max: 6
           extensions: [jpg, jpeg, png, webp, gif]
       - name: tags
         label: Tags
