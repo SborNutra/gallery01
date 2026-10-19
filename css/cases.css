@@ -71,7 +71,7 @@ html:has(body[data-page="cases"]) {
   left: 0.75rem;
   right: 0.75rem;
   bottom: 0.75rem;
-  z-index: 4;
+  z-index: 1000; /* above any number of stacked slides */
   display: flex;
   gap: 0.3rem;
   opacity: 0;
@@ -242,36 +242,76 @@ html:has(body[data-page="cases"]) {
   opacity: 1;
 }
 
-/* "watch film" */
+/* "watch film": a white pill on the picture */
 .case-film-btn {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1001;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  margin-top: 0.6rem;
-  padding: 0.4rem 0.75rem 0.4rem 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  gap: 0.65rem;
+  padding: 0.4rem 1.1rem 0.4rem 0.4rem;
+  border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #fff;
+  background: #fff;
+  color: #0e0e0e;
   font-family: 'SuisseIntl', sans-serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.case-film-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.04);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s ease;
 }
 
 .case-film-btn__icon {
-  width: 0;
-  height: 0;
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #0e0e0e;
+  flex: 0 0 auto;
+}
+
+.case-film-btn__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  transform: translate(-50%, -50%);
   border-style: solid;
-  border-width: 0.3rem 0 0.3rem 0.5rem;
-  border-color: transparent transparent transparent currentColor;
+  border-width: 0.4rem 0 0.4rem 0.65rem;
+  border-color: transparent transparent transparent #fff;
+}
+
+.case-film-btn:hover,
+.case-film-btn:focus-visible {
+  transform: scale(1.06);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+}
+
+.case-film-btn:hover .case-film-btn__label {
+  font-family: 'InstrumentSerif', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+.case-media.has-film .case-progress {
+  top: 0.75rem;
+  bottom: auto;
+}
+
+@media (max-width: 700px) {
+  .case-film-btn {
+    left: 0.75rem;
+    bottom: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .case-film-btn__icon {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
 }
 
 /* film player */

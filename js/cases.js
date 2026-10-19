@@ -267,6 +267,21 @@
       wrapper.appendChild(media);
       if (item.coverVideo.length) wrapper.appendChild(createCoverVideo(item.coverVideo));
       setupSlideshow(card, wrapper, item);
+      if (item.film.length) {
+        // big "play" pill right on the picture — the card itself still links to the site
+        wrapper.classList.add('has-film');
+        const filmBtn = document.createElement('button');
+        filmBtn.type = 'button';
+        filmBtn.className = 'case-film-btn';
+        filmBtn.setAttribute('aria-label', `Watch the ${item.title} film`);
+        filmBtn.innerHTML = '<span class="case-film-btn__icon" aria-hidden="true"></span><span class="case-film-btn__label">Watch film</span>';
+        filmBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openFilm(item.film, item.title, item.cover);
+        });
+        wrapper.appendChild(filmBtn);
+      }
     } else {
       // no cover yet: typographic placeholder instead of an endless shimmer
       wrapper.classList.add('loaded', 'case-media--empty');
@@ -291,18 +306,6 @@
       sub.className = 'case-subtitle';
       sub.textContent = item.subtitle;
       titleBlock.appendChild(sub);
-    }
-    if (item.film.length) {
-      const filmBtn = document.createElement('button');
-      filmBtn.type = 'button';
-      filmBtn.className = 'case-film-btn';
-      filmBtn.innerHTML = '<span class="case-film-btn__icon" aria-hidden="true"></span><span>watch film</span>';
-      filmBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openFilm(item.film, item.title, item.cover);
-      });
-      titleBlock.appendChild(filmBtn);
     }
     meta.appendChild(titleBlock);
 
