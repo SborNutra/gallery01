@@ -135,7 +135,7 @@
 // Empty = analytics off.
 // --------------------
 (function initAnalytics() {
-  const GOATCOUNTER_CODE = '';
+  const GOATCOUNTER_CODE = 'sbornutra1';
   if (!GOATCOUNTER_CODE || location.hostname === 'localhost') return;
   const script = document.createElement('script');
   script.async = true;
