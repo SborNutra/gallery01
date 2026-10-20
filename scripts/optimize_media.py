@@ -508,6 +508,31 @@ def build_og() -> int:
     return changed
 
 
+# --------------------------------------------------------------------------
+# Cache busting: css/x.css → css/x.css?v=<hash of the file>, so browsers never mix
+# a fresh page with an old cached script
+# --------------------------------------------------------------------------
+ASSET_REF = re.compile(r'((?:src|href)=")((?:css|js)/[\w./-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?(")')
+
+
+def stamp_assets() -> int:
+    changed = 0
+    for page in sorted(ROOT.glob("*.html")):
+        html = page.read_text(encoding="utf-8")
+
+        def repl(m: re.Match) -> str:
+            target = ROOT / m.group(2)
+            if not target.exists():
+                return m.group(0)
+            return f"{m.group(1)}{m.group(2)}?v={sha1(target.read_bytes())[:8]}{m.group(3)}"
+
+        new_html = ASSET_REF.sub(repl, html)
+        if new_html != html:
+            page.write_text(new_html, encoding="utf-8")
+            changed += 1
+    return changed
+
+
 def main() -> int:
     log("Shards data:")
     log(f"  shards.json {'updated' if fill_shards() else 'unchanged'}")
@@ -519,6 +544,7 @@ def main() -> int:
     log(f"  cases.json {'updated' if changed else 'unchanged'}")
     log(f"Feed: {'updated' if build_feed() else 'unchanged'}")
     log(f"Link previews: {build_og()} updated")
+    log(f"Cache stamps: {stamp_assets()} pages updated")
     return 0
 
 
