@@ -150,7 +150,9 @@ function renderOverlay(item) {
 
   const stage = document.createElement('div');
   stage.className = 'overlay-stage';
-  stage.appendChild(buildOverlayMedia(item));
+  const media = buildOverlayMedia(item);
+  if (item.aspectRatio) media.style.setProperty('--ratio', String(item.aspectRatio));
+  stage.appendChild(media);
   overlayContent.appendChild(stage);
 
   const bar = document.createElement('div');
@@ -181,7 +183,7 @@ function renderOverlay(item) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
     link.className = 'overlay-action rainbow-random-hover';
-    link.textContent = 'project ↗';
+    link.textContent = 'link ↗';
     actions.appendChild(link);
   }
   const copy = document.createElement('button');

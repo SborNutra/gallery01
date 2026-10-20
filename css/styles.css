@@ -655,9 +655,15 @@ body::-webkit-scrollbar {
 
 .overlay-content img,
 .overlay-content video {
-  max-width: 90vw;
-  max-height: calc(100vh - 9rem);
-  max-height: calc(100dvh - 9rem);
+  --box-w: 90vw;
+  --box-h: calc(100dvh - 9rem);
+  /* size comes from the work's proportions (--ratio), not from the file that happens to be loaded,
+     so the light preview and the original occupy exactly the same box */
+  width: min(var(--box-w), calc(var(--box-h) * var(--ratio, 1)));
+  height: auto;
+  aspect-ratio: var(--ratio, auto);
+  max-width: var(--box-w);
+  max-height: var(--box-h);
   object-fit: contain;
   border-radius: 8px;
   cursor: pointer;
@@ -755,8 +761,8 @@ body.overlay-open {
 
   .overlay-content img,
   .overlay-content video {
-    max-width: calc(100vw - 1.5rem);
-    max-height: calc(100dvh - 11rem);
+    --box-w: calc(100vw - 1.5rem);
+    --box-h: calc(100dvh - 11rem);
     border-radius: 14px;
   }
 

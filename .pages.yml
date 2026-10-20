@@ -37,7 +37,7 @@ content:
         label: Caption (optional)
         type: string
       - name: project_url
-        label: Project link (optional)
+        label: Link (optional — shown as «link ↗» when the work is open)
         type: string
       - name: id
         label: Link name (optional — filled from the file name, used in index.html#name)

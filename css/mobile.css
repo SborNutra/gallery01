@@ -321,3 +321,11 @@
     height: 2.75rem;
   }
 }
+
+/* shards on phones: styles.css pads both html and body under the fixed header —
+   keep only one of them (desktop keeps its larger gap on purpose) */
+@media (max-width: 700px) {
+  html:has(body[data-page="shards"]) {
+    padding-top: 0;
+  }
+}
