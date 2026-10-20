@@ -11,6 +11,7 @@ on:
       - 'scripts/update_color_index.py'
       - '.github/workflows/color-index.yml'
       - 'data/image-index.csv'
+      - 'data/shards.json'
 
 permissions:
   contents: write
@@ -18,8 +19,6 @@ permissions:
 jobs:
   color-index:
     runs-on: ubuntu-latest
-    env:
-      SOURCE_CSV_URL: https://docs.google.com/spreadsheets/d/e/2PACX-1vRb9gChhvriuPLiHwT0yJ7zOcxHsyNNxkGQsBRMreZHFxv_oIvgOZil9mdeLiF-LvBp_onplkqZtMLR/pub?gid=0&single=true&output=csv
 
     steps:
       - name: Checkout
@@ -42,7 +41,7 @@ jobs:
       - name: Update color index CSV
         run: |
           python scripts/update_color_index.py \
-            --csv-input "$SOURCE_CSV_URL" \
+            --csv-input data/shards.json \
             --csv-output data/image-index.csv
 
       - name: Commit updates

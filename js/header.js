@@ -128,3 +128,18 @@
   const observer = new MutationObserver(syncScrollbarSize);
   observer.observe(document.body, { childList: true, subtree: true });
 })();
+
+// --------------------
+// ANALYTICS — GoatCounter (free, no cookies, no consent banner).
+// Put your site code from goatcounter.com here, e.g. 'sbor' for sbor.goatcounter.com.
+// Empty = analytics off.
+// --------------------
+(function initAnalytics() {
+  const GOATCOUNTER_CODE = '';
+  if (!GOATCOUNTER_CODE || location.hostname === 'localhost') return;
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://gc.zgo.at/count.js';
+  script.dataset.goatcounter = `https://${GOATCOUNTER_CODE}.goatcounter.com/count`;
+  document.head.appendChild(script);
+})();

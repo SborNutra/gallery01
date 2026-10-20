@@ -1,0 +1,831 @@
+[
+  {
+    "id": "Beam1",
+    "date": "2026-01-28",
+    "image": "/assets/pics/Beam1-1559x1080.jpg",
+    "tags": [
+      "2d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1559x1080",
+    "hidden": false
+  },
+  {
+    "id": "Butterfly",
+    "date": "2026-03-23",
+    "image": "/assets/pics/Butterfly-1080x1920.webm",
+    "tags": [
+      "2d",
+      "Motion"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "Character",
+    "date": "2026-09-18",
+    "image": "/assets/pics/Character-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "Choko",
+    "date": "2026-09-07",
+    "image": "/assets/pics/Choko-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "https://www.instagram.com/reel/Db_UAOHuPJ2/?igsi=MWxjZm9jNm1ndDFtdQ==",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "CorpseMetal",
+    "date": "2026-03-06",
+    "image": "/assets/pics/CorpseMetal-1000x1691.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1691",
+    "hidden": false
+  },
+  {
+    "id": "Cross",
+    "date": "2026-08-13",
+    "image": "/assets/pics/Cross-1080x1920.webm",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "DarkStar",
+    "date": "2026-02-25",
+    "image": "/assets/pics/DarkStar-1500x1500.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1500x1500",
+    "hidden": false
+  },
+  {
+    "id": "Glass",
+    "date": "2026-09-14",
+    "image": "/assets/pics/Mantis-Glass-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "MatStudy",
+    "date": "2025-04-17",
+    "image": "/assets/pics/MatStudy-1080x1920.png",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "ParamLamp",
+    "date": "2026-03-24",
+    "image": "/assets/pics/ParamLamp-3000x3000.jpg",
+    "tags": [
+      "3d",
+      "Illustration",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "https://www.instagram.com/reel/DcoZJXsAnyI/?igsi=MW1zYWVmbGFydTJhdg==",
+    "resolution": "3000x3000",
+    "hidden": false
+  },
+  {
+    "id": "Room",
+    "date": "2026-09-28",
+    "image": "/assets/pics/Room-1080x1080.webm",
+    "tags": [
+      "3d",
+      "Illustration",
+      "Motion"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1080",
+    "hidden": false
+  },
+  {
+    "id": "Scribble",
+    "date": "2026-01-01",
+    "image": "/assets/pics/Scribble-1500x1500.jpg",
+    "tags": [
+      "2d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1500x1500",
+    "hidden": false
+  },
+  {
+    "id": "Speaker",
+    "date": "2026-08-23",
+    "image": "/assets/pics/Speaker-1500x1500.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1500x1500",
+    "hidden": false
+  },
+  {
+    "id": "Vase",
+    "date": "2026-08-29",
+    "image": "/assets/pics/Vase-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "WiggleCircle",
+    "date": "2026-02-11",
+    "image": "/assets/pics/WiggleCircle-1080x1920.webm",
+    "tags": [
+      "2d",
+      "Motion"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "WormRodeo",
+    "date": "2026-10-12",
+    "image": "/assets/pics/WormRodeo-1080x1920.webm",
+    "tags": [
+      "3d",
+      "Illustration",
+      "Motion"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "alinom1",
+    "date": "2024-12-05",
+    "image": "/assets/pics/alinom1-1700x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1700x1000",
+    "hidden": false
+  },
+  {
+    "id": "alinom2",
+    "date": "2024-12-05",
+    "image": "/assets/pics/alinom2-1700x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1700x1000",
+    "hidden": false
+  },
+  {
+    "id": "bacteria1",
+    "date": "2025-11-04",
+    "image": "/assets/pics/bacteria1-1000x1000.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "bacteria2",
+    "date": "2025-11-04",
+    "image": "/assets/pics/bacteria2-1080x1920.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "bacteria3",
+    "date": "2025-11-04",
+    "image": "/assets/pics/bacteria3-1000x1000.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "balls",
+    "date": "2025-09-21",
+    "image": "/assets/pics/balls-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "brelok",
+    "date": "2025-09-23",
+    "image": "/assets/pics/brelok-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "button",
+    "date": "2025-07-13",
+    "image": "/assets/pics/button-1000x562.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x562",
+    "hidden": false
+  },
+  {
+    "id": "bw",
+    "date": "2025-05-11",
+    "image": "/assets/pics/bw-1080x1355.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1355",
+    "hidden": false
+  },
+  {
+    "id": "bw1",
+    "date": "2025-05-11",
+    "image": "/assets/pics/bw1-642x909.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "642x909",
+    "hidden": false
+  },
+  {
+    "id": "bw2",
+    "date": "2025-05-11",
+    "image": "/assets/pics/bw2-642x909.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "642x909",
+    "hidden": false
+  },
+  {
+    "id": "bw3",
+    "date": "2025-05-11",
+    "image": "/assets/pics/bw3-1052x990.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1052x990",
+    "hidden": false
+  },
+  {
+    "id": "chair1",
+    "date": "2025-08-27",
+    "image": "/assets/pics/chair1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "clown",
+    "date": "2024-01-15",
+    "image": "/assets/pics/clown-1000x1500.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1500",
+    "hidden": false
+  },
+  {
+    "id": "cyany",
+    "date": "2025-08-20",
+    "image": "/assets/pics/cyany-1080x1080.jpg",
+    "tags": [
+      "2d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1080",
+    "hidden": false
+  },
+  {
+    "id": "cyany1",
+    "date": "2025-08-20",
+    "image": "/assets/pics/cyany1-1080x1080.jpg",
+    "tags": [
+      "2d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1080",
+    "hidden": false
+  },
+  {
+    "id": "cyany2",
+    "date": "2025-08-20",
+    "image": "/assets/pics/cyany2-1080x1080.jpg",
+    "tags": [
+      "2d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1080",
+    "hidden": false
+  },
+  {
+    "id": "eye1",
+    "date": "2025-08-27",
+    "image": "/assets/pics/eye1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "grayGate",
+    "date": "2026-01-19",
+    "image": "/assets/pics/grayGate-1249x1156.jpg",
+    "tags": [
+      "2d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1249x1156",
+    "hidden": false
+  },
+  {
+    "id": "landDisplace",
+    "date": "2025-07-29",
+    "image": "/assets/pics/landDisplace-1920x1080.webm",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative",
+      "Motion"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1920x1080",
+    "hidden": false
+  },
+  {
+    "id": "octopus",
+    "date": "2025-09-21",
+    "image": "/assets/pics/octopus-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "piano",
+    "date": "2022-12-07",
+    "image": "/assets/pics/piano-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "portrait1",
+    "date": "2026-02-07",
+    "image": "/assets/pics/portrait1-2511x2902.jpg",
+    "tags": [
+      "2d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "2511x2902",
+    "hidden": false
+  },
+  {
+    "id": "portrait3",
+    "date": "2026-02-08",
+    "image": "/assets/pics/portrait3-2480x3508.jpg",
+    "tags": [
+      "2d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "2480x3508",
+    "hidden": false
+  },
+  {
+    "id": "rainbow1",
+    "date": "2025-03-25",
+    "image": "/assets/pics/rainbow1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "rainbow2",
+    "date": "2025-03-26",
+    "image": "/assets/pics/rainbow2-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "rainbow2-2",
+    "date": "2025-03-17",
+    "image": "/assets/pics/rainbow2-560x990.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "560x990",
+    "hidden": false
+  },
+  {
+    "id": "rainbow3",
+    "date": "2025-03-20",
+    "image": "/assets/pics/rainbow3-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "rainbow3-2",
+    "date": "2025-03-20",
+    "image": "/assets/pics/rainbow3-560x990.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "560x990",
+    "hidden": false
+  },
+  {
+    "id": "rainbow4",
+    "date": "2025-03-21",
+    "image": "/assets/pics/rainbow4-560x990.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "560x990",
+    "hidden": false
+  },
+  {
+    "id": "rainbow5",
+    "date": "2025-03-20",
+    "image": "/assets/pics/rainbow5-560x990.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "560x990",
+    "hidden": false
+  },
+  {
+    "id": "rainbow6",
+    "date": "2025-03-20",
+    "image": "/assets/pics/rainbow6-820x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "820x1000",
+    "hidden": false
+  },
+  {
+    "id": "rainbowPiece",
+    "date": "2025-03-27",
+    "image": "/assets/pics/rainbowPiece-540x540.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "540x540",
+    "hidden": false
+  },
+  {
+    "id": "scent1",
+    "date": "2022-12-22",
+    "image": "/assets/pics/scent1-1400x1000.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1400x1000",
+    "hidden": false
+  },
+  {
+    "id": "shiftfield",
+    "date": "2025-04-07",
+    "image": "/assets/pics/shiftfield-1080x1920.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "shiftfield1",
+    "date": "2025-04-07",
+    "image": "/assets/pics/shiftfield1-1080x1920.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "shiftfield2",
+    "date": "2025-04-07",
+    "image": "/assets/pics/shiftfield2-1080x1920.jpg",
+    "tags": [
+      "2d",
+      "Abstract",
+      "Generative"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "space1",
+    "date": "2025-09-21",
+    "image": "/assets/pics/space1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "spaceship1",
+    "date": "2025-07-22",
+    "image": "/assets/pics/spaceship1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "spaceship2",
+    "date": "2025-07-22",
+    "image": "/assets/pics/spaceship2-1080x1920.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1080x1920",
+    "hidden": false
+  },
+  {
+    "id": "star1",
+    "date": "2025-09-21",
+    "image": "/assets/pics/star1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "tBank",
+    "date": "2025-08-20",
+    "image": "/assets/pics/tBank-1500x1200.jpg",
+    "tags": [
+      "3d",
+      "Illustration"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1500x1200",
+    "hidden": false
+  },
+  {
+    "id": "targetRainbow",
+    "date": "2025-08-16",
+    "image": "/assets/pics/targetRainbow-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "targetRainbow2",
+    "date": "2025-08-16",
+    "image": "/assets/pics/targetRainbow2-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "volume1",
+    "date": "2025-08-27",
+    "image": "/assets/pics/volume1-1000x1000.jpg",
+    "tags": [
+      "3d",
+      "Abstract"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  },
+  {
+    "id": "zorcheCover2",
+    "date": "2025-12-03",
+    "image": "/assets/pics/zorcheCover2-1000x1000.jpg",
+    "tags": [
+      "2d"
+    ],
+    "caption": "",
+    "project_url": "",
+    "resolution": "1000x1000",
+    "hidden": false
+  }
+]

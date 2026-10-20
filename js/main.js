@@ -6,7 +6,9 @@ const hueToggleButton = document.querySelector('.hue-toggle');
 const hueFilterPanel = document.querySelector('.hue-filter');
 const isMobileViewport = () => window.matchMedia('(max-width: 700px)').matches;
 
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRb9gChhvriuPLiHwT0yJ7zOcxHsyNNxkGQsBRMreZHFxv_oIvgOZil9mdeLiF-LvBp_onplkqZtMLR/pub?gid=0&single=true&output=csv';
+// Works live in data/shards.json (edited in Pages CMS); colours for the hue filter are
+// computed by the Color Index workflow into data/image-index.csv.
+const SHARDS_URL = 'data/shards.json';
 const COLOR_INDEX_URL = 'data/image-index.csv';
 const HUE_TOLERANCE = 18;
 
@@ -73,56 +75,247 @@ applyRandomRainbowStart();
 setupRandomRainbowHover();
 
 // --------------------
-// OVERLAY LOGIC
+// OVERLAY: one work at a time, with its own link (index.html#Beam1)
 // --------------------
 const overlay = document.getElementById('overlay');
 const overlayContent = overlay ? overlay.querySelector('.overlay-content') : null;
+let overlayItem = null;
+let overlayPushedHistory = false;
 
-function openOverlay(mediaElement) {
-  if (!overlay || !overlayContent || !mediaElement) return;
+const DATE_FORMAT = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-  overlayContent.innerHTML = '';
+function formatDate(value) {
+  if (!value) return '';
+  // ISO dates from the CMS ("2026-10-12") are shown the old way ("Oct 12, 2026")
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value).trim());
+  if (iso) return DATE_FORMAT.format(new Date(Date.UTC(+iso[1], +iso[2] - 1, +iso[3], 12)));
+  return String(value);
+}
 
-  const clone = mediaElement.cloneNode(true);
+function itemSlug(item) {
+  return encodeURIComponent(item.id || fileNameFromImageRef(item.image));
+}
 
-  if (clone.tagName === 'VIDEO') {
-    if (!clone.getAttribute('src') && clone.dataset.src) clone.src = clone.dataset.src;
-    clone.autoplay = true;
-    clone.muted = true;
-    clone.loop = true;
-    clone.controls = false;
-    const playing = clone.play();
+function findItemBySlug(slug) {
+  const wanted = decodeURIComponent(slug || '').toLowerCase();
+  if (!wanted) return null;
+  return items.find(item => (item.id || '').toLowerCase() === wanted)
+    || items.find(item => fileNameFromImageRef(item.image) === wanted)
+    || null;
+}
+
+function overlayList() {
+  return overlayItem && visibleItems.includes(overlayItem) ? visibleItems : items;
+}
+
+function setHash(item, mode) {
+  const url = item ? `#${itemSlug(item)}` : `${location.pathname}${location.search}`;
+  if (mode === 'push') {
+    history.pushState({ shard: true }, '', url);
+    overlayPushedHistory = true;
+  } else {
+    history.replaceState(history.state, '', url);
+  }
+}
+
+function buildOverlayMedia(item) {
+  const url = item.image;
+  if (getMediaType(url) === 'video') {
+    const video = document.createElement('video');
+    Object.assign(video, { src: url, autoplay: true, muted: true, loop: true, playsInline: true });
+    const playing = video.play();
     if (playing) playing.catch(() => {});
+    return video;
   }
-
-  // the grid shows a light preview; the overlay swaps in the full-size original once it's loaded
-  if (clone.tagName === 'IMG') {
-    clone.loading = 'eager';
-    const fullSrc = mediaElement.dataset.full;
-    if (fullSrc && clone.src !== fullSrc) {
-      const full = new Image();
-      full.onload = () => {
-        if (overlayContent.contains(clone)) clone.src = fullSrc;
-      };
-      full.src = fullSrc;
-    }
+  // start from the light preview (already cached), swap to the original once it has loaded
+  const img = document.createElement('img');
+  const thumb = getThumbUrl(url);
+  img.src = thumb || url;
+  img.alt = item.caption || item.id || '';
+  if (thumb) {
+    img.addEventListener('error', () => { if (img.src !== url) img.src = url; }, { once: true });
+    const full = new Image();
+    full.onload = () => { if (img.isConnected) img.src = url; };
+    full.src = url;
   }
-
-  overlayContent.appendChild(clone);
-  overlay.classList.add('active');
+  return img;
 }
 
-function closeOverlay() {
-  if (!overlay || !overlayContent) return;
-  overlay.classList.remove('active');
+function renderOverlay(item) {
+  overlayItem = item;
+  const list = overlayList();
+  const position = list.indexOf(item);
+
   overlayContent.innerHTML = '';
+
+  const stage = document.createElement('div');
+  stage.className = 'overlay-stage';
+  stage.appendChild(buildOverlayMedia(item));
+  overlayContent.appendChild(stage);
+
+  const bar = document.createElement('div');
+  bar.className = 'overlay-bar';
+
+  const info = document.createElement('div');
+  info.className = 'overlay-info';
+  const line = [formatDate(item.date), item.tags.join(', ')].filter(Boolean).join('  ·  ');
+  if (line) {
+    const meta = document.createElement('span');
+    meta.className = 'overlay-meta';
+    meta.textContent = line;
+    info.appendChild(meta);
+  }
+  if (item.caption) {
+    const caption = document.createElement('span');
+    caption.className = 'overlay-caption';
+    caption.textContent = item.caption;
+    info.appendChild(caption);
+  }
+  bar.appendChild(info);
+
+  const actions = document.createElement('div');
+  actions.className = 'overlay-actions';
+  if (item.project_url) {
+    const link = document.createElement('a');
+    link.href = item.project_url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'overlay-action rainbow-random-hover';
+    link.textContent = 'project ↗';
+    actions.appendChild(link);
+  }
+  const copy = document.createElement('button');
+  copy.type = 'button';
+  copy.className = 'overlay-action rainbow-random-hover';
+  copy.textContent = 'copy link';
+  copy.addEventListener('click', () => {
+    const done = () => { copy.textContent = 'copied'; setTimeout(() => { copy.textContent = 'copy link'; }, 1500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(done, done);
+    else done();
+  });
+  actions.appendChild(copy);
+  if (position >= 0) {
+    const counter = document.createElement('span');
+    counter.className = 'overlay-counter';
+    counter.textContent = `${position + 1} / ${list.length}`;
+    actions.appendChild(counter);
+  }
+  bar.appendChild(actions);
+  overlayContent.appendChild(bar);
+
+  overlay.classList.add('active');
+  document.body.classList.add('overlay-open');
 }
 
-overlay?.addEventListener('click', closeOverlay);
+function openItem(item, mode = 'push') {
+  if (!overlay || !overlayContent || !item) return;
+  const wasOpen = overlay.classList.contains('active');
+  renderOverlay(item);
+  setHash(item, wasOpen ? 'replace' : mode);
+}
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeOverlay();
-});
+function stepOverlay(delta) {
+  if (!overlayItem) return;
+  const list = overlayList();
+  if (!list.length) return;
+  const index = list.indexOf(overlayItem);
+  const next = list[(index + delta + list.length) % list.length];
+  renderOverlay(next);
+  setHash(next, 'replace');
+}
+
+function closeOverlay({ fromHistory = false } = {}) {
+  if (!overlay || !overlayContent || !overlay.classList.contains('active')) return;
+  overlay.classList.remove('active');
+  document.body.classList.remove('overlay-open');
+  overlayContent.innerHTML = '';
+  overlayItem = null;
+  if (fromHistory) return;
+  if (overlayPushedHistory) {
+    overlayPushedHistory = false;
+    history.back();
+  } else {
+    setHash(null, 'replace');
+  }
+}
+
+function setupOverlayControls() {
+  if (!overlay) return;
+
+  const prev = document.createElement('button');
+  prev.type = 'button';
+  prev.className = 'overlay-nav overlay-nav--prev';
+  prev.setAttribute('aria-label', 'Previous work');
+  prev.textContent = '←';
+  const next = document.createElement('button');
+  next.type = 'button';
+  next.className = 'overlay-nav overlay-nav--next';
+  next.setAttribute('aria-label', 'Next work');
+  next.textContent = '→';
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'overlay-close rainbow-random-hover';
+  close.setAttribute('aria-label', 'Close');
+  close.textContent = 'close';
+  overlay.append(prev, next, close);
+
+  prev.addEventListener('click', (e) => { e.stopPropagation(); stepOverlay(-1); });
+  next.addEventListener('click', (e) => { e.stopPropagation(); stepOverlay(1); });
+  close.addEventListener('click', (e) => { e.stopPropagation(); closeOverlay(); });
+
+  // click on the empty backdrop or on the picture itself closes, like before
+  overlay.addEventListener('click', (e) => {
+    if (e.target.closest('.overlay-bar')) return;
+    closeOverlay();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!overlay.classList.contains('active')) return;
+    if (e.key === 'Escape') closeOverlay();
+    if (e.key === 'ArrowRight') stepOverlay(1);
+    if (e.key === 'ArrowLeft') stepOverlay(-1);
+  });
+
+  // swipe left/right to flip, down to close
+  let startX = 0;
+  let startY = 0;
+  overlay.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  overlay.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      stepOverlay(dx < 0 ? 1 : -1);
+      overlay.dataset.swiped = '1';
+      setTimeout(() => { delete overlay.dataset.swiped; }, 400);
+    } else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) {
+      closeOverlay();
+    }
+  }, { passive: true });
+  // a swipe also fires a click — don't let it close the overlay
+  overlay.addEventListener('click', (e) => {
+    if (overlay.dataset.swiped) e.stopImmediatePropagation();
+  }, true);
+
+  window.addEventListener('popstate', () => {
+    const item = findItemBySlug(location.hash.slice(1));
+    if (item) {
+      renderOverlay(item);
+    } else {
+      overlayPushedHistory = false;
+      closeOverlay({ fromHistory: true });
+    }
+  });
+}
+
+setupOverlayControls();
+
+function openFromHash() {
+  const item = findItemBySlug(location.hash.slice(1));
+  if (item) openItem(item, 'replace');
+}
 
 // --------------------
 // MEDIA HELPERS
@@ -299,7 +492,7 @@ function createCard(item) {
     media.addEventListener('loadeddata', () => mediaWrapper.classList.add('loaded'));
   }
 
-  media.addEventListener('click', () => openOverlay(media));
+  media.addEventListener('click', () => openItem(item));
 
   mediaWrapper.appendChild(media);
   card.appendChild(mediaWrapper);
@@ -315,7 +508,7 @@ function createCard(item) {
 
   const dateEl = document.createElement('span');
   dateEl.classList.add('card-date');
-  dateEl.textContent = item.date || '';
+  dateEl.textContent = formatDate(item.date);
   meta.appendChild(dateEl);
 
   const tagsEl = document.createElement('span');
@@ -549,13 +742,8 @@ window.addEventListener('resize', () => {
 });
 
 function parseColorIndexRows(text) {
-  const parsed = Papa.parse(text, {
-    header: true,
-    skipEmptyLines: true
-  });
-
   const map = new Map();
-  parsed.data.forEach((row) => {
+  parseCsv(text).forEach((row) => {
     const image = (row.image || '').trim();
     if (!image) return;
 
@@ -588,6 +776,40 @@ function getColorMetrics(imageRef, colorIndex) {
     || {};
 }
 
+// "/assets/pics/x.jpg" (Pages CMS style) → "assets/pics/x.jpg", so it works under /gallery01/
+function resolveAsset(ref) {
+  const value = String(ref || '').trim();
+  if (!value || /^https?:\/\//i.test(value)) return value;
+  return value.replace(/^\/+/, '');
+}
+
+// small CSV reader for the colour index (replaces the PapaParse CDN dependency)
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let quoted = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text[i];
+    if (quoted) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i += 1; } else quoted = false;
+      } else field += c;
+    } else if (c === '"') quoted = true;
+    else if (c === ',') { row.push(field); field = ''; }
+    else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i += 1;
+      row.push(field); field = '';
+      if (row.some(Boolean)) rows.push(row);
+      row = [];
+    } else field += c;
+  }
+  row.push(field);
+  if (row.some(Boolean)) rows.push(row);
+  const header = rows.shift() || [];
+  return rows.map(r => Object.fromEntries(header.map((key, i) => [key, r[i] || ''])));
+}
+
 function buildItems(dataRows, colorIndex) {
   return dataRows.map((item) => {
     let aspectRatio = 1;
@@ -597,14 +819,15 @@ function buildItems(dataRows, colorIndex) {
       if (w && h) aspectRatio = w / h;
     }
 
-    const image = item.image || '';
+    const image = resolveAsset(item.image || '');
     const color = getColorMetrics(image, colorIndex);
+    const tags = Array.isArray(item.tags) ? item.tags : String(item.tags || '').split(',');
 
     return {
       id: item.id,
       date: item.date,
       image,
-      tags: item.tags ? item.tags.split(',').map(t => t.trim()) : [],
+      tags: tags.map(t => String(t).trim()).filter(Boolean),
       project_url: item.project_url || '',
       caption: item.caption || '',
       aspectRatio,
@@ -640,63 +863,38 @@ function renderTagFilters() {
 // --------------------
 // LOAD DATA
 // --------------------
-// data/image-index.csv is a same-origin copy of the Google Sheet (kept by the Color Index
-// workflow), so the grid is drawn from it right away. The live sheet is still fetched in the
-// background, and the grid is redrawn only if the sheet has something the copy doesn't.
-const ROW_FIELDS = ['id', 'date', 'image', 'tags', 'project_url', 'caption', 'resolution'];
 let colorIndexMap = new Map();
 let controlsReady = false;
-let dataSignature = '';
-
-function parseRows(text) {
-  if (!text) return [];
-  return Papa.parse(text, { header: true, skipEmptyLines: true })
-    .data
-    .filter(row => (row.image || '').trim());
-}
-
-function rowsSignature(rows) {
-  return JSON.stringify(rows.map(row => ROW_FIELDS.map(key => (row[key] || '').trim())));
-}
 
 function applyRows(rows) {
-  if (!rows.length) return;
-  const signature = rowsSignature(rows);
-  if (signature === dataSignature) return;
-  dataSignature = signature;
-
   cardCache.clear();
   items = buildItems(rows, colorIndexMap);
   sortItemsByDate();
 
   filtersContainer.innerHTML = '';
   renderTagFilters();
-  if (currentFilter !== 'all' && !items.some(item => item.tags.includes(currentFilter))) {
-    currentFilter = 'all';
-  }
 
   if (!controlsReady) {
     controlsReady = true;
     setupHueFilterControls();
-    setupFilterScrollGuard();
     updateSortToggleLabel();
   }
 
   setActiveFilter(currentFilter);
 }
 
-const sheetRequest = fetch(CSV_URL).then(res => (res.ok ? res.text() : '')).catch(() => '');
-
-fetch(COLOR_INDEX_URL, { cache: 'no-cache' })
-  .then(res => (res.ok ? res.text() : ''))
-  .catch(() => '')
-  .then((localText) => {
-    colorIndexMap = localText ? parseColorIndexRows(localText) : new Map();
-    applyRows(parseRows(localText));
-    return sheetRequest;
+Promise.all([
+  fetch(SHARDS_URL, { cache: 'no-cache' }).then(res => (res.ok ? res.json() : [])),
+  fetch(COLOR_INDEX_URL, { cache: 'no-cache' }).then(res => (res.ok ? res.text() : '')).catch(() => '')
+])
+  .then(([shards, colorText]) => {
+    colorIndexMap = colorText ? parseColorIndexRows(colorText) : new Map();
+    const rows = (Array.isArray(shards) ? shards : [])
+      .filter(row => row && row.image && !row.hidden);
+    applyRows(rows);
+    openFromHash();
   })
-  .then(sheetText => applyRows(parseRows(sheetText)))
-  .catch(err => console.error('Ошибка загрузки CSV:', err));
+  .catch(err => console.error('Ошибка загрузки работ:', err));
 
 if (sortToggleButton) {
   sortToggleButton.addEventListener('click', toggleSortDirection);

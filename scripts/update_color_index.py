@@ -26,7 +26,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build image color index for CSV rows that reference local or remote images."
     )
-    parser.add_argument("--csv-input", default=DEFAULT_SOURCE_CSV_URL)
+    parser.add_argument("--csv-input", default="data/shards.json")
     parser.add_argument("--csv-output", default="data/image-index.csv")
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--image-column", default="image")
@@ -35,6 +35,24 @@ def parse_args() -> argparse.Namespace:
 
 
 def read_csv_source(source: str) -> list[dict[str, str]]:
+    # data/shards.json (Pages CMS) — the list of works; tags arrive as a list
+    if source.endswith(".json") and not source.startswith(("http://", "https://")):
+        import json
+        rows = json.loads(Path(source).read_text(encoding="utf-8"))
+        out: list[dict[str, str]] = []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            flat = {}
+            for key, value in row.items():
+                if isinstance(value, list):
+                    value = ", ".join(str(v) for v in value)
+                elif isinstance(value, bool):
+                    value = "true" if value else ""
+                flat[key] = "" if value is None else str(value)
+            out.append(flat)
+        return out
+
     if source.startswith(("http://", "https://")):
         with urlopen(source) as response:  # nosec B310
             text = response.read().decode("utf-8")

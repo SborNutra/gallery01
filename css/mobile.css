@@ -267,3 +267,57 @@
     text-overflow: clip;
   }
 }
+
+/* --------------------
+// MOBILE TAP TARGETS (≥ 44px) + tags wrap into rows instead of a sideways scroll
+---------------------*/
+@media (max-width: 700px) {
+  .header__inner {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .header__avatar img {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .header__nav {
+    gap: 0.25rem;
+  }
+
+  .header__nav a,
+  .header__tg {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.7rem;
+    font-size: 1.05rem;
+    box-sizing: border-box;
+  }
+
+  .controls .filters {
+    grid-column: 1 / -1;
+    flex-wrap: wrap;
+    overflow: visible;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    gap: 0.5rem;
+    justify-self: stretch;
+    touch-action: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .filters button,
+  .sort-toggle {
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    font-size: 1.05rem;
+  }
+
+  .hue-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}

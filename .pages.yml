@@ -1,11 +1,55 @@
 # Pages CMS config — admin panel at https://app.pagescms.org (log in with GitHub, pick this repo).
-# Only the "cases" section is managed here; shards keep working as before.
+# Everything lives in this repository: data/shards.json, data/cases.json and the assets/ folder.
 
 media:
-  input: assets/cases
-  output: /assets/cases
+  - name: pics
+    label: Shards (works)
+    input: assets/pics
+    output: /assets/pics
+  - name: cases
+    label: Cases
+    input: assets/cases
+    output: /assets/cases
 
 content:
+  - name: shards
+    label: Shards (works)
+    type: file
+    path: data/shards.json
+    format: json
+    list: true
+    fields:
+      - name: image
+        label: Picture or video (jpg / png / webp / gif / webm / mp4)
+        type: file
+        required: true
+        options:
+          media: pics
+          extensions: [jpg, jpeg, png, webp, gif, webm, mp4]
+      - name: date
+        label: Date
+        type: date
+      - name: tags
+        label: Tags (e.g. 3d, Illustration, Motion, Generative, 2d, Abstract)
+        type: string
+        list: true
+      - name: caption
+        label: Caption (optional)
+        type: string
+      - name: project_url
+        label: Project link (optional)
+        type: string
+      - name: id
+        label: Link name (optional — filled from the file name, used in index.html#name)
+        type: string
+      - name: resolution
+        label: Size, e.g. 1080x1920 (optional — filled automatically)
+        type: string
+      - name: hidden
+        label: Hidden (draft)
+        type: boolean
+        default: false
+
   - name: cases
     label: Cases
     type: file
@@ -27,11 +71,13 @@ content:
         label: Cover (any size — it is compressed automatically)
         type: image
         options:
+          media: cases
           extensions: [jpg, jpeg, png, webp, gif]
       - name: cover_video
         label: Cover video loop (optional, silent, 5–10 s — webm and/or mp4)
         type: file
         options:
+          media: cases
           multiple:
             max: 2
           extensions: [webm, mp4]
@@ -39,6 +85,7 @@ content:
         label: Full film (optional — adds a "watch film" button; webm and/or mp4)
         type: file
         options:
+          media: cases
           multiple:
             max: 2
           extensions: [webm, mp4]
@@ -46,6 +93,7 @@ content:
         label: Hover frames (2–4 pictures shown on hover)
         type: image
         options:
+          media: cases
           multiple:
             max: 6
           extensions: [jpg, jpeg, png, webp, gif]

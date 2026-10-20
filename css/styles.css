@@ -640,11 +640,143 @@ body::-webkit-scrollbar {
   border-radius: 0;
 }
 
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  max-width: 90vw;
+}
+
+.overlay-stage {
+  display: flex;
+  justify-content: center;
+}
+
 .overlay-content img,
 .overlay-content video {
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: calc(100vh - 9rem);
+  max-height: calc(100dvh - 9rem);
   object-fit: contain;
   border-radius: 8px;
   cursor: pointer;
+}
+
+body.overlay-open {
+  overflow: hidden;
+}
+
+.overlay-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  font-family: 'SuisseIntl', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.overlay-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.overlay-meta {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.overlay-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex: 0 0 auto;
+}
+
+.overlay-action {
+  padding: 0.35rem 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.overlay-counter {
+  color: rgba(255, 255, 255, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.overlay-nav,
+.overlay-close {
+  position: absolute;
+  border: 0;
+  background: none;
+  color: #fff;
+  opacity: 0.6;
+  font-family: 'SuisseIntl', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.overlay-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3.5rem;
+  height: 5rem;
+  font-size: 1.75rem;
+}
+
+.overlay-nav--prev { left: 0.75rem; }
+.overlay-nav--next { right: 0.75rem; }
+
+.overlay-close {
+  top: 1.25rem;
+  right: 1.5rem;
+  padding: 0.6rem;
+  font-size: 1.1rem;
+}
+
+.overlay-nav:hover,
+.overlay-close:hover {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .overlay-content {
+    max-width: 100vw;
+    padding: 0 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .overlay-content img,
+  .overlay-content video {
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100dvh - 11rem);
+    border-radius: 14px;
+  }
+
+  .overlay-bar {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  /* on phones you swipe; arrows would cover the picture */
+  .overlay-nav {
+    display: none;
+  }
+
+  .overlay-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .overlay-action {
+    padding: 0.6rem 0;
+  }
 }
